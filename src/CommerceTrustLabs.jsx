@@ -554,7 +554,7 @@ const Footer = () => (
   <footer style={{ background: COLORS.ink, color: COLORS.paper, padding: "4rem 3rem", display: "grid", gridTemplateColumns: "1fr 1fr", alignItems: "end", gap: "2rem" }}>
     <div>
       <div style={{ fontFamily: "'Syne', sans-serif", fontSize: "1.4rem", fontWeight: 800, letterSpacing: "-0.03em", marginBottom: "0.6rem" }}>Commerce Trust Labs</div>
-      <div style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.7rem", color: "rgba(245,242,235,0.35)", marginBottom: "1.2rem" }}>AI-Governed Commerce Infrastructure — Cumming, Georgia, USA</div>
+      <div style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.7rem", color: "rgba(245,242,235,0.35)", marginBottom: "1.2rem" }}>AI-Governed Commerce Infrastructure — Atlanta, Georgia, USA</div>
       <div style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.68rem", color: "rgba(245,242,235,0.22)", lineHeight: 1.8, maxWidth: "44ch" }}>
         Commerce Trust Labs is an independent research and technology initiative focused on governance infrastructure for AI-driven commerce systems.
       </div>
