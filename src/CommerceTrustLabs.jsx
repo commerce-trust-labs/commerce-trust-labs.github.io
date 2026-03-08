@@ -11,8 +11,9 @@ const GlobalStyle = () => (
     <style>{`
     @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@300;400&family=Instrument+Serif:ital@0;1&display=swap');
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{background:#0b0f14;color:#e8e4dc;font-family:'Syne',sans-serif;overflow-x:hidden}
+    html{scroll-behavior:smooth;overflow-x:hidden;width:100%;max-width:100vw}
+    body{background:#0b0f14;color:#e8e4dc;font-family:'Syne',sans-serif;overflow-x:hidden;width:100%;max-width:100vw;min-width:0}
+    #root{width:100%;min-width:0;overflow-x:hidden;max-width:100vw}
     ::selection{background:#c4501a;color:#fff}
     ::-webkit-scrollbar{width:3px}
     ::-webkit-scrollbar-track{background:#0b0f14}
@@ -33,12 +34,13 @@ const GlobalStyle = () => (
   `}</style>
 );
 
-/* shared wrapper style — never spread over itself */
+/* shared wrapper style — never spread over itself, no horizontal overflow */
 const inner = (extra = {}) => ({
-  maxWidth: "1200px",
+  maxWidth: "min(1200px, 100%)",
   margin: "0 auto",
-  padding: "0 3rem",
+  padding: "0 clamp(1rem, 5vw, 3rem)",
   width: "100%",
+  minWidth: 0,
   boxSizing: "border-box",
   ...extra
 });
@@ -94,9 +96,9 @@ const Nav = () => {
     return () => o.disconnect();
   }, []);
   return (
-      <nav style={{ position:"fixed", top:0, left:0, right:0, zIndex:200, display:"flex", justifyContent:"space-between", alignItems:"center", padding:"1rem 3rem", background: solid ? "rgba(11,15,20,.97)" : "rgba(11,15,20,.5)", backdropFilter:"blur(16px)", borderBottom:`1px solid ${solid ? C.border : "transparent"}`, transition:"all .3s" }}>
-        <a href="#" style={{ fontFamily:"'DM Mono',monospace", fontSize:".7rem", letterSpacing:".2em", textTransform:"uppercase", color:C.text, textDecoration:"none" }}>Commerce Trust Labs</a>
-        <div style={{ display:"flex", gap:"2rem" }}>
+      <nav style={{ position:"fixed", top:0, left:0, right:0, zIndex:200, display:"flex", flexWrap:"wrap", justifyContent:"space-between", alignItems:"center", gap:"1rem", padding:"1rem clamp(1rem, 5vw, 3rem)", background: solid ? "rgba(11,15,20,.97)" : "rgba(11,15,20,.5)", backdropFilter:"blur(16px)", borderBottom:`1px solid ${solid ? C.border : "transparent"}`, transition:"all .3s", minWidth:0, maxWidth:"100vw" }}>
+        <a href="#" style={{ fontFamily:"'DM Mono',monospace", fontSize:".7rem", letterSpacing:".2em", textTransform:"uppercase", color:C.text, textDecoration:"none", flexShrink:0 }}>Commerce Trust Labs</a>
+        <div style={{ display:"flex", flexWrap:"wrap", gap:"clamp(1rem, 2vw, 2rem)", minWidth:0 }}>
           {[["problem","Problem"],["mission","Mission"],["technology","Technology"],["interest","Impact"],["research","Research"],["team","Team"]].map(([id,l]) => (
               <a key={id} href={`#${id}`} className={`nl${active===id?" on":""}`}>{l}</a>
           ))}
@@ -109,7 +111,7 @@ const Nav = () => {
 const Ticker = () => {
   const items = ["AI Commerce Governance","◆","Open Governance Framework","◆","Real-time Policy Enforcement","◆","Settlement Architecture","◆","Federated Trust Network","◆","AI-Native Control Plane","◆"];
   return (
-      <div style={{ background:C.accent, overflow:"hidden", padding:".55rem 0", whiteSpace:"nowrap" }}>
+      <div style={{ background:C.accent, overflow:"hidden", padding:".55rem 0", whiteSpace:"nowrap", width:"100%", maxWidth:"100vw" }}>
         <div style={{ display:"inline-flex", gap:"3rem", animation:"ticker 28s linear infinite" }}>
           {[...items,...items].map((t,i) => (
               <span key={i} style={{ fontFamily:"'DM Mono',monospace", fontSize:".68rem", letterSpacing:".2em", textTransform:"uppercase", color:"rgba(255,255,255,.9)" }}>{t}</span>
@@ -156,10 +158,10 @@ const Hero = () => {
   useEffect(() => { const t = setTimeout(() => setUp(true), 80); return () => clearTimeout(t); }, []);
   const a = d => ({ opacity: up?1:0, transform: up?"none":"translateY(16px)", transition:`opacity .7s ease ${d}ms, transform .7s ease ${d}ms` });
   return (
-      <section style={{ background:C.bg, paddingTop:"68px", minHeight:"100vh", overflow:"hidden" }}>
-        <div style={inner({ minHeight:"calc(100vh - 68px)", display:"grid", gridTemplateColumns:"1fr 1fr", gap:"4rem", alignItems:"center", padding:"4rem 3rem" })}>
+      <section style={{ background:C.bg, paddingTop:"68px", minHeight:"100vh", overflow:"hidden", width:"100%", maxWidth:"100vw" }}>
+        <div style={inner({ minHeight:"calc(100vh - 68px)", display:"flex", flexWrap:"wrap", gap:"4rem", alignItems:"center", padding:"4rem clamp(1rem, 5vw, 3rem)" })}>
           {/* LEFT */}
-          <div style={{ minWidth:0 }}>
+          <div style={{ minWidth:0, flex:"1 1 320px" }}>
             <div style={{ ...a(80), display:"flex", alignItems:"center", gap:".8rem", marginBottom:"1.6rem" }}>
               <div style={{ width:"2rem", height:"1px", background:C.accent, flexShrink:0 }}/>
               <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".65rem", letterSpacing:".22em", textTransform:"uppercase", color:C.accent }}>AI-Governed Commerce Infrastructure</span>
@@ -175,9 +177,9 @@ const Hero = () => {
               <a href="#mission" className="bp">Our Mission →</a>
               <a href="https://github.com/commerce-trust-labs" target="_blank" rel="noreferrer" className="bg2btn">GitHub →</a>
             </div>
-            <div style={{ ...a(440), display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:"1px", background:C.border, border:`1px solid ${C.border}` }}>
+            <div style={{ ...a(440), display:"flex", flexWrap:"wrap", gap:"1px", background:C.border, border:`1px solid ${C.border}` }}>
               {[["Open","Reference Arch"],["Real-time","Policy Engine"],["AI-Native","Governance"]].map(([v,d]) => (
-                  <div key={v} style={{ background:C.bg2, padding:"1.2rem 1rem" }}>
+                  <div key={v} style={{ background:C.bg2, padding:"1.2rem 1rem", flex:"1 1 100px", minWidth:0 }}>
                     <div style={{ fontFamily:"'Syne',sans-serif", fontSize:"1rem", fontWeight:800, color:C.accent, marginBottom:".3rem" }}>{v}</div>
                     <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".58rem", letterSpacing:".1em", textTransform:"uppercase", color:C.muted }}>{d}</div>
                   </div>
@@ -185,7 +187,7 @@ const Hero = () => {
             </div>
           </div>
           {/* RIGHT */}
-          <div style={{ minWidth:0, display:"flex", justifyContent:"center", alignItems:"center", position:"relative" }}>
+          <div style={{ minWidth:0, flex:"1 1 320px", display:"flex", justifyContent:"center", alignItems:"center", position:"relative" }}>
             <div style={{ position:"absolute", inset:0, background:"radial-gradient(ellipse at center,rgba(196,80,26,.07) 0%,transparent 70%)", pointerEvents:"none" }}/>
             <Network/>
           </div>
@@ -203,11 +205,11 @@ const Problem = () => {
     { title:"No Cross-Retailer Visibility Standard", body:"Unlike financial services — which share fraud signals through federated networks — retail commerce has no equivalent trust layer, leaving each retailer isolated from industry-wide threat intelligence." },
   ];
   return (
-      <section id="problem" style={{ background:C.bg2 }}>
-        <div style={inner({ padding:"6rem 3rem" })}>
+      <section id="problem" style={{ background:C.bg2, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
+        <div style={inner({ padding:"6rem clamp(1rem, 5vw, 3rem)" })}>
           <Label light>The Problem</Label>
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"4rem", alignItems:"start" }}>
-            <div>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:"4rem", alignItems:"start" }}>
+            <div style={{ minWidth:0, flex:"1 1 280px" }}>
               <Reveal>
                 <h2 style={{ fontFamily:"'Syne',sans-serif", fontSize:"clamp(1.8rem,2.5vw,2.6rem)", fontWeight:800, lineHeight:1.05, letterSpacing:"-.03em", color:C.text }}>
                   AI Commerce<br/>Operates Without<br/>
@@ -220,7 +222,7 @@ const Problem = () => {
                 </p>
               </Reveal>
             </div>
-            <div style={{ display:"flex", flexDirection:"column", gap:"1.8rem" }}>
+            <div style={{ display:"flex", flexDirection:"column", gap:"1.8rem", minWidth:0, flex:"1 1 280px" }}>
               {items.map((p,i) => (
                   <Reveal key={i} delay={i*80}>
                     <div style={{ borderLeft:`2px solid ${C.accent}`, paddingLeft:"1.4rem" }}>
@@ -244,18 +246,18 @@ const Mission = () => {
     { n:"03", title:"Protecting the U.S. Economy", body:"U.S. retail commerce is critical national infrastructure. Our work reduces systemic compliance risk, enables AI adoption at scale, and ensures the transition to agentic commerce serves the national interest." },
   ];
   return (
-      <section id="mission" style={{ background:C.bg }}>
-        <div style={inner({ padding:"6rem 3rem" })}>
+      <section id="mission" style={{ background:C.bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
+        <div style={inner({ padding:"6rem clamp(1rem, 5vw, 3rem)" })}>
           <Label>Mission & Vision</Label>
           <Reveal>
             <p style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontSize:"clamp(1.2rem,1.8vw,1.7rem)", lineHeight:1.4, color:C.text, maxWidth:"32ch", marginBottom:"4rem", paddingLeft:"1rem", borderLeft:`3px solid ${C.accent}` }}>
               "To build the governance infrastructure that makes AI-driven commerce trustworthy, compliant, and resilient at national scale."
             </p>
           </Reveal>
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:"1px", background:C.border, border:`1px solid ${C.border}`, overflow:"hidden" }}>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:"1px", background:C.border, border:`1px solid ${C.border}`, overflow:"hidden" }}>
             {pillars.map((p,i) => (
                 <Reveal key={i} delay={i*100}>
-                  <div className="ch" style={{ background:C.bg2, padding:"2.5rem", height:"100%", cursor:"default", transition:"background .25s" }}>
+                  <div className="ch" style={{ background:C.bg2, padding:"2.5rem", height:"100%", cursor:"default", transition:"background .25s", flex:"1 1 260px", minWidth:0 }}>
                     <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".6rem", letterSpacing:".2em", color:C.accent, marginBottom:"1rem" }}>{p.n} —</div>
                     <h3 style={{ fontFamily:"'Syne',sans-serif", fontSize:"1rem", fontWeight:700, color:C.text, marginBottom:".8rem" }}>{p.title}</h3>
                     <p style={{ fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".75rem", lineHeight:1.75, color:C.muted }}>{p.body}</p>
@@ -277,24 +279,28 @@ const Technology = () => {
     { tag:"Layer 4 — Intelligence", title:"Cross-Retailer Trust Network", body:"A federated intelligence network enabling participating retailers to share anonymized threat signals, compliance patterns, and governance benchmarks — creating collective defense infrastructure." },
   ];
   return (
-      <section id="technology" style={{ background:C.bg3 }}>
-        <div style={inner({ padding:"6rem 3rem" })}>
+      <section id="technology" style={{ background:C.bg3, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
+        <div style={inner({ padding:"6rem clamp(1rem, 5vw, 3rem)" })}>
           <Label light>Reference Architecture</Label>
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"3rem", alignItems:"end", marginBottom:"3rem" }}>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:"3rem", alignItems:"end", marginBottom:"3rem" }}>
             <Reveal>
-              <h2 style={{ fontFamily:"'Syne',sans-serif", fontSize:"clamp(1.5rem,2.2vw,2.2rem)", fontWeight:800, lineHeight:1.05, letterSpacing:"-.03em", color:C.text }}>
-                Commerce Control Plane —{" "}
-                <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", color:C.blueHi }}>Governance Framework</em>
-              </h2>
+              <div style={{ minWidth:0, flex:"1 1 280px" }}>
+                <h2 style={{ fontFamily:"'Syne',sans-serif", fontSize:"clamp(1.5rem,2.2vw,2.2rem)", fontWeight:800, lineHeight:1.05, letterSpacing:"-.03em", color:C.text }}>
+                  Commerce Control Plane —{" "}
+                  <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", color:C.blueHi }}>Governance Framework</em>
+                </h2>
+              </div>
             </Reveal>
             <Reveal delay={150}>
-              <p style={{ fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".82rem", lineHeight:1.85, color:C.muted }}>A reference architecture for governance in AI-driven commerce — sitting between commerce platforms and the regulations, policies, and trust standards that govern them.</p>
+              <div style={{ minWidth:0, flex:"1 1 280px" }}>
+                <p style={{ fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".82rem", lineHeight:1.85, color:C.muted }}>A reference architecture for governance in AI-driven commerce — sitting between commerce platforms and the regulations, policies, and trust standards that govern them.</p>
+              </div>
             </Reveal>
           </div>
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"1px", background:C.border, border:`1px solid ${C.border}`, overflow:"hidden" }}>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:"1px", background:C.border, border:`1px solid ${C.border}`, overflow:"hidden" }}>
             {cards.map((c,i) => (
                 <Reveal key={i} delay={i*80}>
-                  <div className="ch" style={{ background:C.bg2, padding:"2.5rem", position:"relative", overflow:"hidden", height:"100%", cursor:"default", transition:"background .25s" }}>
+                  <div className="ch" style={{ background:C.bg2, padding:"2.5rem", position:"relative", overflow:"hidden", height:"100%", cursor:"default", transition:"background .25s", flex:"1 1 280px", minWidth:0 }}>
                     <div style={{ position:"absolute", bottom:"-.5rem", right:"1rem", fontSize:"4.5rem", fontWeight:800, color:"rgba(232,228,220,.03)", lineHeight:1, fontFamily:"'Syne',sans-serif", pointerEvents:"none" }}>0{i+1}</div>
                     <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".58rem", letterSpacing:".2em", textTransform:"uppercase", color:C.blueHi, marginBottom:".8rem" }}>{c.tag}</div>
                     <h3 style={{ fontFamily:"'Syne',sans-serif", fontSize:"1rem", fontWeight:700, color:C.text, marginBottom:".8rem" }}>{c.title}</h3>
@@ -316,11 +322,11 @@ const Interest = () => {
     { tag:"Open Infrastructure", title:"Public-Benefit Initiative", body:"Our reference architectures are developed as open infrastructure — not proprietary products — to maximize national-level adoption and industry-wide impact." },
   ];
   return (
-      <section id="interest" style={{ background:C.bg }}>
-        <div style={inner({ padding:"6rem 3rem" })}>
+      <section id="interest" style={{ background:C.bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
+        <div style={inner({ padding:"6rem clamp(1rem, 5vw, 3rem)" })}>
           <Label>Why This Matters</Label>
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"4rem", alignItems:"start" }}>
-            <div>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:"4rem", alignItems:"start" }}>
+            <div style={{ minWidth:0, flex:"1 1 280px" }}>
               <Reveal>
                 <h2 style={{ fontFamily:"'Syne',sans-serif", fontSize:"clamp(1.5rem,2.2vw,2.4rem)", fontWeight:800, lineHeight:1.05, letterSpacing:"-.03em", color:C.text, marginBottom:"1.5rem" }}>
                   Infrastructure for the<br/>
@@ -348,10 +354,10 @@ const Interest = () => {
                 </div>
               </Reveal>
             </div>
-            <div style={{ display:"flex", flexDirection:"column", gap:"1rem" }}>
+            <div style={{ display:"flex", flexDirection:"column", gap:"1rem", minWidth:0, flex:"1 1 280px" }}>
               {cards.map((c,i) => (
                   <Reveal key={i} delay={i*90}>
-                    <div className="ch" style={{ background:C.bg2, border:`1px solid ${C.border}`, padding:"1.6rem 1.8rem", cursor:"default", transition:"background .25s" }}>
+                    <div className="ch" style={{ background:C.bg2, border:`1px solid ${C.border}`, padding:"1.6rem 1.8rem", cursor:"default", transition:"background .25s", minWidth:0 }}>
                       <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".56rem", letterSpacing:".2em", textTransform:"uppercase", color:C.accent, marginBottom:".4rem" }}>{c.tag}</div>
                       <div style={{ fontFamily:"'Syne',sans-serif", fontWeight:700, fontSize:".88rem", color:C.text, marginBottom:".4rem" }}>{c.title}</div>
                       <div style={{ fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".73rem", color:C.muted, lineHeight:1.7 }}>{c.body}</div>
@@ -374,8 +380,8 @@ const Research = () => {
     { type:"Framework", title:"AI-Agent Governance Framework for Retail Platforms", desc:"Behavioral constraint specifications, audit trail standards, and explainability requirements for AI agents in U.S. retail commerce.", link:null, linkLabel:"Forthcoming" },
   ];
   return (
-      <section id="research" style={{ background:C.bg2 }}>
-        <div style={inner({ padding:"6rem 3rem" })}>
+      <section id="research" style={{ background:C.bg2, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
+        <div style={inner({ padding:"6rem clamp(1rem, 5vw, 3rem)" })}>
           <Label light>Research & Publications</Label>
           <Reveal>
             <h2 style={{ fontFamily:"'Syne',sans-serif", fontSize:"clamp(1.5rem,2.2vw,2.2rem)", fontWeight:800, letterSpacing:"-.03em", color:C.text, marginBottom:"3rem", lineHeight:1.05 }}>
@@ -386,15 +392,15 @@ const Research = () => {
           <div style={{ display:"flex", flexDirection:"column", gap:"1px", background:C.border, border:`1px solid ${C.border}` }}>
             {pubs.map((p,i) => (
                 <Reveal key={i} delay={i*60}>
-                  <div className="pr" style={{ background:C.bg, padding:"1.6rem 2rem", display:"grid", gridTemplateColumns:"5rem 1fr auto", gap:"1.5rem", alignItems:"center" }}>
-                    <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".56rem", letterSpacing:".15em", textTransform:"uppercase", color:C.accent }}>{p.type}</div>
-                    <div>
+                  <div className="pr" style={{ background:C.bg, padding:"1.6rem 2rem", display:"flex", flexWrap:"wrap", gap:"1.5rem", alignItems:"center", minWidth:0 }}>
+                    <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".56rem", letterSpacing:".15em", textTransform:"uppercase", color:C.accent, flexShrink:0 }}>{p.type}</div>
+                    <div style={{ minWidth:0, flex:"1 1 200px" }}>
                       <div style={{ fontFamily:"'Syne',sans-serif", fontWeight:700, fontSize:".88rem", color:C.text, marginBottom:".3rem" }}>{p.title}</div>
                       <div style={{ fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".71rem", color:C.muted, lineHeight:1.6 }}>{p.desc}</div>
                     </div>
                     {p.link
-                        ? <a href={p.link} target="_blank" rel="noreferrer" className="lk">{p.linkLabel}</a>
-                        : <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".66rem", color:C.muted, whiteSpace:"nowrap" }}>{p.linkLabel}</span>
+                        ? <a href={p.link} target="_blank" rel="noreferrer" className="lk" style={{ flexShrink:0 }}>{p.linkLabel}</a>
+                        : <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".66rem", color:C.muted, whiteSpace:"nowrap", flexShrink:0 }}>{p.linkLabel}</span>
                     }
                   </div>
                 </Reveal>
@@ -407,12 +413,12 @@ const Research = () => {
 
 /* ── TEAM ── */
 const Team = () => (
-    <section id="team" style={{ background:C.bg }}>
-      <div style={inner({ padding:"6rem 3rem" })}>
+    <section id="team" style={{ background:C.bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
+      <div style={inner({ padding:"6rem clamp(1rem, 5vw, 3rem)" })}>
         <Label>Founder</Label>
         <Reveal>
-          <div style={{ display:"grid", gridTemplateColumns:"200px 1fr", gap:"4rem", alignItems:"start", border:`1px solid ${C.border}`, padding:"3rem" }}>
-            <div>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:"4rem", alignItems:"start", border:`1px solid ${C.border}`, padding:"3rem", minWidth:0 }}>
+            <div style={{ flexShrink:0, minWidth:0 }}>
               <div style={{ width:"100%", aspectRatio:"3/4", background:C.bg2, border:`1px solid ${C.border}`, marginBottom:"1.2rem", position:"relative", display:"flex", alignItems:"center", justifyContent:"center", overflow:"hidden" }}>
                 <span style={{ fontFamily:"'Syne',sans-serif", fontSize:"3.5rem", fontWeight:800, color:C.text, opacity:.06 }}>PS</span>
                 <div style={{ position:"absolute", bottom:0, left:0, right:0, height:"3px", background:C.accent }}/>
@@ -420,7 +426,7 @@ const Team = () => (
               <div style={{ fontFamily:"'Syne',sans-serif", fontSize:"1rem", fontWeight:700, color:C.text, marginBottom:".3rem" }}>Pranesh Soma</div>
               <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".12em", textTransform:"uppercase", color:C.accent }}>Founder & Chief Architect</div>
             </div>
-            <div style={{ minWidth:0 }}>
+            <div style={{ minWidth:0, flex:"1 1 280px" }}>
               <h3 style={{ fontFamily:"'Syne',sans-serif", fontSize:"clamp(1.2rem,1.8vw,1.6rem)", fontWeight:800, lineHeight:1.1, letterSpacing:"-.03em", color:C.text, marginBottom:"1.8rem" }}>
                 Building the{" "}
                 <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400 }}>Infrastructure That Commerce Runs On</em>
@@ -432,9 +438,9 @@ const Team = () => (
               ].map((para,i) => (
                   <p key={i} style={{ fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".78rem", lineHeight:1.9, color:C.muted, marginBottom:"1rem" }}>{para}</p>
               ))}
-              <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:"1px", background:C.border, border:`1px solid ${C.border}`, marginTop:"1.8rem" }}>
+              <div style={{ display:"flex", flexWrap:"wrap", gap:"1px", background:C.border, border:`1px solid ${C.border}`, marginTop:"1.8rem" }}>
                 {[["Open","Reference Arch"],["Real-time","Policy Engine"],["Federated","Trust Network"],["AI-Native","Governance"]].map(([v,d]) => (
-                    <div key={v} style={{ background:C.bg2, padding:"1rem" }}>
+                    <div key={v} style={{ background:C.bg2, padding:"1rem", flex:"1 1 120px", minWidth:0 }}>
                       <div style={{ fontFamily:"'Syne',sans-serif", fontSize:".9rem", fontWeight:800, color:C.accent, marginBottom:".3rem" }}>{v}</div>
                       <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".56rem", letterSpacing:".1em", textTransform:"uppercase", color:C.muted }}>{d}</div>
                     </div>
@@ -449,14 +455,14 @@ const Team = () => (
 
 /* ── FOOTER ── */
 const Footer = () => (
-    <footer style={{ background:C.bg2, borderTop:`1px solid ${C.border}` }}>
-      <div style={inner({ padding:"3rem 3rem", display:"grid", gridTemplateColumns:"1fr 1fr", gap:"2rem", alignItems:"end" })}>
-        <div>
+    <footer style={{ background:C.bg2, borderTop:`1px solid ${C.border}`, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
+      <div style={inner({ padding:"3rem clamp(1rem, 5vw, 3rem)", display:"flex", flexWrap:"wrap", gap:"2rem", alignItems:"end" })}>
+        <div style={{ minWidth:0, flex:"1 1 280px" }}>
           <div style={{ fontFamily:"'Syne',sans-serif", fontSize:"1.1rem", fontWeight:800, color:C.text, marginBottom:".5rem" }}>Commerce Trust Labs</div>
           <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".66rem", color:C.muted, marginBottom:"1rem" }}>AI-Governed Commerce Infrastructure — Cumming, Georgia, USA</div>
           <div style={{ fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".64rem", color:"rgba(232,228,220,.18)", lineHeight:1.8, maxWidth:"42ch" }}>Commerce Trust Labs is an independent research and technology initiative focused on governance infrastructure for AI-driven commerce systems.</div>
         </div>
-        <div style={{ textAlign:"right", fontFamily:"'DM Mono',monospace", fontSize:".66rem", lineHeight:2.4 }}>
+        <div style={{ textAlign:"right", fontFamily:"'DM Mono',monospace", fontSize:".66rem", lineHeight:2.4, minWidth:0, flex:"1 1 200px" }}>
           {[["commercetrustlabs.org","https://commercetrustlabs.org"],["github.com/commerce-trust-labs","https://github.com/commerce-trust-labs"],["contact@commercetrustlabs.org","mailto:contact@commercetrustlabs.org"]].map(([label,href]) => (
               <div key={label}><a href={href} className="fl">{label}</a></div>
           ))}
