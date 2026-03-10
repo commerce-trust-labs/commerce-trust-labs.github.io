@@ -418,11 +418,15 @@ const Team = () => (
         <Label>Founder</Label>
         <Reveal>
           <div style={{ display:"flex", flexWrap:"wrap", gap:"4rem", alignItems:"start", border:`1px solid ${C.border}`, padding:"3rem", minWidth:0 }}>
-            <div style={{ flexShrink:0, minWidth:0 }}>
-              <div style={{ width:"100%", aspectRatio:"3/4", background:C.bg2, border:`1px solid ${C.border}`, marginBottom:"1.2rem", position:"relative", display:"flex", alignItems:"center", justifyContent:"center", overflow:"hidden" }}>
-                <span style={{ fontFamily:"'Syne',sans-serif", fontSize:"3.5rem", fontWeight:800, color:C.text, opacity:.06 }}>PS</span>
-                <div style={{ position:"absolute", bottom:0, left:0, right:0, height:"3px", background:C.accent }}/>
-              </div>
+              <div style={{ flexShrink:0, minWidth:0, width:"220px" }}>
+                <div style={{ width:"100%", aspectRatio:"3/4", background:C.bg2, border:`1px solid ${C.border}`, marginBottom:"1.2rem", position:"relative", overflow:"hidden" }}>
+                    <img
+                        src="/Pranesh.PNG"
+                        alt="Pranesh Soma"
+                        style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center top", display:"block" }}
+                    />
+                    <div style={{ position:"absolute", bottom:0, left:0, right:0, height:"3px", background:C.accent }}/>
+                </div>
               <div style={{ fontFamily:"'Syne',sans-serif", fontSize:"1rem", fontWeight:700, color:C.text, marginBottom:".3rem" }}>Pranesh Soma</div>
               <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".12em", textTransform:"uppercase", color:C.accent }}>Founder & Chief Architect</div>
             </div>
@@ -459,7 +463,7 @@ const Footer = () => (
       <div style={inner({ padding:"3rem clamp(1rem, 5vw, 3rem)", display:"flex", flexWrap:"wrap", gap:"2rem", alignItems:"end" })}>
         <div style={{ minWidth:0, flex:"1 1 280px" }}>
           <div style={{ fontFamily:"'Syne',sans-serif", fontSize:"1.1rem", fontWeight:800, color:C.text, marginBottom:".5rem" }}>Commerce Trust Labs</div>
-          <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".66rem", color:C.muted, marginBottom:"1rem" }}>AI-Governed Commerce Infrastructure — Cumming, Georgia, USA</div>
+          <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".66rem", color:C.muted, marginBottom:"1rem" }}>AI-Governed Commerce Infrastructure — Atlanta, Georgia, USA</div>
           <div style={{ fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".64rem", color:"rgba(232,228,220,.18)", lineHeight:1.8, maxWidth:"42ch" }}>Commerce Trust Labs is an independent research and technology initiative focused on governance infrastructure for AI-driven commerce systems.</div>
         </div>
         <div style={{ textAlign:"right", fontFamily:"'DM Mono',monospace", fontSize:".66rem", lineHeight:2.4, minWidth:0, flex:"1 1 200px" }}>
