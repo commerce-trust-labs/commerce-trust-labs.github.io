@@ -373,12 +373,43 @@ const Interest = () => {
 
 /* ── RESEARCH ── */
 const Research = () => {
-  const pubs = [
-    { type:"Architecture", title:"Governance Control Plane Reference Architecture", desc:"Open reference architecture for AI-governed commerce systems — policy engine design, compliance orchestration, and settlement patterns.", link:"https://github.com/commerce-trust-labs/commerce-control-plane", linkLabel:"GitHub →" },
-    { type:"Whitepaper", title:"AI Commerce Governance Framework (2026)", desc:"A framework for certifying, monitoring, and constraining AI agent behavior in retail commerce environments at national scale.", link:null, linkLabel:"Forthcoming" },
-    { type:"Article", title:"Retry Storms in Distributed Commerce Infrastructure", desc:"Analysis of cascading failure patterns in high-volume retail systems and patterns for resilient distributed commerce infrastructure.", link:"#", linkLabel:"Read →" },
-    { type:"Framework", title:"AI-Agent Governance Framework for Retail Platforms", desc:"Behavioral constraint specifications, audit trail standards, and explainability requirements for AI agents in U.S. retail commerce.", link:null, linkLabel:"Forthcoming" },
-  ];
+const pubs = [
+  {
+    type: "Architecture",
+    title: "Governance Control Plane Reference Architecture",
+    desc: "Open reference architecture for AI-governed commerce systems — policy engine design, compliance orchestration, and settlement patterns.",
+    link: "https://github.com/commerce-trust-labs/commerce-control-plane",
+    linkLabel: "GitHub →"
+  },
+  {
+    type: "Whitepaper",
+    title: "AI Commerce Governance Framework (2026)",
+    desc: "A framework for certifying, monitoring, and constraining AI agent behavior in retail commerce environments at national scale.",
+    link: null,
+    linkLabel: "Forthcoming"
+  },
+  {
+    type: "Article",
+    title: "Retry Storms in Distributed Commerce Infrastructure",
+    desc: "Analysis of cascading failure patterns in high-volume retail systems and patterns for resilient distributed commerce infrastructure.",
+    link: "https://medium.com/@praneshsoma/retry-storms-139869b956e3",
+    linkLabel: "Read →"
+  },
+  {
+    type: "Article",
+    title: "AI Agents Are the New Bot Traffic — And Commerce Infrastructure Isn't Ready",
+    desc: "AI agents are beginning to generate machine-speed traffic across retail systems that were designed for human interaction. This article explores how agentic traffic can trigger retry storms, hidden automation loops, and cascading failures in commerce infrastructure—and why the next generation of retail platforms must build governance and control planes to stabilize the ecosystem.",
+    link: "https://medium.com/@praneshsoma/ai-agents-are-the-new-bot-traffic-and-commerce-infrastructure-isnt-ready-35e12e01158d",
+    linkLabel: "Read →"
+  },
+  {
+    type: "Framework",
+    title: "AI-Agent Governance Framework for Retail Platforms",
+    desc: "Behavioral constraint specifications, audit trail standards, and explainability requirements for AI agents in U.S. retail commerce.",
+    link: null,
+    linkLabel: "Forthcoming"
+  }
+];
   return (
       <section id="research" style={{ background:C.bg2, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
         <div style={inner({ padding:"6rem clamp(1rem, 5vw, 3rem)" })}>
