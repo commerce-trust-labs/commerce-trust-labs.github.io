@@ -159,8 +159,9 @@ const CompassGraphic = () => (
       <circle cx="240" cy="210" r="180" fill="url(#cg)"/>
       {[176,132,88].map((r,i)=>(<circle key={r} cx="240" cy="210" r={r} stroke="rgba(28,28,30,.1)" strokeWidth="1" strokeDasharray={i===2?"2 5":"1 0"}/>))}
       <circle cx="240" cy="210" r="44" fill="none" stroke="#d9631f" strokeWidth="1.2"/>
-      <text x="240" y="215" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="8" letterSpacing="1" fill="#d9631f">ECP</text>
-      {[["COMMERCE",0],["SDLC LOOP",90],["OPERATIONS",180],["POLICY",270]].map(([label,deg],i)=>{
+      <text x="240" y="212" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="6.2" letterSpacing=".5" fill="#d9631f">CONTROL</text>
+      <text x="240" y="220" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="6.2" letterSpacing=".5" fill="#d9631f">PLANE</text>
+      {[["COMMERCE",0],["ENGINEERING",90],["OPERATIONS",180],["POLICY",270]].map(([label,deg],i)=>{
         const r=176, rad=(deg-90)*Math.PI/180, x=240+r*Math.cos(rad), y=210+r*Math.sin(rad);
         return (<g key={i}>
           <circle cx={x} cy={y} r="4" fill={i%2===0?"#d9631f":"#7bafe0"} opacity="0.9"/>
@@ -230,7 +231,7 @@ const Nav = () => {
   const [solid, setSolid] = useState(false);
   const [active, setActive] = useState("");
   const [open, setOpen] = useState(false);
-  const links = [["story","Story"],["loop","Loop"],["context","Context"],["operations","Operations"],["ecp","Control Plane"],["research","Research"],["team","Founder"]];
+  const links = [["story","Story"],["loop","Delivery Loop"],["context","Context"],["operations","Operations"],["enterprise-control-plane","Control Plane"],["research","Research"],["team","Creator"]];
   useEffect(() => {
     const fn = () => setSolid(window.scrollY > 40);
     window.addEventListener("scroll", fn);
@@ -293,7 +294,7 @@ const Hero = () => {
             <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>Trusted Actions</em>
           </h1>
           <p style={{ ...a(260), fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:"clamp(1.15rem,1.8vw,1.5rem)", lineHeight:1.65, color:"rgba(28,28,30,.72)", maxWidth:"42ch", marginBottom:"3.2rem" }}>
-            A token is model-generated reasoning. A trusted action is what's left after it passes through context, policy, human approval, and verification. We build the plane in between.
+            Tokens carry model output. Trusted action emerges only when that output is grounded in authoritative context, evaluated by policy, authorized at the right risk level, executed through registered procedures, and verified with evidence. Commerce Trust Labs explores the control plane in between.
           </p>
           <div style={{ ...a(360), display:"flex", gap:"1.1rem", flexWrap:"wrap", justifyContent:"center", marginBottom:"5.5rem" }}>
             <a href="#story" className="pill">Read the Story →</a>
@@ -366,7 +367,7 @@ const Story = () => {
         </div>
         <Reveal delay={460}>
           <p style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontSize:"1.3rem", lineHeight:1.55, color:C.text, borderLeft:`3px solid ${C.accent}`, paddingLeft:"1.4rem" }}>
-            Making the planner smarter didn't make the system safe or deployable. The harder problem was converting AI reasoning into a governed, authorized, evidence-backed, auditable action — that shift is why Commerce Trust Labs exists.
+            A smarter planner did not make the system safe to operate. The harder problem was turning AI reasoning into an authorized, evidence-backed, auditable action. That shift—from intelligence alone to governed execution—is the purpose of Commerce Trust Labs.
           </p>
         </Reveal>
       </SplitSection>
@@ -383,14 +384,14 @@ const Loop = () => {
       <section id="loop" style={{ position:"relative", background:C.bg3, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
         <div style={inner({ padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
           <Reveal>
-            <Eyebrow>Governed Agentic SDLC</Eyebrow>
+            <Eyebrow>Governed Agentic Software Delivery</Eyebrow>
             <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.1rem,3.4vw,3.2rem)", fontWeight:800, lineHeight:1.06, letterSpacing:"-.035em", color:C.text, marginBottom:"1.8rem", maxWidth:"22ch" }}>
               An 11-stage delivery loop with evidence and human gates
             </h2>
           </Reveal>
           <Reveal delay={120}>
             <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:"1.08rem", lineHeight:1.85, color:"rgba(28,28,30,.66)", maxWidth:"68ch", marginBottom:"3.5rem" }}>
-              Enterprise software doesn't move from prompt to production in one step. The Governed Agentic SDLC Loop is the delivery workflow within the Engineering Confidence Platform: eleven stages coordinated by a supervisor that enforces stage-entry and stage-exit criteria. Downstream work cannot start on an artifact that has not been accepted, and four stages stop for a human.
+              Enterprise software should not move from prompt to production in one step. The Governed Agentic Software Development Life Cycle Loop is the delivery workflow within the Engineering Confidence Platform: eleven stages coordinated by a supervisor that enforces entry and exit criteria. Downstream work cannot begin until its input artifact is accepted, and architecture decisions, low-level design, change approval, and release stop for human judgment.
             </p>
           </Reveal>
           <Reveal delay={200}>
@@ -511,15 +512,15 @@ const Operations = () => {
   );
 };
 
-/* ── ECP ── */
-const Ecp = () => {
+/* ── ENTERPRISE CONTROL PLANE ── */
+const EnterpriseControlPlane = () => {
   const pillars = [
-    { title:"One plane, many consumers", body:"Agentic Commerce, the Engineering Confidence Platform, and Agentic Operations all read from — and write evidence back into — the same governed context and policy layer, instead of each building its own." },
+    { title:"One plane, multiple workflows", body:"Agentic Commerce, the Engineering Confidence Platform, and Agentic Operations use the same governed context, identity, policy, authorization, and evidence foundation instead of recreating trust controls inside every workflow." },
     { title:"Configurable at every scope", body:"Context and policy are defined at the organization, domain, application, repository, and workflow level, so governance doesn't mean copy-pasting the same rules into every agent prompt." },
     { title:"Trust is structural, not a score", body:"Trust comes from correct identity, fresh evidence, a registered procedure and action, a valid policy decision, human authorization, and a verified outcome — not from a model's confidence." },
   ];
   return (
-      <section id="ecp" style={{ position:"relative", background:C.bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
+      <section id="enterprise-control-plane" style={{ position:"relative", background:C.bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
         <div style={inner({ padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
           <div className="split-row" style={{ marginBottom:"4.5rem", alignItems:"center" }}>
             <div className="split-text">
@@ -532,7 +533,7 @@ const Ecp = () => {
               </Reveal>
               <Reveal delay={140}>
                 <p style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontSize:"clamp(1.3rem,1.9vw,1.7rem)", lineHeight:1.5, color:C.text, maxWidth:"34ch" }}>
-                  "Intelligence proposes; the control plane governs; enterprise systems execute; evidence proves the outcome."
+                  "Intelligence proposes; the Enterprise Control Plane governs; enterprise systems execute; evidence proves the outcome."
                 </p>
               </Reveal>
             </div>
@@ -558,8 +559,8 @@ const Ecp = () => {
 /* ── RESEARCH ── */
 const Research = () => {
   const pubs = [
-    { type:"Implementation", title:"agentic-sdlc-loop", desc:"The working reference implementation of the Governed Agentic SDLC Loop — supervisor orchestration, stage transitions, human gates, and evidence flow.", link:"https://github.com/PraneshSoma/agentic-sdlc-loop", linkLabel:"GitHub →" },
-    { type:"Reference Architecture", title:"loop-engineering", desc:"Architecture specifications for the same SDLC Loop — stage contracts, acceptance gates, traceability, and the audit model.", link:"https://github.com/PraneshSoma/loop-engineering", linkLabel:"GitHub →" },
+    { type:"Implementation", title:"agentic-sdlc-loop", desc:"A working reference implementation of the governed software-delivery loop, including supervisor orchestration, stage transitions, human gates, and evidence flow.", link:"https://github.com/PraneshSoma/agentic-sdlc-loop", linkLabel:"GitHub →" },
+    { type:"Reference Architecture", title:"loop-engineering", desc:"The companion reference architecture for the same delivery loop, covering stage contracts, acceptance gates, traceability, and the audit model.", link:"https://github.com/PraneshSoma/loop-engineering", linkLabel:"GitHub →" },
     { type:"Platform", title:"agentic-operations-platform", desc:"The Agentic Operations runtime — trigger, context assembly, diagnosis, policy, approval, execution, and verification.", link:null, linkLabel:"Private repository" },
     { type:"Article", title:"Retry Storms in Distributed Commerce Infrastructure", desc:"Analysis of cascading failure patterns in high-volume retail systems and patterns for resilient distributed commerce infrastructure.", link:"https://medium.com/@praneshsoma/retry-storms-139869b956e3", linkLabel:"Read →" },
     { type:"Article", title:"AI Agents Are the New Bot Traffic — And Commerce Infrastructure Isn't Ready", desc:"How agentic, machine-speed traffic triggers retry storms and cascading failures in commerce infrastructure built for human interaction — and why the next generation of retail platforms needs a governance and control plane.", link:"https://medium.com/@praneshsoma/ai-agents-are-the-new-bot-traffic-and-commerce-infrastructure-isnt-ready-35e12e01158d", linkLabel:"Read →" },
@@ -674,13 +675,13 @@ const Team = () => (
     <section id="team" style={{ position:"relative", background:C.bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
       <div style={inner({ position:"relative", zIndex:1, padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
         <Reveal>
-          <Eyebrow center>Origin</Eyebrow>
+          <Eyebrow center>Creator</Eyebrow>
           <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.1rem,3.4vw,3.2rem)", fontWeight:800, lineHeight:1.06, letterSpacing:"-.035em", color:C.text, textAlign:"center", maxWidth:"22ch", margin:"0 auto 1.2rem" }}>
             From commerce systems to{" "}
             <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>governed autonomy</em>
           </h2>
           <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:"1.08rem", lineHeight:1.75, color:C.muted, textAlign:"center", maxWidth:"62ch", margin:"0 auto" }}>
-            Commerce Trust Labs didn't begin as an AI company. It's the evolution of nearly two decades spent building enterprise commerce systems — the same instincts for control, evidence, and safe migration, transformed into the governed infrastructure that lets AI act on those systems.
+            Commerce Trust Labs did not begin with AI. It evolved from nearly two decades of building enterprise commerce systems—translating the same disciplines of control, evidence, resilience, and safe migration into governed infrastructure for AI-driven action.
           </p>
         </Reveal>
         <Milestones/>
@@ -696,12 +697,12 @@ const Team = () => (
             </div>
             <div style={{ minWidth:0, flex:"1 1 320px" }}>
               <h3 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(1.35rem,2.2vw,1.9rem)", fontWeight:800, lineHeight:1.14, letterSpacing:"-.035em", color:C.text, marginBottom:"1.6rem" }}>
-                The architect behind{" "}
-                <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>the transformation</em>
+                Experience transformed into{" "}
+                <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>reference architecture</em>
               </h3>
               {[
                 "Pranesh Soma is a distributed systems architect with close to two decades of experience designing large-scale enterprise commerce systems across cart, checkout, pricing, identity, platform traffic, modernization, and complex data migrations.",
-                "Commerce Trust Labs is where that experience became architecture — the planner/worker model behind Agentic Commerce, the Governed Agentic SDLC Loop within the Engineering Confidence Platform, the composite-context model, and the Agentic Operations runtime, unified through an Enterprise Control Plane between AI reasoning and enterprise action.",
+                "Commerce Trust Labs turns that experience into a connected body of independent research: the planner-and-worker model behind Agentic Commerce, the governed software-delivery loop within the Engineering Confidence Platform, the composite-context model, and the Agentic Operations runtime. The Enterprise Control Plane unifies them through shared context, policy, authorization, and evidence between AI reasoning and enterprise action.",
               ].map((para,i) => (
                   <p key={i} style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".95rem", lineHeight:1.85, color:"rgba(28,28,30,.64)", marginBottom:"1rem" }}>{para}</p>
               ))}
@@ -723,14 +724,14 @@ const Footer = () => (
           </div>
           <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".66rem", color:C.muted, marginBottom:"1rem" }}>Agentic Infrastructure for Enterprise Commerce — Atlanta, Georgia, USA</div>
           <div style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".72rem", color:"rgba(28,28,30,.38)", lineHeight:1.8, maxWidth:"62ch" }}>
-            Commerce Trust Labs is an independent personal research and engineering initiative building the governed context and control plane between AI reasoning and enterprise action. The views and reference architectures presented here are the creator's own, are not affiliated with or endorsed by any employer or client, and are limited to generalized, publicly shareable material.
+            Commerce Trust Labs is an independent personal research and engineering initiative exploring governed infrastructure between AI reasoning and enterprise action. The views, prototypes, and reference architectures are the creator's own; they are not affiliated with or endorsed by any employer or client and contain only generalized, publicly shareable material.
           </div>
         </div>
         <div style={{ textAlign:"right", fontFamily:"'DM Mono',monospace", fontSize:".7rem", lineHeight:2.4, minWidth:0, flex:"1 1 200px" }}>
           {[["commercetrustlabs.org","https://commercetrustlabs.org"],["github.com/PraneshSoma","https://github.com/PraneshSoma"],["contact@commercetrustlabs.org","mailto:contact@commercetrustlabs.org"]].map(([label,href]) => (
               <div key={label}><a href={href} className="fl">{label}</a></div>
           ))}
-          <div style={{ color:"rgba(28,28,30,.14)", marginTop:".5rem", fontSize:".62rem" }}>© 2025 Commerce Trust Labs. All rights reserved.</div>
+          <div style={{ color:"rgba(28,28,30,.14)", marginTop:".5rem", fontSize:".62rem" }}>© 2026 Commerce Trust Labs. All rights reserved.</div>
         </div>
       </div>
     </footer>
@@ -746,7 +747,7 @@ export default function App() {
         <Loop/>
         <ContextSection/>
         <Operations/>
-        <Ecp/>
+        <EnterpriseControlPlane/>
         <Research/>
         <Team/>
         <Footer/>
