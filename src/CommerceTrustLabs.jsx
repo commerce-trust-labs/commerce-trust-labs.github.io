@@ -648,21 +648,11 @@ const EngineeringNotes = () => {
       problem:"Repository structure, architecture decisions, business rules, runtime telemetry, ownership, policy, and prior outcomes were retrieved independently by each workflow. This increased response latency, duplicated interpretation, and allowed two agents to act from different versions of reality.",
       decision:"Treat context as a governed evidence product. Composite Context assembles claims from authoritative sources, preserves source and freshness metadata, resolves them at organization, domain, application, repository, and workflow scope, and exposes only the minimum evidence required by the current decision.",
       trace:["Resolve the acting identity and scope","Collect claims from authoritative connectors","Mark missing, stale, and conflicting evidence","Assemble a decision-specific context package","Persist accepted decisions and verified outcomes back into context"],
-      learned:"Shared context improved consistency, but evidence alone could not decide whether an agent was permitted to act. The architecture still needed a reusable model for confidence, policy, approval, and release readiness.",
-      next:"That constraint produced the Engineering Confidence Platform."
-    },
-    {
-      number:"04", era:"2026 · Engineering Confidence Platform",
-      title:"Confidence could not be another model-generated number",
-      lead:"Once AI participated in architecture and software delivery, the important question changed from “Is the answer convincing?” to “What evidence makes this change acceptable at this risk level?”",
-      problem:"A single confidence score hides why a decision is safe. High model certainty cannot compensate for stale context, an unapproved architecture change, missing tests, an unauthorized actor, or an action outside the registered release procedure.",
-      decision:"Define confidence structurally. A change earns progression through traceable requirements, accepted decisions, evidence completeness, policy evaluation, risk-tiered human gates, immutable execution intent, and outcome verification. The platform applies those controls at application and repository scope while the delivery loop performs the work.",
-      trace:["Evidence establishes what is known","Policy evaluates the proposed action","Risk determines the required authorization","The accepted plan becomes immutable intent","Verification proves the resulting system state"],
-      learned:"The same governed-action pattern was not limited to code. Production support had the identical trust problem—only with shorter timelines and a larger blast radius.",
+      learned:"Shared context improved consistency, but evidence alone could not decide whether an agent was permitted to act — it still needed identity, policy, authorization, and verification wrapped around it. That governed-action gap showed up most sharply in production support, where timelines are short and the blast radius is large.",
       next:"That constraint produced Agentic Operations."
     },
     {
-      number:"05", era:"2026 · Agentic Operations",
+      number:"04", era:"2026 · Agentic Operations",
       title:"A successful API call is not a resolved incident",
       lead:"Operational tickets appeared ideal for automation: detect a known symptom, run a standard procedure, and close the incident. The dangerous gap was everything between diagnosis and verified recovery.",
       problem:"An agent could select the wrong procedure, diagnose from incomplete telemetry, mutate a plan after approval, execute with broad credentials, or report success because an API returned 200—even while the customer-facing condition remained broken.",
@@ -672,7 +662,7 @@ const EngineeringNotes = () => {
       next:"That constraint produced the Enterprise Control Plane."
     },
     {
-      number:"06", era:"2026 · Enterprise Control Plane",
+      number:"05", era:"2026 · Enterprise Control Plane",
       title:"The architecture converged on one governed-action model",
       lead:"Agentic Commerce, software delivery, and production operations began as separate problems. Their implementations converged because every enterprise action must answer the same questions before it is trusted.",
       problem:"Who is acting? What authoritative facts support the decision? Is the proposed action registered? Which policy applies at this scope? Who must authorize it? What exactly was approved? Did execution produce the intended outcome?",
@@ -689,7 +679,7 @@ const EngineeringNotes = () => {
         <Reveal>
           <Eyebrow center>Engineering Notes · The Complete Arc</Eyebrow>
           <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.4rem,4.4vw,4.4rem)", fontWeight:800, lineHeight:1.02, letterSpacing:"-.045em", color:C.text, textAlign:"center", maxWidth:"17ch", margin:"0 auto 1.5rem" }}>
-            Six constraints. One evolving{" "}<em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>architecture</em>
+            Five constraints. One evolving{" "}<em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>architecture</em>
           </h2>
           <p style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.06rem", lineHeight:1.8, color:C.muted, textAlign:"center", maxWidth:"68ch", margin:"0 auto 3.5rem" }}>
             This work did not begin with a control plane diagram. Each architecture emerged because the previous one exposed a constraint it could not solve. Open a chapter to follow the problem, decision, execution trace, and the insight that led to the next system.
@@ -890,7 +880,7 @@ const Team = () => (
               </h3>
               {[
                 "Pranesh Soma is a distributed systems architect with close to two decades of experience designing large-scale enterprise commerce systems across cart, checkout, pricing, identity, platform traffic, modernization, and complex data migrations.",
-                "Commerce Trust Labs turns that experience into a connected body of independent research: the planner-and-worker model behind Agentic Commerce, the governed software-delivery loop within the Engineering Confidence Platform, the composite-context model, and the Agentic Operations runtime. The Enterprise Control Plane unifies them through shared context, policy, authorization, and evidence between AI reasoning and enterprise action.",
+                "Commerce Trust Labs turns that experience into a connected body of independent research: the planner-and-worker model behind Agentic Commerce, the governed software-delivery loop, the composite-context model, and the Agentic Operations runtime. The Enterprise Control Plane unifies them through shared context, policy, authorization, and evidence between AI reasoning and enterprise action.",
               ].map((para,i) => (
                   <p key={i} style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".95rem", lineHeight:1.85, color:"rgba(28,28,30,.64)", marginBottom:"1rem" }}>{para}</p>
               ))}
