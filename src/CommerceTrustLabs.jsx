@@ -285,66 +285,61 @@ const EngineeringArcGraphic = () => {
     ["07","ROADMAP","Token savings without evidence safety","Intelligence Control Plane"],
   ];
   return (
-    <div style={{ border:`1px solid ${C.border}`, borderRadius:"24px", overflow:"hidden", background:"rgba(255,255,255,.76)", marginBottom:"3.5rem" }}>
-      <div style={{ padding:"1.4rem 1.6rem", borderBottom:`1px solid ${C.border}`, display:"flex", justifyContent:"space-between", gap:"1rem", flexWrap:"wrap", alignItems:"center" }}>
+    <div style={{ marginBottom:"4rem" }}>
+      <div style={{ display:"flex", justifyContent:"space-between", gap:"1rem", flexWrap:"wrap", alignItems:"baseline", marginBottom:"2rem" }}>
         <div>
-          <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".58rem", letterSpacing:".16em", textTransform:"uppercase", color:C.accent, marginBottom:".35rem" }}>Not a product map · A decision trail</div>
-          <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1rem", fontWeight:750, color:C.text }}>Seven decisions that accumulated into an architecture</div>
+          <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".64rem", letterSpacing:".2em", textTransform:"uppercase", color:C.accent, marginBottom:".5rem" }}>Not a product map · A decision trail</div>
+          <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(1.2rem,1.8vw,1.5rem)", fontWeight:800, letterSpacing:"-.02em", color:C.text }}>Each constraint forced the next architecture</div>
         </div>
-        <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".58rem", letterSpacing:".1em", color:C.muted }}>2025 → ROADMAP</div>
+        <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".12em", color:C.muted, whiteSpace:"nowrap" }}>2025 &rarr; Roadmap</div>
       </div>
 
-      <div style={{ overflowX:"auto", padding:"2rem 1.5rem 2.4rem" }}>
-        <div style={{ minWidth:"1180px", display:"flex", alignItems:"stretch" }}>
-          {evolution.map(([n,date,observed,built],i)=>(
-            <div key={n} style={{ display:"flex", flex:"1 0 0", alignItems:"center" }}>
-              <div style={{ flex:"1 0 0", minHeight:"178px", border:`1px solid ${i===6?"rgba(47,111,176,.48)":C.border}`, borderTop:`3px solid ${i===6?C.blueHi:C.accent}`, borderRadius:"13px", padding:"1.15rem", background:i===6?"rgba(47,111,176,.055)":"#fff", display:"flex", flexDirection:"column" }}>
-                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", gap:".5rem", marginBottom:".85rem" }}>
-                  <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".61rem", color:i===6?C.blueHi:C.accent }}>{n}</span>
-                  <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".48rem", letterSpacing:".08em", color:"rgba(28,28,30,.38)", textAlign:"right" }}>{date}</span>
-                </div>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".48rem", letterSpacing:".1em", color:"rgba(28,28,30,.38)", marginBottom:".35rem" }}>OBSERVED</div>
-                <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".72rem", lineHeight:1.35, color:C.muted, minHeight:"2.1rem", marginBottom:".75rem" }}>{observed}</div>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".48rem", letterSpacing:".1em", color:i===6?C.blueHi:C.accent, marginBottom:".28rem" }}>BUILT</div>
-                <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".85rem", lineHeight:1.25, fontWeight:750, color:C.text }}>{built}</div>
-              </div>
-              {i<evolution.length-1 && <div style={{ width:"22px", flexShrink:0, textAlign:"center", color:C.accent, fontFamily:"'DM Mono',monospace", fontSize:".9rem" }}>→</div>}
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(185px, 1fr))", gap:"1.1rem" }}>
+        {evolution.map(([n,date,observed,built],i)=>{ const road=i===6; return (
+          <div key={n} style={{ border:`1px solid ${road?"rgba(47,111,176,.4)":C.border}`, borderTop:`3px solid ${road?C.blueHi:C.accent}`, borderRadius:"16px", background:road?"rgba(47,111,176,.05)":"#fff", padding:"1.6rem 1.4rem", display:"flex", flexDirection:"column" }}>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", gap:".5rem", marginBottom:"1.4rem" }}>
+              <span style={{ fontFamily:"'DM Mono',monospace", fontSize:"1.05rem", fontWeight:500, color:road?C.blueHi:C.accent }}>{n}</span>
+              <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".58rem", letterSpacing:".1em", color:"rgba(28,28,30,.42)" }}>{date}</span>
             </div>
-          ))}
-        </div>
+            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".56rem", letterSpacing:".16em", textTransform:"uppercase", color:"rgba(28,28,30,.42)", marginBottom:".45rem" }}>Observed</div>
+            <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".95rem", lineHeight:1.45, color:C.muted, flex:1, marginBottom:"1.3rem" }}>{observed}</div>
+            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".56rem", letterSpacing:".16em", textTransform:"uppercase", color:road?C.blueHi:C.accent, marginBottom:".4rem" }}>{road?"Roadmap":"Built"}</div>
+            <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.08rem", fontWeight:750, lineHeight:1.25, color:C.text }}>{built}</div>
+          </div>
+        ); })}
       </div>
 
-      <div style={{ borderTop:`1px solid ${C.border}`, padding:"2.2rem clamp(1.25rem,4vw,3rem) 2.8rem", background:C.bg2 }}>
-        <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".58rem", letterSpacing:".16em", textTransform:"uppercase", color:C.blueHi, marginBottom:"1.5rem", textAlign:"center" }}>The architecture that emerged</div>
-        <div style={{ maxWidth:"1000px", margin:"0 auto", display:"flex", flexDirection:"column", gap:".7rem" }}>
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(3,minmax(0,1fr))", gap:".7rem" }}>
-            {[["AGENTIC COMMERCE","Project-to-cart outcomes"],["GOVERNED AGENTIC SDLC","Evidence-gated delivery"],["AGENTIC OPERATIONS","Approved, verified remediation"]].map(([title,body])=>(
-              <div key={title} style={{ border:`1px solid ${C.border}`, borderRadius:"12px", background:"#fff", padding:"1.2rem", textAlign:"center" }}>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".61rem", letterSpacing:".07em", color:C.accent, marginBottom:".45rem" }}>{title}</div>
-                <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".76rem", lineHeight:1.5, color:C.muted }}>{body}</div>
+      <div style={{ border:`1px solid ${C.border}`, borderRadius:"20px", background:C.bg2, padding:"clamp(2rem,4vw,3.2rem)", marginTop:"1.4rem" }}>
+        <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".64rem", letterSpacing:".2em", textTransform:"uppercase", color:C.blueHi, marginBottom:"2rem", textAlign:"center" }}>The architecture that emerged</div>
+        <div style={{ maxWidth:"1040px", margin:"0 auto", display:"flex", flexDirection:"column", gap:".9rem" }}>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))", gap:".9rem" }}>
+            {[["Agentic Commerce","Project-to-cart outcomes"],["Governed Agentic SDLC","Evidence-gated delivery"],["Agentic Operations","Approved, verified remediation"]].map(([title,body])=>(
+              <div key={title} style={{ border:`1px solid ${C.border}`, borderRadius:"14px", background:"#fff", padding:"1.5rem", textAlign:"center" }}>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".1em", textTransform:"uppercase", color:C.accent, marginBottom:".6rem" }}>{title}</div>
+                <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".92rem", lineHeight:1.5, color:C.muted }}>{body}</div>
               </div>
             ))}
           </div>
-          <div style={{ textAlign:"center", height:"16px", color:"rgba(28,28,30,.3)", lineHeight:"16px" }}>↕</div>
-          <div style={{ border:"1px solid rgba(217,99,31,.34)", borderRadius:"12px", background:"rgba(217,99,31,.06)", padding:"1.15rem", textAlign:"center" }}>
-            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".66rem", letterSpacing:".1em", color:C.accent, marginBottom:".4rem" }}>COMPOSITE CONTEXT</div>
-            <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".78rem", color:C.muted }}>Business · application · repository · runtime · policy · history · verified outcomes</div>
+          <div style={{ textAlign:"center", color:"rgba(28,28,30,.32)", fontSize:"1.1rem" }}>&#8597;</div>
+          <div style={{ border:"1px solid rgba(217,99,31,.34)", borderRadius:"14px", background:"rgba(217,99,31,.06)", padding:"1.5rem", textAlign:"center" }}>
+            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".68rem", letterSpacing:".12em", textTransform:"uppercase", color:C.accent, marginBottom:".5rem" }}>Composite Context</div>
+            <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".92rem", color:C.muted }}>Business &middot; application &middot; repository &middot; runtime &middot; policy &middot; history &middot; verified outcomes</div>
           </div>
-          <div style={{ textAlign:"center", height:"16px", color:"rgba(28,28,30,.3)", lineHeight:"16px" }}>↕</div>
-          <div style={{ display:"grid", gridTemplateColumns:"minmax(0,.85fr) minmax(0,1.15fr)", gap:".7rem" }}>
-            <div style={{ border:`1px solid ${C.border}`, borderRadius:"12px", background:"#fff", padding:"1.15rem", textAlign:"center" }}>
-              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".61rem", letterSpacing:".07em", color:C.text, marginBottom:".4rem" }}>ENGINEERING CONFIDENCE PLATFORM</div>
-              <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".76rem", color:C.muted }}>Requirements · gates · confidence · release evidence</div>
+          <div style={{ textAlign:"center", color:"rgba(28,28,30,.32)", fontSize:"1.1rem" }}>&#8597;</div>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))", gap:".9rem" }}>
+            <div style={{ border:`1px solid ${C.border}`, borderRadius:"14px", background:"#fff", padding:"1.5rem", textAlign:"center" }}>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".1em", textTransform:"uppercase", color:C.text, marginBottom:".5rem" }}>Engineering Confidence Platform</div>
+              <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".92rem", color:C.muted }}>Requirements &middot; gates &middot; confidence &middot; release evidence</div>
             </div>
-            <div style={{ border:`1px solid ${C.border}`, borderRadius:"12px", background:C.text, padding:"1.15rem", textAlign:"center" }}>
-              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".61rem", letterSpacing:".07em", color:"#ed8a4d", marginBottom:".4rem" }}>ENTERPRISE CONTROL PLANE</div>
-              <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".76rem", color:"rgba(255,255,255,.62)" }}>Identity · policy · authorization · registered action · audit · verification</div>
+            <div style={{ border:`1px solid ${C.text}`, borderRadius:"14px", background:C.text, padding:"1.5rem", textAlign:"center" }}>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".1em", textTransform:"uppercase", color:"#ed8a4d", marginBottom:".5rem" }}>Enterprise Control Plane</div>
+              <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".92rem", color:"rgba(255,255,255,.66)" }}>Identity &middot; policy &middot; authorization &middot; registered action &middot; audit &middot; verification</div>
             </div>
           </div>
-          <div style={{ textAlign:"center", height:"16px", color:"rgba(28,28,30,.3)", lineHeight:"16px" }}>↓</div>
-          <div style={{ border:"1px dashed rgba(47,111,176,.55)", borderRadius:"12px", background:"rgba(47,111,176,.07)", padding:"1.15rem", textAlign:"center" }}>
-            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".64rem", letterSpacing:".08em", color:C.blueHi, marginBottom:".4rem" }}>ROADMAP · ENTERPRISE INTELLIGENCE CONTROL PLANE</div>
-            <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".77rem", color:C.muted }}>Context selection · model routing · tool path · token budget · quality-aware economics</div>
+          <div style={{ textAlign:"center", color:"rgba(28,28,30,.32)", fontSize:"1.1rem" }}>&darr;</div>
+          <div style={{ border:"1px dashed rgba(47,111,176,.55)", borderRadius:"14px", background:"rgba(47,111,176,.07)", padding:"1.5rem", textAlign:"center" }}>
+            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".64rem", letterSpacing:".12em", textTransform:"uppercase", color:C.blueHi, marginBottom:".5rem" }}>Roadmap &middot; Enterprise Intelligence Control Plane</div>
+            <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".92rem", color:C.muted }}>Context selection &middot; model routing &middot; tool path &middot; token budget &middot; quality-aware economics</div>
           </div>
         </div>
       </div>
