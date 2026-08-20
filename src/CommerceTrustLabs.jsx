@@ -274,6 +274,84 @@ const FlowGraphic = () => {
   );
 };
 
+const EngineeringArcGraphic = () => {
+  const evolution = [
+    ["01","MAR 2025","Content without a complete cart","Agentic Commerce"],
+    ["02","MAY 2026","A valuable loop bound to one assistant","Governed Agentic SDLC"],
+    ["03","2026","Every agent rebuilding the same reality","Composite Context"],
+    ["04","2026","Confidence without inspectable proof","Engineering Confidence Platform"],
+    ["05","AUG 2026","API success mistaken for recovery","Agentic Operations"],
+    ["06","AUG 2026","Trust controls repeated per workflow","Enterprise Control Plane"],
+    ["07","ROADMAP","Token savings without evidence safety","Intelligence Control Plane"],
+  ];
+  return (
+    <div style={{ border:`1px solid ${C.border}`, borderRadius:"24px", overflow:"hidden", background:"rgba(255,255,255,.76)", marginBottom:"3.5rem" }}>
+      <div style={{ padding:"1.4rem 1.6rem", borderBottom:`1px solid ${C.border}`, display:"flex", justifyContent:"space-between", gap:"1rem", flexWrap:"wrap", alignItems:"center" }}>
+        <div>
+          <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".58rem", letterSpacing:".16em", textTransform:"uppercase", color:C.accent, marginBottom:".35rem" }}>Not a product map · A decision trail</div>
+          <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1rem", fontWeight:750, color:C.text }}>Seven decisions that accumulated into an architecture</div>
+        </div>
+        <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".58rem", letterSpacing:".1em", color:C.muted }}>2025 → ROADMAP</div>
+      </div>
+
+      <div style={{ overflowX:"auto", padding:"2rem 1.5rem 2.4rem" }}>
+        <div style={{ minWidth:"1180px", display:"flex", alignItems:"stretch" }}>
+          {evolution.map(([n,date,observed,built],i)=>(
+            <div key={n} style={{ display:"flex", flex:"1 0 0", alignItems:"center" }}>
+              <div style={{ flex:"1 0 0", minHeight:"178px", border:`1px solid ${i===6?"rgba(47,111,176,.48)":C.border}`, borderTop:`3px solid ${i===6?C.blueHi:C.accent}`, borderRadius:"13px", padding:"1.15rem", background:i===6?"rgba(47,111,176,.055)":"#fff", display:"flex", flexDirection:"column" }}>
+                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", gap:".5rem", marginBottom:".85rem" }}>
+                  <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".61rem", color:i===6?C.blueHi:C.accent }}>{n}</span>
+                  <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".48rem", letterSpacing:".08em", color:"rgba(28,28,30,.38)", textAlign:"right" }}>{date}</span>
+                </div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".48rem", letterSpacing:".1em", color:"rgba(28,28,30,.38)", marginBottom:".35rem" }}>OBSERVED</div>
+                <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".72rem", lineHeight:1.35, color:C.muted, minHeight:"2.1rem", marginBottom:".75rem" }}>{observed}</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".48rem", letterSpacing:".1em", color:i===6?C.blueHi:C.accent, marginBottom:".28rem" }}>BUILT</div>
+                <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".85rem", lineHeight:1.25, fontWeight:750, color:C.text }}>{built}</div>
+              </div>
+              {i<evolution.length-1 && <div style={{ width:"22px", flexShrink:0, textAlign:"center", color:C.accent, fontFamily:"'DM Mono',monospace", fontSize:".9rem" }}>→</div>}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div style={{ borderTop:`1px solid ${C.border}`, padding:"2.2rem clamp(1.25rem,4vw,3rem) 2.8rem", background:C.bg2 }}>
+        <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".58rem", letterSpacing:".16em", textTransform:"uppercase", color:C.blueHi, marginBottom:"1.5rem", textAlign:"center" }}>The architecture that emerged</div>
+        <div style={{ maxWidth:"1000px", margin:"0 auto", display:"flex", flexDirection:"column", gap:".7rem" }}>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(3,minmax(0,1fr))", gap:".7rem" }}>
+            {[["AGENTIC COMMERCE","Project-to-cart outcomes"],["GOVERNED AGENTIC SDLC","Evidence-gated delivery"],["AGENTIC OPERATIONS","Approved, verified remediation"]].map(([title,body])=>(
+              <div key={title} style={{ border:`1px solid ${C.border}`, borderRadius:"12px", background:"#fff", padding:"1.2rem", textAlign:"center" }}>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".61rem", letterSpacing:".07em", color:C.accent, marginBottom:".45rem" }}>{title}</div>
+                <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".76rem", lineHeight:1.5, color:C.muted }}>{body}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{ textAlign:"center", height:"16px", color:"rgba(28,28,30,.3)", lineHeight:"16px" }}>↕</div>
+          <div style={{ border:"1px solid rgba(217,99,31,.34)", borderRadius:"12px", background:"rgba(217,99,31,.06)", padding:"1.15rem", textAlign:"center" }}>
+            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".66rem", letterSpacing:".1em", color:C.accent, marginBottom:".4rem" }}>COMPOSITE CONTEXT</div>
+            <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".78rem", color:C.muted }}>Business · application · repository · runtime · policy · history · verified outcomes</div>
+          </div>
+          <div style={{ textAlign:"center", height:"16px", color:"rgba(28,28,30,.3)", lineHeight:"16px" }}>↕</div>
+          <div style={{ display:"grid", gridTemplateColumns:"minmax(0,.85fr) minmax(0,1.15fr)", gap:".7rem" }}>
+            <div style={{ border:`1px solid ${C.border}`, borderRadius:"12px", background:"#fff", padding:"1.15rem", textAlign:"center" }}>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".61rem", letterSpacing:".07em", color:C.text, marginBottom:".4rem" }}>ENGINEERING CONFIDENCE PLATFORM</div>
+              <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".76rem", color:C.muted }}>Requirements · gates · confidence · release evidence</div>
+            </div>
+            <div style={{ border:`1px solid ${C.border}`, borderRadius:"12px", background:C.text, padding:"1.15rem", textAlign:"center" }}>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".61rem", letterSpacing:".07em", color:"#ed8a4d", marginBottom:".4rem" }}>ENTERPRISE CONTROL PLANE</div>
+              <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".76rem", color:"rgba(255,255,255,.62)" }}>Identity · policy · authorization · registered action · audit · verification</div>
+            </div>
+          </div>
+          <div style={{ textAlign:"center", height:"16px", color:"rgba(28,28,30,.3)", lineHeight:"16px" }}>↓</div>
+          <div style={{ border:"1px dashed rgba(47,111,176,.55)", borderRadius:"12px", background:"rgba(47,111,176,.07)", padding:"1.15rem", textAlign:"center" }}>
+            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".64rem", letterSpacing:".08em", color:C.blueHi, marginBottom:".4rem" }}>ROADMAP · ENTERPRISE INTELLIGENCE CONTROL PLANE</div>
+            <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".77rem", color:C.muted }}>Context selection · model routing · tool path · token budget · quality-aware economics</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const DocGraphic = () => (
     <svg viewBox="0 0 480 420" fill="none" style={{ width:"100%", height:"auto", display:"block" }}>
       <defs><radialGradient id="dg" cx="50%" cy="40%" r="55%"><stop offset="0%" stopColor="#d9631f" stopOpacity=".12"/><stop offset="100%" stopColor="#d9631f" stopOpacity="0"/></radialGradient></defs>
@@ -785,8 +863,18 @@ const EngineeringNotes = () => {
       problem:"Who is acting? What authoritative facts support the decision? Is the proposed action registered? Which policy applies at this scope? Who must authorize it? What exactly was approved? Did execution produce the intended outcome?",
       decision:"Place a reusable Enterprise Control Plane between probabilistic reasoning and deterministic enterprise systems. Composite Context supplies governed evidence. Identity, policy, and authorization determine whether an action may proceed. Registered procedures constrain execution. Verification feeds the observed outcome back into the context shared by commerce, engineering, and operations.",
       trace:["Models propose","Composite Context grounds","Policy and people authorize","Registered capabilities execute","Evidence verifies","Outcomes strengthen the next decision"],
-      learned:"The result is not a claim that every enterprise workflow is solved. It is a working architectural thesis: intelligence can vary by model and use case, while the infrastructure that converts reasoning into accountable action remains consistent.",
-      next:"Models produce tokens. Enterprises need trusted actions."
+      learned:"The result is not a claim that every enterprise workflow is solved. It is a working architectural thesis: intelligence can vary by model and use case, while the infrastructure that converts reasoning into accountable action remains consistent. But operating the loop exposed a new economic constraint: frontier models were repeatedly consuming large volumes of overlapping context even when only part of that evidence required expensive reasoning.",
+      next:"That constraint produced the Enterprise Intelligence Control Plane roadmap."
+    },
+    {
+      number:"07", era:"Roadmap · Enterprise Intelligence Control Plane",
+      title:"The next scarce resource is trustworthy intelligence per token",
+      lead:"Once context, policy, approval, execution, and verification were connected, the next question became economic: how can an enterprise provide every agent with sufficient evidence while avoiding repeated, indiscriminate use of the most expensive model and context window?",
+      problem:"Existing gateways can route providers, count tokens, cache prompts, and enforce budgets. They do not by themselves determine which evidence deserves tokens, whether excluded context contained a critical constraint, when a lower-cost model is sufficient, or whether optimization reduced the quality of the engineering outcome.",
+      decision:"Evolve the earlier reverse-proxy control-plane pattern into an Enterprise Intelligence Control Plane. Claude Code becomes the first client. A transparent intelligence data plane observes requests and establishes a baseline; Composite Context supplies curated evidence through MCP; deterministic hooks enforce task, repository, tool, and approval policy; and risk-aware routing selects context, models, tools, and token budgets. A thin evidence console makes every decision inspectable.",
+      trace:["Observe Claude Code sessions without changing behavior","Attribute tokens, cost, cache, latency, and retries to task and repository","Curate the smallest trustworthy context manifest through Composite Context","Enforce deterministic tool and risk policy through hooks","Route routine work economically and escalate when risk or uncertainty requires","Compare savings, latency, quality, and missed-evidence rate against the baseline"],
+      learned:"This remains a roadmap, not a completed-product claim. Its success criterion is deliberately harder than reducing spend: demonstrate that token and model optimization preserved required evidence, policy compliance, and outcome quality.",
+      next:"Use the least expensive capable intelligence—but make every context and routing decision provable."
     },
   ];
   return (
@@ -796,11 +884,14 @@ const EngineeringNotes = () => {
         <Reveal>
           <Eyebrow center>Engineering Notes · The Complete Arc</Eyebrow>
           <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.4rem,4.4vw,4.4rem)", fontWeight:800, lineHeight:1.02, letterSpacing:"-.045em", color:C.text, textAlign:"center", maxWidth:"17ch", margin:"0 auto 1.5rem" }}>
-            Six constraints. One evolving{" "}<em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>architecture</em>
+            Seven decisions. One accumulated{" "}<em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>architecture</em>
           </h2>
           <p style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.06rem", lineHeight:1.8, color:C.muted, textAlign:"center", maxWidth:"68ch", margin:"0 auto 3.5rem" }}>
-            This work did not begin with a control plane diagram. Each architecture emerged because the previous one exposed a constraint it could not solve. Open a chapter to follow the problem, decision, execution trace, and the insight that led to the next system.
+            This work did not begin with a control plane diagram. Each architecture emerged because the previous experiment exposed a constraint it could not solve. The individual mechanisms—context, policy, approval, gateways, and agent orchestration—are established patterns. The native contribution is the problem-driven sequence and their composition into one governed-action architecture. Open a chapter to follow the evidence trail.
           </p>
+        </Reveal>
+        <Reveal delay={80}>
+          <EngineeringArcGraphic/>
         </Reveal>
         <div className="note-grid">
           {notes.map((n,i)=>(
