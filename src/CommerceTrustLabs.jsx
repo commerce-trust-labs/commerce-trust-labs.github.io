@@ -693,7 +693,7 @@ const Team = () => (
                 <div style={{ position:"absolute", bottom:0, left:0, right:0, height:"3px", background:C.accent }}/>
               </div>
               <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.05rem", fontWeight:700, color:C.text, marginBottom:".3rem", textAlign:"center" }}>Pranesh Soma</div>
-              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".1em", textTransform:"uppercase", color:C.accent, textAlign:"center" }}>Founder &amp; Chief Architect</div>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".1em", textTransform:"uppercase", color:C.accent, textAlign:"center" }}>Creator &amp; Principal Architect</div>
             </div>
             <div style={{ minWidth:0, flex:"1 1 320px" }}>
               <h3 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(1.35rem,2.2vw,1.9rem)", fontWeight:800, lineHeight:1.14, letterSpacing:"-.035em", color:C.text, marginBottom:"1.6rem" }}>
@@ -701,7 +701,7 @@ const Team = () => (
                 <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>the transformation</em>
               </h3>
               {[
-                "Pranesh Soma is a distributed systems architect who spent close to two decades inside one of the largest retail platforms in the United States — building the cart, checkout, pricing, identity, and traffic-management systems that agentic infrastructure now has to plan around, and leading modernization programs from monolith-to-microservices cloud migrations to large graph-to-Cassandra data-parity transitions.",
+                "Pranesh Soma is a distributed systems architect with close to two decades of experience designing large-scale enterprise commerce systems across cart, checkout, pricing, identity, platform traffic, modernization, and complex data migrations.",
                 "Commerce Trust Labs is where that experience became architecture — the planner/worker model behind Agentic Commerce, the agentic SDLC loop, the composite-context model, the Agentic Operations runtime, and the Enterprise Context Plan that unifies them into a governed plane between AI reasoning and enterprise action.",
               ].map((para,i) => (
                   <p key={i} style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".95rem", lineHeight:1.85, color:"rgba(28,28,30,.64)", marginBottom:"1rem" }}>{para}</p>
@@ -723,7 +723,9 @@ const Footer = () => (
             <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.1rem", fontWeight:800, color:C.text }}>Commerce Trust Labs</div>
           </div>
           <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".66rem", color:C.muted, marginBottom:"1rem" }}>Agentic Infrastructure for Enterprise Commerce — Atlanta, Georgia, USA</div>
-          <div style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".72rem", color:"rgba(28,28,30,.22)", lineHeight:1.8, maxWidth:"42ch" }}>Commerce Trust Labs is an independent research and engineering initiative building the governed context and control plane between AI reasoning and enterprise action.</div>
+          <div style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".72rem", color:"rgba(28,28,30,.38)", lineHeight:1.8, maxWidth:"62ch" }}>
+            Commerce Trust Labs is an independent personal research and engineering initiative building the governed context and control plane between AI reasoning and enterprise action. The views and reference architectures presented here are the creator's own, are not affiliated with or endorsed by any employer or client, and are limited to generalized, publicly shareable material.
+          </div>
         </div>
         <div style={{ textAlign:"right", fontFamily:"'DM Mono',monospace", fontSize:".7rem", lineHeight:2.4, minWidth:0, flex:"1 1 200px" }}>
           {[["commercetrustlabs.org","https://commercetrustlabs.org"],["github.com/PraneshSoma","https://github.com/PraneshSoma"],["contact@commercetrustlabs.org","mailto:contact@commercetrustlabs.org"]].map(([label,href]) => (
