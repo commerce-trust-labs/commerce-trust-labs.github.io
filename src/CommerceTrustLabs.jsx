@@ -1,35 +1,951 @@
 import { useState } from "react";
 
-const C={ink:"#171719",muted:"#64646b",soft:"#f5f3ef",line:"rgba(23,23,25,.13)",orange:"#d95f1d",blue:"#2f6fb0"};
-const shell={maxWidth:"1240px",margin:"0 auto",padding:"0 clamp(1.25rem,5vw,3.5rem)"};
-const Style=()=> <style>{`
+const C = {
+  ink: "#171719",
+  muted: "#64646b",
+  soft: "#f5f3ef",
+  line: "rgba(23,23,25,.13)",
+  orange: "#d95f1d",
+  blue: "#2f6fb0",
+};
+const shell = {
+  maxWidth: "1240px",
+  margin: "0 auto",
+  padding: "0 clamp(1.25rem,5vw,3.5rem)",
+};
+const Style = () => (
+  <style>{`
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap');
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-2%,3%) scale(1.05)}}@keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(3%,-2%) scale(1.08)}}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:#171719;font-family:Manrope,sans-serif}.mono{font-family:'DM Mono',monospace}.serif{font-family:'Instrument Serif',serif}.eyebrow{font-family:'DM Mono',monospace;font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:#d95f1d;margin-bottom:1.2rem}.navlink{text-decoration:none;font-family:'DM Mono',monospace;font-size:.68rem;color:#64646b}.navlink:hover{color:#171719}.section{padding:clamp(5.5rem,9vw,8.5rem) 0}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2.5rem,7vw,7rem);align-items:center}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.card{border:1px solid rgba(23,23,25,.13);border-radius:18px;background:#fff}.btn{display:inline-flex;padding:.9rem 1.45rem;border-radius:999px;text-decoration:none;font-size:.82rem;font-weight:700;border:1px solid #171719;background:#171719;color:#fff}.btn.alt{background:transparent;color:#171719;border-color:rgba(23,23,25,.24)}.workflow{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem}.decision{display:grid;grid-template-columns:85px 1fr 25px 1fr;gap:1rem;align-items:center;padding:1.2rem 0;border-top:1px solid rgba(23,23,25,.13)}.decision:first-child{border-top:0}.road{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.13);border-radius:16px;overflow:hidden}.road>div{background:#1e1e21;padding:1.6rem}.mobile{display:none}.note summary{cursor:pointer;list-style:none}.note summary::-webkit-details-marker{display:none}.note[open] .plus{transform:rotate(45deg)}
 @media(max-width:850px){.desktop{display:none!important}.mobile{display:flex}.grid2,.grid3,.workflow,.road{grid-template-columns:1fr}.decision{grid-template-columns:62px 1fr}.decision .obs,.decision .built{grid-column:2}.decision .arr{display:none}.hero{font-size:clamp(3.2rem,14vw,5rem)!important}.section{padding:5.5rem 0}}
-`}</style>;
-const Eyebrow=({children})=><div className="eyebrow">{children}</div>;
-const H2=({children})=><h2 style={{fontSize:"clamp(2.3rem,4.8vw,4.2rem)",lineHeight:1.03,letterSpacing:"-.045em",margin:"0 0 1.4rem",maxWidth:"18ch"}}>{children}</h2>;
+@media(max-width:850px){.hero{font-size:clamp(2.8rem,12vw,4.2rem)!important}}
+`}</style>
+);
+const Eyebrow = ({ children }) => <div className="eyebrow">{children}</div>;
+const H2 = ({ children }) => (
+  <h2
+    style={{
+      fontSize: "clamp(2.3rem,4.8vw,4.2rem)",
+      lineHeight: 1.03,
+      letterSpacing: "-.045em",
+      margin: "0 0 1.4rem",
+      maxWidth: "18ch",
+    }}
+  >
+    {children}
+  </h2>
+);
 
-const Nav=()=>{const[open,setOpen]=useState(false),links=[["origin","Origin"],["turning","Turning point"],["architecture","Architecture"],["proof","Proof"],["decisions","Decision trail"],["roadmap","Roadmap"]];return <nav style={{position:"sticky",top:0,zIndex:20,background:"rgba(255,255,255,.92)",backdropFilter:"blur(14px)",borderBottom:`1px solid ${C.line}`}}><div style={{...shell,minHeight:72,display:"flex",alignItems:"center",justifyContent:"space-between",gap:"1rem"}}><a href="#top" style={{textDecoration:"none",color:C.ink,fontWeight:800,display:"flex",alignItems:"center",gap:10}}><span className="mono" style={{width:32,height:32,display:"grid",placeItems:"center",borderRadius:7,background:C.orange,color:"#fff",fontSize:11}}>CT</span>Commerce Trust Labs</a><div className="desktop" style={{display:"flex",gap:"1.4rem"}}>{links.map(([id,l])=><a key={id} className="navlink" href={`#${id}`}>{l}</a>)}</div><button className="mobile" onClick={()=>setOpen(!open)} aria-label="Toggle navigation" style={{background:"transparent",border:`1px solid ${C.line}`,borderRadius:8,padding:8}}>☰</button></div>{open&&<div className="mobile" style={{...shell,flexDirection:"column",gap:12,paddingBottom:16}}>{links.map(([id,l])=><a key={id} className="navlink" href={`#${id}`} onClick={()=>setOpen(false)}>{l}</a>)}</div>}</nav>};
+const Atmosphere = () => (
+  <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none" }}>
+    <div style={{ position: "absolute", width: "60%", paddingBottom: "60%", left: "-10%", top: "-15%", borderRadius: "50%", background: "rgba(217,95,29,.2)", filter: "blur(90px)", animation: "drift 22s ease-in-out infinite" }}/>
+    <div style={{ position: "absolute", width: "50%", paddingBottom: "50%", right: "-10%", top: "10%", borderRadius: "50%", background: "rgba(123,175,224,.14)", filter: "blur(100px)", animation: "drift2 26s ease-in-out infinite" }}/>
+    <div style={{ position: "absolute", inset: "-20%", backgroundImage: "linear-gradient(rgba(28,28,30,.045) 1px, transparent 1px),linear-gradient(90deg,rgba(28,28,30,.045) 1px,transparent 1px)", backgroundSize: "56px 56px", maskImage: "radial-gradient(ellipse 60% 50% at 50% 40%,black,transparent)", WebkitMaskImage: "radial-gradient(ellipse 60% 50% at 50% 40%,black,transparent)" }}/>
+  </div>
+);
 
-const Hero=()=> <header id="top" style={{minHeight:"calc(100vh - 72px)",display:"grid",alignItems:"center",background:"radial-gradient(circle at 76% 25%,rgba(47,111,176,.11),transparent 28%),radial-gradient(circle at 20% 78%,rgba(217,95,29,.12),transparent 30%)"}}><div style={{...shell,paddingTop:80,paddingBottom:80,textAlign:"center"}}><Eyebrow>Personal research · hands-on learning · working prototypes</Eyebrow><h1 className="hero" style={{fontSize:"clamp(4rem,8vw,7rem)",lineHeight:.96,letterSpacing:"-.055em",margin:"0 auto 2rem",maxWidth:"13ch"}}>AI can reason.<br/><em className="serif" style={{fontWeight:400,color:C.orange}}>The enterprise still has to decide whether it may act.</em></h1><p style={{fontSize:"clamp(1.08rem,1.7vw,1.35rem)",lineHeight:1.72,color:C.muted,maxWidth:760,margin:"0 auto 1.25rem"}}>Commerce Trust Labs is an independent personal research and engineering initiative created from my own learning, experiments, and reference implementations.</p><p style={{fontSize:"1rem",lineHeight:1.75,color:"rgba(23,23,25,.58)",maxWidth:720,margin:"0 auto 2.6rem"}}>It records how one architecture emerged while I explored agentic commerce, software delivery, and operations: authoritative context, policy, human authorization, controlled execution, and evidence of the outcome.</p><div style={{display:"flex",justifyContent:"center",gap:12,flexWrap:"wrap"}}><a className="btn" href="#origin">Follow the story →</a><a className="btn alt" href="#proof">See what is built</a></div><div className="mono" style={{fontSize:10,color:"rgba(23,23,25,.4)",marginTop:42}}>INDEPENDENT WORK · GENERALIZED ARCHITECTURE · NO EMPLOYER OR CLIENT SYSTEMS</div></div></header>;
+const Nav = () => {
+  const [open, setOpen] = useState(false),
+    links = [
+      ["origin", "Origin"],
+      ["turning", "Turning point"],
+      ["architecture", "Architecture"],
+      ["proof", "Proof"],
+      ["decisions", "Decision trail"],
+      ["roadmap", "Roadmap"],
+      ["creator", "Creator"],
+    ];
+  return (
+    <nav
+      style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 20,
+        background: "rgba(255,255,255,.92)",
+        backdropFilter: "blur(14px)",
+        borderBottom: `1px solid ${C.line}`,
+      }}
+    >
+      <div
+        style={{
+          ...shell,
+          minHeight: 72,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "1rem",
+        }}
+      >
+        <a
+          href="#top"
+          style={{
+            textDecoration: "none",
+            color: C.ink,
+            fontWeight: 800,
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+          }}
+        >
+          <span
+            className="mono"
+            style={{
+              width: 32,
+              height: 32,
+              display: "grid",
+              placeItems: "center",
+              borderRadius: 7,
+              background: C.orange,
+              color: "#fff",
+              fontSize: 11,
+            }}
+          >
+            CT
+          </span>
+          Commerce Trust Labs
+        </a>
+        <div className="desktop" style={{ display: "flex", gap: "1.4rem" }}>
+          {links.map(([id, l]) => (
+            <a key={id} className="navlink" href={`#${id}`}>
+              {l}
+            </a>
+          ))}
+        </div>
+        <button
+          className="mobile"
+          onClick={() => setOpen(!open)}
+          aria-label="Toggle navigation"
+          style={{
+            background: "transparent",
+            border: `1px solid ${C.line}`,
+            borderRadius: 8,
+            padding: 8,
+          }}
+        >
+          ☰
+        </button>
+      </div>
+      {open && (
+        <div
+          className="mobile"
+          style={{
+            ...shell,
+            flexDirection: "column",
+            gap: 12,
+            paddingBottom: 16,
+          }}
+        >
+          {links.map(([id, l]) => (
+            <a
+              key={id}
+              className="navlink"
+              href={`#${id}`}
+              onClick={() => setOpen(false)}
+            >
+              {l}
+            </a>
+          ))}
+        </div>
+      )}
+    </nav>
+  );
+};
 
-const Origin=()=> <section id="origin" className="section" style={{background:C.soft}}><div style={shell}><div className="grid2"><div><Eyebrow>March 2025 · The starting problem</Eyebrow><H2>Plenty of project content. <em className="serif" style={{fontWeight:400,color:C.orange}}>No complete project cart.</em></H2><p style={{fontSize:"1.05rem",lineHeight:1.85,color:C.muted}}>A customer could find a video, article, or project idea but still had to determine the steps, materials, tools, quantities, compatibility, and availability one product at a time. The first prototype asked whether specialized agents could turn the project outcome into a complete purchase.</p></div><div className="card" style={{padding:"1.8rem"}}><Eyebrow>Project-to-cart flow</Eyebrow>{[["Understand","Interpret the idea, video, article, or link"],["Plan","Derive steps, materials, quantities, and constraints"],["Match","Resolve catalog products, substitutes, and availability"],["Complete","Create the cart and surface marketplace options"],["Learn","Return catalog gaps as merchandising signals"]].map(([t,d],i)=><div key={t} style={{display:"grid",gridTemplateColumns:"25px 85px 1fr",gap:12,padding:".8rem 0",borderTop:i?`1px solid ${C.line}`:"none"}}><span className="mono" style={{fontSize:10,color:C.orange}}>{i+1}</span><strong style={{fontSize:13}}>{t}</strong><span style={{fontSize:12.5,lineHeight:1.55,color:C.muted}}>{d}</span></div>)}</div></div></div></section>;
+const Hero = () => (
+  <header
+    id="top"
+    style={{
+      position: "relative",
+      minHeight: "calc(100vh - 72px)",
+      display: "grid",
+      alignItems: "center",
+      overflow: "hidden",
+    }}
+  >
+    <Atmosphere />
+    <div
+      style={{
+        ...shell,
+        position: "relative",
+        zIndex: 1,
+        paddingTop: 80,
+        paddingBottom: 80,
+        textAlign: "center",
+      }}
+    >
+      <Eyebrow>
+        Personal research · hands-on learning · working prototypes
+      </Eyebrow>
+      <h1
+        className="hero"
+        style={{
+          fontSize: "clamp(3rem,6vw,5.7rem)",
+          fontWeight: 700,
+          lineHeight: 1,
+          letterSpacing: "-.045em",
+          margin: "0 auto 2rem",
+          maxWidth: "13ch",
+        }}
+      >
+        AI can reason.
+        <br />
+        <em className="serif" style={{ fontWeight: 400, color: C.orange }}>
+          The enterprise still has to decide whether it may act.
+        </em>
+      </h1>
+      <p
+        style={{
+          fontSize: "clamp(1.08rem,1.7vw,1.35rem)",
+          lineHeight: 1.72,
+          color: C.muted,
+          maxWidth: 760,
+          margin: "0 auto 1.25rem",
+        }}
+      >
+        Commerce Trust Labs is an independent personal research and engineering
+        initiative created from my own learning, experiments, and reference
+        implementations.
+      </p>
+      <p
+        style={{
+          fontSize: "1rem",
+          lineHeight: 1.75,
+          color: "rgba(23,23,25,.58)",
+          maxWidth: 720,
+          margin: "0 auto 2.6rem",
+        }}
+      >
+        It records how one architecture emerged while I explored agentic
+        commerce, software delivery, and operations: authoritative context,
+        policy, human authorization, controlled execution, and evidence of the
+        outcome.
+      </p>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: 12,
+          flexWrap: "wrap",
+        }}
+      >
+        <a className="btn" href="#origin">
+          Follow the story →
+        </a>
+        <a className="btn alt" href="#proof">
+          See what is built
+        </a>
+      </div>
+      <div
+        className="mono"
+        style={{ fontSize: 10, color: "rgba(23,23,25,.4)", marginTop: 42 }}
+      >
+        INDEPENDENT WORK · GENERALIZED ARCHITECTURE · NO EMPLOYER OR CLIENT
+        SYSTEMS
+      </div>
+    </div>
+  </header>
+);
 
-const Turning=()=> <section id="turning" className="section"><div style={shell}><Eyebrow>The turning point</Eyebrow><H2>The hard problem was not smarter agents. <em className="serif" style={{fontWeight:400,color:C.orange}}>It was trusting what happened next.</em></H2><p style={{fontSize:"1.06rem",lineHeight:1.85,color:C.muted,maxWidth:760,marginBottom:42}}>Multi-agent orchestration worked, but it revealed three constraints that model intelligence could not solve.</p><div className="grid3">{[["Memory","Agents repeatedly reconstructed decisions, constraints, and evidence."],["Authority","A plausible plan did not establish whether an agent was permitted to execute."],["Outcome","A successful tool call did not prove that the intended state was reached."]].map(([t,d],i)=><div className="card" style={{padding:28}} key={t}><span className="mono" style={{fontSize:10,color:C.orange}}>0{i+1}</span><h3 style={{fontSize:22,margin:"20px 0 10px"}}>{t}</h3><p style={{fontSize:14,lineHeight:1.75,color:C.muted,margin:0}}>{d}</p></div>)}</div><p className="serif" style={{fontStyle:"italic",fontSize:"clamp(1.45rem,2.5vw,2rem)",lineHeight:1.5,maxWidth:820,margin:"3.5rem 0 0",borderLeft:`3px solid ${C.orange}`,paddingLeft:22}}>The work changed from “build a better agent” to “build the governed infrastructure between reasoning and action.”</p></div></section>;
+const Origin = () => (
+  <section id="origin" className="section" style={{ background: C.soft }}>
+    <div style={shell}>
+      <div className="grid2">
+        <div>
+          <Eyebrow>March 2025 · The starting problem</Eyebrow>
+          <H2>
+            Plenty of project content.{" "}
+            <em className="serif" style={{ fontWeight: 400, color: C.orange }}>
+              No complete project cart.
+            </em>
+          </H2>
+          <p style={{ fontSize: "1.05rem", lineHeight: 1.85, color: C.muted }}>
+            A customer could find a video, article, or project idea but still
+            had to determine the steps, materials, tools, quantities,
+            compatibility, and availability one product at a time. The first
+            prototype asked whether specialized agents could turn the project
+            outcome into a complete purchase.
+          </p>
+        </div>
+        <div className="card" style={{ padding: "1.8rem" }}>
+          <Eyebrow>Project-to-cart flow</Eyebrow>
+          {[
+            ["Understand", "Interpret the idea, video, article, or link"],
+            ["Plan", "Derive steps, materials, quantities, and constraints"],
+            [
+              "Match",
+              "Resolve catalog products, substitutes, and availability",
+            ],
+            ["Complete", "Create the cart and surface marketplace options"],
+            ["Learn", "Return catalog gaps as merchandising signals"],
+          ].map(([t, d], i) => (
+            <div
+              key={t}
+              style={{
+                display: "grid",
+                gridTemplateColumns: "25px 85px 1fr",
+                gap: 12,
+                padding: ".8rem 0",
+                borderTop: i ? `1px solid ${C.line}` : "none",
+              }}
+            >
+              <span className="mono" style={{ fontSize: 10, color: C.orange }}>
+                {i + 1}
+              </span>
+              <strong style={{ fontSize: 13 }}>{t}</strong>
+              <span
+                style={{ fontSize: 12.5, lineHeight: 1.55, color: C.muted }}
+              >
+                {d}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+);
 
-const Architecture=()=> <section id="architecture" className="section" style={{background:C.soft}}><div style={shell}><div style={{textAlign:"center",maxWidth:790,margin:"0 auto 3.5rem"}}><Eyebrow>One architecture</Eyebrow><h2 style={{fontSize:"clamp(2.5rem,5vw,4.6rem)",lineHeight:1.02,letterSpacing:"-.045em",margin:"0 0 1.2rem"}}>Different workflows. <em className="serif" style={{fontWeight:400,color:C.orange}}>The same trust model.</em></h2><p style={{color:C.muted,lineHeight:1.8}}>The individual mechanisms are established. The contribution is the problem-driven sequence and their composition into one reusable governed-action architecture.</p></div><div style={{maxWidth:980,margin:"0 auto",display:"grid",gap:10}}><div className="workflow">{[["Agentic Commerce","Project-to-cart outcomes"],["Governed Agentic SDLC","Evidence-gated delivery"],["Agentic Operations","Approved, verified remediation"]].map(([t,d])=><div className="card" style={{padding:20,textAlign:"center"}} key={t}><strong style={{fontSize:14}}>{t}</strong><div style={{fontSize:12,color:C.muted,marginTop:6}}>{d}</div></div>)}</div><div style={{textAlign:"center",color:"rgba(23,23,25,.35)"}}>↕</div><Layer title="COMPOSITE CONTEXT" body="Business · application · repository · runtime · policy · history · verified outcomes" accent/><div style={{textAlign:"center",color:"rgba(23,23,25,.35)"}}>↕</div><Layer title="ENTERPRISE CONTROL PLANE" body="Identity → context → registered action → policy → authorization → immutable intent → controlled execution → verification" dark/><div className="grid2" style={{gap:10}}><Layer title="ENGINEERING CONFIDENCE PLATFORM" body="The engineering application of the control model"/><Layer title="ROADMAP · INTELLIGENCE CONTROL PLANE" body="Context, model, tool, risk, and token economics" roadmap/></div></div></div></section>;
-const Layer=({title,body,dark,accent,roadmap})=><div className="card" style={{padding:20,textAlign:"center",background:dark?C.ink:accent?"rgba(217,95,29,.055)":"#fff",color:dark?"#fff":C.ink,borderColor:accent?"rgba(217,95,29,.4)":roadmap?"rgba(47,111,176,.5)":C.line,borderStyle:roadmap?"dashed":"solid"}}><strong className="mono" style={{fontSize:11,color:dark?"#ed8a4d":roadmap?C.blue:accent?C.orange:C.ink}}>{title}</strong><div style={{fontSize:12,color:dark?"rgba(255,255,255,.62)":C.muted,marginTop:7}}>{body}</div></div>;
+const Turning = () => (
+  <section id="turning" className="section">
+    <div style={shell}>
+      <Eyebrow>The turning point</Eyebrow>
+      <H2>
+        The hard problem was not smarter agents.{" "}
+        <em className="serif" style={{ fontWeight: 400, color: C.orange }}>
+          It was trusting what happened next.
+        </em>
+      </H2>
+      <p
+        style={{
+          fontSize: "1.06rem",
+          lineHeight: 1.85,
+          color: C.muted,
+          maxWidth: 760,
+          marginBottom: 42,
+        }}
+      >
+        Multi-agent orchestration worked, but it revealed three constraints that
+        model intelligence could not solve.
+      </p>
+      <div className="grid3">
+        {[
+          [
+            "Memory",
+            "Agents repeatedly reconstructed decisions, constraints, and evidence.",
+          ],
+          [
+            "Authority",
+            "A plausible plan did not establish whether an agent was permitted to execute.",
+          ],
+          [
+            "Outcome",
+            "A successful tool call did not prove that the intended state was reached.",
+          ],
+        ].map(([t, d], i) => (
+          <div className="card" style={{ padding: 28 }} key={t}>
+            <span className="mono" style={{ fontSize: 10, color: C.orange }}>
+              0{i + 1}
+            </span>
+            <h3 style={{ fontSize: 22, margin: "20px 0 10px" }}>{t}</h3>
+            <p
+              style={{
+                fontSize: 14,
+                lineHeight: 1.75,
+                color: C.muted,
+                margin: 0,
+              }}
+            >
+              {d}
+            </p>
+          </div>
+        ))}
+      </div>
+      <p
+        className="serif"
+        style={{
+          fontStyle: "italic",
+          fontSize: "clamp(1.45rem,2.5vw,2rem)",
+          lineHeight: 1.5,
+          maxWidth: 820,
+          margin: "3.5rem 0 0",
+          borderLeft: `3px solid ${C.orange}`,
+          paddingLeft: 22,
+        }}
+      >
+        The work changed from “build a better agent” to “build the governed
+        infrastructure between reasoning and action.”
+      </p>
+    </div>
+  </section>
+);
 
-const Proof=()=>{const p=[["Working implementation","Governed Agentic SDLC","A supervisor-led state machine from discovery through architecture, build, review, and release—with persisted state, evidence, and human gates.","https://github.com/PraneshSoma/agentic-sdlc-loop","Inspect implementation →"],["Reference architecture","Loop Engineering","Stage contracts, acceptance gates, traceability, and the operating structure tested by reproducing a valuable Claude workflow in GitHub Copilot.","https://github.com/PraneshSoma/loop-engineering","Review architecture →"],["Working prototype","Agentic Operations","A synthetic incident moves through procedure matching, evidence-grounded diagnosis, frozen plan, policy, approval, scoped execution, and verification.",null,"Private prototype"]];return <section id="proof" className="section"><div style={shell}><Eyebrow>Working proof</Eyebrow><H2>Architecture is credible when <em className="serif" style={{fontWeight:400,color:C.orange}}>something runs.</em></H2><p style={{color:C.muted,lineHeight:1.8,maxWidth:720,marginBottom:42}}>These are reference implementations and synthetic prototypes—not production-deployment claims.</p><div className="grid3">{p.map(([s,t,d,l,a])=><div className="card" style={{padding:28,display:"flex",flexDirection:"column"}} key={t}><span className="mono" style={{fontSize:9,letterSpacing:".1em",color:C.blue}}>{s.toUpperCase()}</span><h3 style={{fontSize:21,margin:"20px 0 10px"}}>{t}</h3><p style={{fontSize:14,lineHeight:1.75,color:C.muted,margin:"0 0 20px"}}>{d}</p>{l?<a className="navlink" style={{color:C.orange,marginTop:"auto"}} href={l} target="_blank" rel="noreferrer">{a}</a>:<span className="mono" style={{fontSize:10,color:C.muted,marginTop:"auto"}}>{a}</span>}</div>)}</div></div></section>};
+const Architecture = () => (
+  <section id="architecture" className="section" style={{ background: C.soft }}>
+    <div style={shell}>
+      <div
+        style={{ textAlign: "center", maxWidth: 790, margin: "0 auto 3.5rem" }}
+      >
+        <Eyebrow>One architecture</Eyebrow>
+        <h2
+          style={{
+            fontSize: "clamp(2.5rem,5vw,4.6rem)",
+            lineHeight: 1.02,
+            letterSpacing: "-.045em",
+            margin: "0 0 1.2rem",
+          }}
+        >
+          Different workflows.{" "}
+          <em className="serif" style={{ fontWeight: 400, color: C.orange }}>
+            The same trust model.
+          </em>
+        </h2>
+        <p style={{ color: C.muted, lineHeight: 1.8 }}>
+          The individual mechanisms are established. The contribution is the
+          problem-driven sequence and their composition into one reusable
+          governed-action architecture.
+        </p>
+      </div>
+      <div
+        style={{ maxWidth: 980, margin: "0 auto", display: "grid", gap: 10 }}
+      >
+        <div className="workflow">
+          {[
+            ["Agentic Commerce", "Project-to-cart outcomes"],
+            ["Governed Agentic SDLC", "Evidence-gated delivery"],
+            ["Agentic Operations", "Approved, verified remediation"],
+          ].map(([t, d]) => (
+            <div
+              className="card"
+              style={{ padding: 20, textAlign: "center" }}
+              key={t}
+            >
+              <strong style={{ fontSize: 14 }}>{t}</strong>
+              <div style={{ fontSize: 12, color: C.muted, marginTop: 6 }}>
+                {d}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div style={{ textAlign: "center", color: "rgba(23,23,25,.35)" }}>
+          ↕
+        </div>
+        <Layer
+          title="COMPOSITE CONTEXT"
+          body="Business · application · repository · runtime · policy · history · verified outcomes"
+          accent
+        />
+        <div style={{ textAlign: "center", color: "rgba(23,23,25,.35)" }}>
+          ↕
+        </div>
+        <Layer
+          title="ENTERPRISE CONTROL PLANE"
+          body="Identity → context → registered action → policy → authorization → immutable intent → controlled execution → verification"
+          dark
+        />
+        <div className="grid2" style={{ gap: 10 }}>
+          <Layer
+            title="ENGINEERING CONFIDENCE PLATFORM"
+            body="The engineering application of the control model"
+          />
+          <Layer
+            title="ROADMAP · INTELLIGENCE CONTROL PLANE"
+            body="Context, model, tool, risk, and token economics"
+            roadmap
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+);
+const Layer = ({ title, body, dark, accent, roadmap }) => (
+  <div
+    className="card"
+    style={{
+      padding: 20,
+      textAlign: "center",
+      background: dark ? C.ink : accent ? "rgba(217,95,29,.055)" : "#fff",
+      color: dark ? "#fff" : C.ink,
+      borderColor: accent
+        ? "rgba(217,95,29,.4)"
+        : roadmap
+          ? "rgba(47,111,176,.5)"
+          : C.line,
+      borderStyle: roadmap ? "dashed" : "solid",
+    }}
+  >
+    <strong
+      className="mono"
+      style={{
+        fontSize: 11,
+        color: dark ? "#ed8a4d" : roadmap ? C.blue : accent ? C.orange : C.ink,
+      }}
+    >
+      {title}
+    </strong>
+    <div
+      style={{
+        fontSize: 12,
+        color: dark ? "rgba(255,255,255,.62)" : C.muted,
+        marginTop: 7,
+      }}
+    >
+      {body}
+    </div>
+  </div>
+);
 
-const Decisions=()=>{const rows=[["MAR 2025","Project content without a complete cart","Agentic Commerce"],["MAY 2026","A valuable loop bound to one assistant","Governed Agentic SDLC"],["2026","Every agent reconstructing the same reality","Composite Context"],["2026","Confidence without inspectable proof","Engineering Confidence Platform"],["AUG 2026","API success mistaken for recovery","Agentic Operations"],["AUG 2026","Trust controls repeated per workflow","Enterprise Control Plane"],["ROADMAP","Token savings without evidence safety","Enterprise Intelligence Control Plane"]];return <section id="decisions" className="section" style={{background:C.soft}}><div style={shell}><Eyebrow>Decision trail</Eyebrow><H2>Not a product map. <em className="serif" style={{fontWeight:400,color:C.orange}}>A record of what each experiment exposed.</em></H2><p style={{color:C.muted,lineHeight:1.8,maxWidth:720,marginBottom:35}}>The architecture was not designed all at once. Each decision exists because the previous system exposed a constraint it could not solve.</p><div className="card" style={{padding:"1rem clamp(1rem,3vw,2rem)"}}>{rows.map(([date,o,b],i)=><div className="decision" key={date+b}><span className="mono" style={{fontSize:9,color:i===6?C.blue:C.orange}}>{date}</span><span className="obs"><span className="mono" style={{fontSize:8,color:"rgba(23,23,25,.4)"}}>OBSERVED</span><br/><strong style={{fontSize:13,color:C.muted}}>{o}</strong></span><span className="arr" style={{color:C.orange}}>→</span><span className="built"><span className="mono" style={{fontSize:8,color:i===6?C.blue:C.orange}}>{i===6?"TESTING":"BUILT"}</span><br/><strong style={{fontSize:14}}>{b}</strong></span></div>)}</div></div></section>};
+const Proof = () => {
+  const p = [
+    [
+      "Working implementation",
+      "Governed Agentic SDLC",
+      "A supervisor-led state machine from discovery through architecture, build, review, and release—with persisted state, evidence, and human gates.",
+      "https://github.com/PraneshSoma/agentic-sdlc-loop",
+      "Inspect implementation →",
+    ],
+    [
+      "Reference architecture",
+      "Loop Engineering",
+      "Stage contracts, acceptance gates, traceability, and the operating structure tested by reproducing a valuable Claude workflow in GitHub Copilot.",
+      "https://github.com/PraneshSoma/loop-engineering",
+      "Review architecture →",
+    ],
+    [
+      "Working prototype",
+      "Agentic Operations",
+      "A synthetic incident moves through procedure matching, evidence-grounded diagnosis, frozen plan, policy, approval, scoped execution, and verification.",
+      null,
+      "Private prototype",
+    ],
+  ];
+  return (
+    <section id="proof" className="section">
+      <div style={shell}>
+        <Eyebrow>Working proof</Eyebrow>
+        <H2>
+          Architecture is credible when{" "}
+          <em className="serif" style={{ fontWeight: 400, color: C.orange }}>
+            something runs.
+          </em>
+        </H2>
+        <p
+          style={{
+            color: C.muted,
+            lineHeight: 1.8,
+            maxWidth: 720,
+            marginBottom: 42,
+          }}
+        >
+          These are reference implementations and synthetic prototypes—not
+          production-deployment claims.
+        </p>
+        <div className="grid3">
+          {p.map(([s, t, d, l, a]) => (
+            <div
+              className="card"
+              style={{ padding: 28, display: "flex", flexDirection: "column" }}
+              key={t}
+            >
+              <span
+                className="mono"
+                style={{ fontSize: 9, letterSpacing: ".1em", color: C.blue }}
+              >
+                {s.toUpperCase()}
+              </span>
+              <h3 style={{ fontSize: 21, margin: "20px 0 10px" }}>{t}</h3>
+              <p
+                style={{
+                  fontSize: 14,
+                  lineHeight: 1.75,
+                  color: C.muted,
+                  margin: "0 0 20px",
+                }}
+              >
+                {d}
+              </p>
+              {l ? (
+                <a
+                  className="navlink"
+                  style={{ color: C.orange, marginTop: "auto" }}
+                  href={l}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {a}
+                </a>
+              ) : (
+                <span
+                  className="mono"
+                  style={{ fontSize: 10, color: C.muted, marginTop: "auto" }}
+                >
+                  {a}
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
-const Roadmap=()=> <section id="roadmap" className="section" style={{background:C.ink,color:"#fff"}}><div style={shell}><Eyebrow>Roadmap · Next experiment</Eyebrow><H2>Use the least expensive capable intelligence. <em className="serif" style={{fontWeight:400,color:"#ed8a4d"}}>Prove quality survived.</em></H2><p style={{color:"rgba(255,255,255,.62)",lineHeight:1.8,maxWidth:760,marginBottom:42}}>Claude Code will be the first client. The objective is not fewer tokens alone; it is optimization with an auditable record of what was included, excluded, routed, and verified.</p><div className="road">{[["01 · Observe","Transparent gateway","Establish token, cost, latency, cache, retry, and quality baselines."],["02 · Curate","Composite Context via MCP","Select the smallest trustworthy evidence package and record why."],["03 · Govern","Deterministic hooks","Enforce repository, tool, risk, approval, and validation policy."],["04 · Optimize","Risk-aware routing","Escalate only when evidence, uncertainty, or risk justifies it."]].map(([n,t,d])=><div key={n}><span className="mono" style={{fontSize:9,color:"#ed8a4d"}}>{n}</span><h3 style={{fontSize:17,margin:"15px 0 9px"}}>{t}</h3><p style={{fontSize:13,lineHeight:1.7,color:"rgba(255,255,255,.52)",margin:0}}>{d}</p></div>)}</div></div></section>;
+const Decisions = () => {
+  const rows = [
+    ["MAR 2025", "Project content without a complete cart", "Agentic Commerce"],
+    [
+      "MAY 2026",
+      "A valuable loop bound to one assistant",
+      "Governed Agentic SDLC",
+    ],
+    [
+      "2026",
+      "Every agent reconstructing the same reality",
+      "Composite Context",
+    ],
+    [
+      "2026",
+      "Confidence without inspectable proof",
+      "Engineering Confidence Platform",
+    ],
+    ["AUG 2026", "API success mistaken for recovery", "Agentic Operations"],
+    [
+      "AUG 2026",
+      "Trust controls repeated per workflow",
+      "Enterprise Control Plane",
+    ],
+    [
+      "ROADMAP",
+      "Token savings without evidence safety",
+      "Enterprise Intelligence Control Plane",
+    ],
+  ];
+  return (
+    <section id="decisions" className="section" style={{ background: C.soft }}>
+      <div style={shell}>
+        <Eyebrow>Decision trail</Eyebrow>
+        <H2>
+          Not a product map.{" "}
+          <em className="serif" style={{ fontWeight: 400, color: C.orange }}>
+            A record of what each experiment exposed.
+          </em>
+        </H2>
+        <p
+          style={{
+            color: C.muted,
+            lineHeight: 1.8,
+            maxWidth: 720,
+            marginBottom: 35,
+          }}
+        >
+          The architecture was not designed all at once. Each decision exists
+          because the previous system exposed a constraint it could not solve.
+        </p>
+        <div className="card" style={{ padding: "1rem clamp(1rem,3vw,2rem)" }}>
+          {rows.map(([date, o, b], i) => (
+            <div className="decision" key={date + b}>
+              <span
+                className="mono"
+                style={{ fontSize: 9, color: i === 6 ? C.blue : C.orange }}
+              >
+                {date}
+              </span>
+              <span className="obs">
+                <span
+                  className="mono"
+                  style={{ fontSize: 8, color: "rgba(23,23,25,.4)" }}
+                >
+                  OBSERVED
+                </span>
+                <br />
+                <strong style={{ fontSize: 13, color: C.muted }}>{o}</strong>
+              </span>
+              <span className="arr" style={{ color: C.orange }}>
+                →
+              </span>
+              <span className="built">
+                <span
+                  className="mono"
+                  style={{ fontSize: 8, color: i === 6 ? C.blue : C.orange }}
+                >
+                  {i === 6 ? "TESTING" : "BUILT"}
+                </span>
+                <br />
+                <strong style={{ fontSize: 14 }}>{b}</strong>
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
-const Notes=()=> <section className="section"><div style={shell}><div className="grid2" style={{alignItems:"start"}}><div><Eyebrow>Engineering notes</Eyebrow><H2>Deeper reasoning, without interrupting the story.</H2><p style={{color:C.muted,lineHeight:1.8}}>The homepage carries the architecture. These notes retain the problem, decision, trace, limitation, and next constraint.</p></div><div>{[["The project-to-cart gap","Why inspiration without transaction completion created a customer problem and a merchandising signal."],["Was the value in Claude—or the loop?","The May 2026 Copilot simulation that separated the engineering model from one assistant."],["Why Composite Context became necessary","How repeated reconstruction became the bottleneck after orchestration worked."],["A successful API call is not a resolved incident","Why autonomy requires frozen plans, scoped execution, and outcome evidence."]].map(([t,d],i)=><details className="note card" style={{padding:"1.2rem 1.4rem",marginBottom:10}} key={t}><summary style={{display:"flex",justifyContent:"space-between",gap:12,fontWeight:750}}><span>0{i+1} · {t}</span><span className="plus" style={{transition:"transform .2s"}}>+</span></summary><p style={{fontSize:14,lineHeight:1.75,color:C.muted,margin:"15px 0 3px"}}>{d}</p></details>)}</div></div></div></section>;
+const Roadmap = () => (
+  <section
+    id="roadmap"
+    className="section"
+    style={{ background: C.ink, color: "#fff" }}
+  >
+    <div style={shell}>
+      <Eyebrow>Roadmap · Next experiment</Eyebrow>
+      <H2>
+        Use the least expensive capable intelligence.{" "}
+        <em className="serif" style={{ fontWeight: 400, color: "#ed8a4d" }}>
+          Prove quality survived.
+        </em>
+      </H2>
+      <p
+        style={{
+          color: "rgba(255,255,255,.62)",
+          lineHeight: 1.8,
+          maxWidth: 760,
+          marginBottom: 42,
+        }}
+      >
+        Claude Code will be the first client. The objective is not fewer tokens
+        alone; it is optimization with an auditable record of what was included,
+        excluded, routed, and verified.
+      </p>
+      <div className="road">
+        {[
+          [
+            "01 · Observe",
+            "Transparent gateway",
+            "Establish token, cost, latency, cache, retry, and quality baselines.",
+          ],
+          [
+            "02 · Curate",
+            "Composite Context via MCP",
+            "Select the smallest trustworthy evidence package and record why.",
+          ],
+          [
+            "03 · Govern",
+            "Deterministic hooks",
+            "Enforce repository, tool, risk, approval, and validation policy.",
+          ],
+          [
+            "04 · Optimize",
+            "Risk-aware routing",
+            "Escalate only when evidence, uncertainty, or risk justifies it.",
+          ],
+        ].map(([n, t, d]) => (
+          <div key={n}>
+            <span className="mono" style={{ fontSize: 9, color: "#ed8a4d" }}>
+              {n}
+            </span>
+            <h3 style={{ fontSize: 17, margin: "15px 0 9px" }}>{t}</h3>
+            <p
+              style={{
+                fontSize: 13,
+                lineHeight: 1.7,
+                color: "rgba(255,255,255,.52)",
+                margin: 0,
+              }}
+            >
+              {d}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
 
-const About=()=> <section className="section" style={{background:C.soft}}><div style={shell}><div className="grid2"><div><Eyebrow>Creator</Eyebrow><H2>Personal learning transformed into <em className="serif" style={{fontWeight:400,color:C.orange}}>reference architecture.</em></H2><p style={{color:C.muted,lineHeight:1.85}}>Pranesh Soma is a distributed-systems architect with close to two decades of enterprise commerce experience. Commerce Trust Labs is his independent personal research initiative, developed through hands-on learning and generalized prototypes outside employer and client systems.</p></div><div style={{display:"flex",gap:22,alignItems:"center"}}><img src="/Pranesh.PNG" alt="Pranesh Soma" style={{width:145,height:185,objectFit:"cover",objectPosition:"top",borderRadius:14,border:`1px solid ${C.line}`}}/><div><h3 style={{fontSize:22,margin:"0 0 7px"}}>Pranesh Soma</h3><div className="eyebrow">Creator & Principal Architect</div><a className="navlink" href="https://github.com/PraneshSoma" target="_blank" rel="noreferrer">GitHub →</a></div></div></div></div></section>;
-const Footer=()=> <footer style={{borderTop:`1px solid ${C.line}`,padding:"2.5rem 0"}}><div style={{...shell,display:"flex",justifyContent:"space-between",gap:15,flexWrap:"wrap",fontSize:11,color:"rgba(23,23,25,.42)"}}><span>© 2026 Commerce Trust Labs</span><span>Independent personal research · Atlanta, Georgia</span></div></footer>;
+const Notes = () => (
+  <section className="section">
+    <div style={shell}>
+      <div className="grid2" style={{ alignItems: "start" }}>
+        <div>
+          <Eyebrow>Engineering notes</Eyebrow>
+          <H2>Deeper reasoning, without interrupting the story.</H2>
+          <p style={{ color: C.muted, lineHeight: 1.8 }}>
+            The homepage carries the architecture. These notes retain the
+            problem, decision, trace, limitation, and next constraint.
+          </p>
+        </div>
+        <div>
+          {[
+            [
+              "The project-to-cart gap",
+              "Why inspiration without transaction completion created a customer problem and a merchandising signal.",
+            ],
+            [
+              "Was the value in Claude—or the loop?",
+              "The May 2026 Copilot simulation that separated the engineering model from one assistant.",
+            ],
+            [
+              "Why Composite Context became necessary",
+              "How repeated reconstruction became the bottleneck after orchestration worked.",
+            ],
+            [
+              "A successful API call is not a resolved incident",
+              "Why autonomy requires frozen plans, scoped execution, and outcome evidence.",
+            ],
+          ].map(([t, d], i) => (
+            <details
+              className="note card"
+              style={{ padding: "1.2rem 1.4rem", marginBottom: 10 }}
+              key={t}
+            >
+              <summary
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  gap: 12,
+                  fontWeight: 750,
+                }}
+              >
+                <span>
+                  0{i + 1} · {t}
+                </span>
+                <span className="plus" style={{ transition: "transform .2s" }}>
+                  +
+                </span>
+              </summary>
+              <p
+                style={{
+                  fontSize: 14,
+                  lineHeight: 1.75,
+                  color: C.muted,
+                  margin: "15px 0 3px",
+                }}
+              >
+                {d}
+              </p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+);
 
-export default function App(){return <><Style/><Nav/><Hero/><Origin/><Turning/><Architecture/><Proof/><Decisions/><Roadmap/><Notes/><About/><Footer/></>}
+const CareerArc = () => {
+  const enterprise = [
+    ["2006", "Retail foundations"], ["2014", "Cloud + microservices"], ["2018", "Traffic control"],
+    ["2021", "Reactive commerce"], ["2023", "B2B platforms"], ["2026", "Customer platform"],
+  ];
+  const ai = [
+    ["MAR 2025", "Agentic Commerce"], ["MAY 2026", "Governed SDLC"], ["2026", "Composite Context"],
+    ["AUG 2026", "Agentic Operations"], ["2026", "Enterprise Control Plane"], ["ROADMAP", "Intelligence Control"],
+  ];
+  return (
+    <div style={{ margin: "4rem 0 5rem" }}>
+      <div style={{ display: "flex", justifyContent: "center", gap: "1.5rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
+        <span className="mono" style={{ fontSize: 10, color: C.muted }}><b style={{ color: C.blue }}>●</b> ENTERPRISE COMMERCE</span>
+        <span className="mono" style={{ fontSize: 10, color: C.muted }}><b style={{ color: C.orange }}>●</b> AGENTIC ARCHITECTURE</span>
+      </div>
+      <div style={{ overflowX: "auto" }}>
+        <svg viewBox="0 0 1200 420" style={{ width: "100%", minWidth: 960, display: "block" }}>
+          <defs>
+            <linearGradient id="enterpriseArc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#2f6fb0"/><stop offset="1" stopColor="#6a54b8"/></linearGradient>
+            <linearGradient id="aiArc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#d95f1d"/><stop offset="1" stopColor="#e0a636"/></linearGradient>
+          </defs>
+          <path d="M100 330 Q600 10 1100 330" stroke="url(#enterpriseArc)" strokeWidth="12" opacity=".1" fill="none"/>
+          <path d="M150 330 Q600 105 1050 330" stroke="url(#aiArc)" strokeWidth="12" opacity=".1" fill="none"/>
+          <path d="M100 330 Q600 10 1100 330" stroke="url(#enterpriseArc)" strokeWidth="2.5" fill="none"/>
+          <path d="M150 330 Q600 105 1050 330" stroke="url(#aiArc)" strokeWidth="2.5" fill="none"/>
+          {enterprise.map(([year,label],i)=>{const x=100+i*200;const y=330-4*i*(5-i);return <g key={label}><circle cx={x} cy={y} r="5" fill="#fff" stroke={C.blue} strokeWidth="2"/><text x={x} y={72+(i%2)*38} textAnchor="middle" fontFamily="DM Mono" fontSize="10" fill={C.blue}>{year}</text><text x={x} y={88+(i%2)*38} textAnchor="middle" fontFamily="Manrope" fontWeight="700" fontSize="12" fill={C.ink}>{label}</text></g>})}
+          {ai.map(([year,label],i)=>{const x=150+i*180;const y=330-3*i*(5-i);return <g key={label}><circle cx={x} cy={y} r="5" fill="#fff" stroke={C.orange} strokeWidth="2"/><text x={x} y={370+(i%2)*28} textAnchor="middle" fontFamily="DM Mono" fontSize="9" fill={C.orange}>{year}</text><text x={x} y={385+(i%2)*28} textAnchor="middle" fontFamily="Manrope" fontWeight="700" fontSize="11" fill={C.ink}>{label}</text></g>})}
+        </svg>
+      </div>
+    </div>
+  );
+};
+
+const About = () => (
+  <section id="creator" className="section" style={{ position: "relative", background: C.soft, overflow: "hidden" }}>
+    <Atmosphere />
+    <div style={shell}>
+      <div style={{ position: "relative", zIndex: 1, textAlign: "center", maxWidth: 760, margin: "0 auto" }}>
+        <Eyebrow>Creator · Career architecture</Eyebrow>
+        <h2 style={{ fontSize: "clamp(2.2rem,4vw,3.7rem)", lineHeight: 1.04, letterSpacing: "-.04em", margin: 0 }}>
+          Enterprise experience became the foundation for <em className="serif" style={{ fontWeight: 400, color: C.orange }}>governed autonomy.</em>
+        </h2>
+      </div>
+      <CareerArc />
+      <div className="grid2" style={{ position: "relative", zIndex: 1 }}>
+        <div>
+          <Eyebrow>What this demonstrates</Eyebrow>
+          <h3 style={{ fontSize: "clamp(1.5rem,2.5vw,2.2rem)", lineHeight: 1.2, margin: "0 0 1.2rem" }}>
+            Principal-level platform thinking backed by implementation.
+          </h3>
+          <p style={{ color: C.muted, lineHeight: 1.85 }}>
+            Pranesh Soma is a distributed-systems architect with close to two
+            decades of enterprise commerce experience. Commerce Trust Labs is
+            his independent personal research initiative, developed through
+            hands-on learning and generalized prototypes outside employer and
+            client systems.
+          </p>
+          <p className="mono" style={{ color: C.muted, fontSize: 11, lineHeight: 2 }}>
+            SYSTEMS THINKING · PLATFORM ARCHITECTURE · GOVERNED AI · WORKING PROTOTYPES · TECHNICAL LEADERSHIP
+          </p>
+        </div>
+        <div style={{ display: "flex", gap: 22, alignItems: "center" }}>
+          <img
+            src="/Pranesh.PNG"
+            alt="Pranesh Soma"
+            style={{
+              width: 145,
+              height: 185,
+              objectFit: "cover",
+              objectPosition: "top",
+              borderRadius: 14,
+              border: `1px solid ${C.line}`,
+            }}
+          />
+          <div>
+            <h3 style={{ fontSize: 22, margin: "0 0 7px" }}>Pranesh Soma</h3>
+            <div className="eyebrow">Creator & Principal Architect</div>
+            <a
+              className="navlink"
+              href="https://github.com/PraneshSoma"
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+const Footer = () => (
+  <footer style={{ borderTop: `1px solid ${C.line}`, padding: "2.5rem 0" }}>
+    <div
+      style={{
+        ...shell,
+        display: "flex",
+        justifyContent: "space-between",
+        gap: 15,
+        flexWrap: "wrap",
+        fontSize: 11,
+        color: "rgba(23,23,25,.42)",
+      }}
+    >
+      <span>© 2026 Commerce Trust Labs</span>
+      <span>Independent personal research · Atlanta, Georgia</span>
+    </div>
+  </footer>
+);
+
+export default function App() {
+  return (
+    <>
+      <Style />
+      <Nav />
+      <Hero />
+      <Origin />
+      <Turning />
+      <Architecture />
+      <Proof />
+      <Decisions />
+      <Roadmap />
+      <Notes />
+      <About />
+      <Footer />
+    </>
+  );
+}
