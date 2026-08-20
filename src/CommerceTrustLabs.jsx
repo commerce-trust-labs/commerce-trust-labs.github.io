@@ -292,7 +292,7 @@ const Nav = () => {
   const [solid, setSolid] = useState(false);
   const [active, setActive] = useState("");
   const [open, setOpen] = useState(false);
-  const links = [["story","Story"],["loop","Delivery Loop"],["context","Context"],["operations","Operations"],["enterprise-control-plane","Control Plane"],["engineering-notes","Engineering Notes"],["research","Research"],["team","Creator"]];
+  const links = [["story","Story"],["loop","Delivery Loop"],["context","Context"],["operations","Operations"],["enterprise-control-plane","Control Plane"],["roadmap","Roadmap"],["engineering-notes","Engineering Notes"],["research","Research"],["team","Creator"]];
   useEffect(() => {
     const fn = () => setSolid(window.scrollY > 40);
     window.addEventListener("scroll", fn);
@@ -618,6 +618,113 @@ const EnterpriseControlPlane = () => {
   );
 };
 
+/* ── ROADMAP ── */
+const Roadmap = () => {
+  const phases = [
+    {
+      n:"01", label:"Observe", title:"Transparent intelligence gateway",
+      body:"Use Claude Code as the first client. Proxy requests without rewriting them and establish a reliable baseline for user, repository, task, model, input/output tokens, cache behavior, latency, retries, compaction, and cost.",
+      proof:"Proof: a session-level cost and quality baseline"
+    },
+    {
+      n:"02", label:"Curate", title:"Composite Context through MCP",
+      body:"Expose task-specific architecture, repository, policy, runtime, and decision evidence as a context manifest. Record what was selected, what was excluded, source freshness, and why each item deserved tokens.",
+      proof:"Proof: lower context volume without missed evidence"
+    },
+    {
+      n:"03", label:"Govern", title:"Deterministic controls through hooks",
+      body:"Classify task and risk, enforce repository policy, constrain tool use, run validation after changes, require approval for high-risk actions, and return verified outcomes to the control plane.",
+      proof:"Proof: policy enforcement outside the model prompt"
+    },
+    {
+      n:"04", label:"Optimize", title:"Risk-aware intelligence routing",
+      body:"Assign token budgets, reuse stable context, delegate classification and summarization to lower-cost models, and escalate to frontier reasoning only when uncertainty, evidence conflict, or risk justifies it.",
+      proof:"Proof: measurable savings with quality held constant"
+    },
+  ];
+  const consoleViews = [
+    ["Session trace","Context, model, tool, retry, and escalation decisions"],
+    ["Token economics","Baseline cost, optimized cost, latency, and savings"],
+    ["Context manifest","Included and excluded evidence with reasons and freshness"],
+    ["Policy decisions","Allowed, blocked, escalated, approved, and verified actions"],
+  ];
+  return (
+    <section id="roadmap" style={{ position:"relative", background:C.text, color:"#fff", width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
+      <div style={{ position:"absolute", inset:0, background:"radial-gradient(circle at 78% 22%, rgba(47,111,176,.28), transparent 34%), radial-gradient(circle at 18% 76%, rgba(217,99,31,.2), transparent 32%)" }}/>
+      <div style={inner({ position:"relative", zIndex:1, padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
+        <Reveal>
+          <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".65rem", letterSpacing:".2em", textTransform:"uppercase", color:"#ed8a4d", marginBottom:"1.6rem" }}>Roadmap · The Next Control Plane</div>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))", gap:"clamp(2.5rem,6vw,7rem)", alignItems:"end", marginBottom:"4.5rem" }}>
+            <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.5rem,5vw,5rem)", fontWeight:800, lineHeight:1, letterSpacing:"-.05em", color:"#fff", maxWidth:"13ch" }}>
+              From traffic control to{" "}<em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:"#ed8a4d" }}>intelligence control</em>
+            </h2>
+            <div>
+              <p style={{ fontFamily:"'Instrument Serif',serif", fontSize:"clamp(1.25rem,1.8vw,1.6rem)", lineHeight:1.55, color:"rgba(255,255,255,.88)", marginBottom:"1.2rem" }}>
+                A reverse proxy decides where traffic should go. An intelligence control plane decides which context, model, tools, governance path, and token budget should handle an enterprise task.
+              </p>
+              <p style={{ fontFamily:"'Manrope',sans-serif", fontSize:".94rem", lineHeight:1.8, color:"rgba(255,255,255,.58)" }}>
+                The gateway market already covers provider routing, budgets, caching, and observability. The differentiated problem is context economics: assembling the smallest trustworthy evidence package for a task and proving that lower cost did not remove a requirement, policy, or production constraint.
+              </p>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal delay={100}>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(150px,1fr))", border:"1px solid rgba(255,255,255,.14)", borderRadius:"18px", overflow:"hidden", marginBottom:"4.5rem", background:"rgba(255,255,255,.035)" }}>
+            {["CLAUDE CODE","INTELLIGENCE DATA PLANE","COMPOSITE CONTEXT","MODEL + TOOL ROUTING","EVIDENCE + OUTCOME"].map((step,i)=>(
+              <div key={step} style={{ position:"relative", padding:"1.5rem 1.1rem", borderRight:i<4?"1px solid rgba(255,255,255,.12)":"none", minHeight:"92px", display:"flex", alignItems:"center", justifyContent:"center", textAlign:"center" }}>
+                <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".67rem", letterSpacing:".09em", lineHeight:1.5, color:i===0||i===4?"#ed8a4d":"rgba(255,255,255,.74)" }}>{step}</span>
+                {i<4 && <span aria-hidden="true" style={{ position:"absolute", right:"-.42rem", top:"50%", transform:"translateY(-50%)", zIndex:2, color:"#ed8a4d", fontSize:"1rem" }}>→</span>}
+              </div>
+            ))}
+          </div>
+        </Reveal>
+
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(250px,1fr))", gap:"1.2rem", marginBottom:"4.5rem" }}>
+          {phases.map((p,i)=>(
+            <Reveal key={p.n} delay={i*70}>
+              <div style={{ height:"100%", border:"1px solid rgba(255,255,255,.14)", borderRadius:"18px", padding:"2rem", background:"rgba(255,255,255,.045)" }}>
+                <div style={{ display:"flex", justifyContent:"space-between", gap:"1rem", alignItems:"center", marginBottom:"1.3rem" }}>
+                  <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".68rem", color:"#ed8a4d" }}>{p.n}</span>
+                  <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".56rem", letterSpacing:".14em", textTransform:"uppercase", color:"rgba(255,255,255,.4)" }}>{p.label}</span>
+                </div>
+                <h3 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.18rem", lineHeight:1.25, fontWeight:750, color:"#fff", marginBottom:"1rem" }}>{p.title}</h3>
+                <p style={{ fontFamily:"'Manrope',sans-serif", fontSize:".88rem", lineHeight:1.75, color:"rgba(255,255,255,.6)", marginBottom:"1.4rem" }}>{p.body}</p>
+                <p style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", lineHeight:1.55, color:"#ed8a4d" }}>{p.proof}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={120}>
+          <div style={{ borderTop:"1px solid rgba(255,255,255,.14)", paddingTop:"3.5rem" }} className="note-story">
+            <div>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".16em", textTransform:"uppercase", color:"#ed8a4d", marginBottom:"1rem" }}>First product experience</div>
+              <h3 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(1.8rem,3vw,2.8rem)", lineHeight:1.08, letterSpacing:"-.035em", color:"#fff", marginBottom:"1.2rem" }}>Claude Code first. Thin evidence console second.</h3>
+              <p style={{ fontFamily:"'Manrope',sans-serif", fontSize:".94rem", lineHeight:1.8, color:"rgba(255,255,255,.58)" }}>
+                The control plane should prove itself inside a real engineering workflow before becoming a large standalone application. Claude Code remains the primary experience; the UI exists to expose the decisions the gateway made and whether they preserved engineering quality.
+              </p>
+            </div>
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(2,minmax(0,1fr))", gap:"1px", background:"rgba(255,255,255,.12)", border:"1px solid rgba(255,255,255,.12)", borderRadius:"15px", overflow:"hidden" }}>
+              {consoleViews.map(([title,body])=>(
+                <div key={title} style={{ background:"#1d1d22", padding:"1.5rem" }}>
+                  <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".94rem", fontWeight:700, color:"#fff", marginBottom:".55rem" }}>{title}</div>
+                  <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".8rem", lineHeight:1.65, color:"rgba(255,255,255,.48)" }}>{body}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+        <Reveal delay={180}>
+          <p style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontSize:"clamp(1.3rem,2vw,1.8rem)", lineHeight:1.55, color:"#fff", textAlign:"center", maxWidth:"55ch", margin:"4rem auto 0" }}>
+            The objective is not fewer tokens at any cost. It is the smallest trustworthy context, the least expensive capable intelligence, and evidence that the outcome remained correct.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  );
+};
+
 /* ── ENGINEERING NOTES ── */
 const EngineeringNotes = () => {
   const notes = [
@@ -936,6 +1043,7 @@ export default function App() {
         <ContextSection/>
         <Operations/>
         <EnterpriseControlPlane/>
+        <Roadmap/>
         <EngineeringNotes/>
         <Research/>
         <Team/>
