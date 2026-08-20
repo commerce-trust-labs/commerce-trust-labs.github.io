@@ -42,6 +42,7 @@ const GlobalStyle = () => (
     .split-row{display:flex;flex-wrap:wrap;gap:clamp(4rem,6vw,7rem);align-items:center}
     .split-text{order:1;min-width:0;flex:1 1 340px}
     .split-visual{order:2;min-width:0;flex:1 1 420px;max-width:580px;margin:0 auto}
+    .split-visual.align-content{padding-top:8rem}
     .split-visual svg{filter:contrast(1.15) saturate(1.08)}
     .split-row.reverse .split-text{order:2}
     .split-row.reverse .split-visual{order:1}
@@ -52,6 +53,11 @@ const GlobalStyle = () => (
       .nav-mobile-panel.open{display:flex}
       .split-text,.split-row.reverse .split-text{order:1}
       .split-visual,.split-row.reverse .split-visual{order:2}
+      .split-visual.align-content{padding-top:0}
+    }
+    @media (min-width: 1440px){
+      .split-text{flex-basis:520px}
+      .split-visual{flex-basis:500px;max-width:620px}
     }
     @media (min-width: 1440px){
       .split-text{flex-basis:520px}
@@ -160,21 +166,21 @@ const FragmentGraphic = () => (
 
 const CompassGraphic = () => (
     <svg viewBox="0 0 480 420" fill="none" style={{ width:"100%", height:"auto", display:"block" }}>
-      <defs><radialGradient id="cg" cx="50%" cy="50%" r="55%"><stop offset="0%" stopColor="#d9631f" stopOpacity=".14"/><stop offset="100%" stopColor="#d9631f" stopOpacity="0"/></radialGradient></defs>
+      <defs><radialGradient id="cg" cx="50%" cy="50%" r="55%"><stop offset="0%" stopColor="#d9631f" stopOpacity=".2"/><stop offset="100%" stopColor="#d9631f" stopOpacity="0"/></radialGradient></defs>
       <circle cx="240" cy="210" r="180" fill="url(#cg)"/>
-      {[176,132,88].map((r,i)=>(<circle key={r} cx="240" cy="210" r={r} stroke="rgba(28,28,30,.1)" strokeWidth="1" strokeDasharray={i===2?"2 5":"1 0"}/>))}
-      <circle cx="240" cy="210" r="44" fill="none" stroke="#d9631f" strokeWidth="1.2"/>
-      <text x="240" y="212" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="6.2" letterSpacing=".5" fill="#d9631f">CONTROL</text>
-      <text x="240" y="220" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="6.2" letterSpacing=".5" fill="#d9631f">PLANE</text>
+      {[176,132,88].map((r,i)=>(<circle key={r} cx="240" cy="210" r={r} stroke={i===2?"rgba(217,99,31,.34)":"rgba(28,28,30,.24)"} strokeWidth={i===2?1.3:1.2} strokeDasharray={i===2?"3 5":"1 0"}/>))}
+      <circle cx="240" cy="210" r="48" fill="rgba(255,255,255,.72)" stroke="#d9631f" strokeWidth="1.8"/>
+      <text x="240" y="208" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="8" fontWeight="500" letterSpacing=".7" fill="#b94d12">CONTROL</text>
+      <text x="240" y="219" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="8" fontWeight="500" letterSpacing=".7" fill="#b94d12">PLANE</text>
       {[["COMMERCE",0],["ENGINEERING",90],["OPERATIONS",180],["POLICY",270]].map(([label,deg],i)=>{
         const r=176, rad=(deg-90)*Math.PI/180, x=240+r*Math.cos(rad), y=210+r*Math.sin(rad);
         return (<g key={i}>
-          <circle cx={x} cy={y} r="4" fill={i%2===0?"#d9631f":"#7bafe0"} opacity="0.9"/>
-          <text x={x} y={deg===0?y-12:deg===180?y+20:y+4} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="7.5" letterSpacing="1" fill="rgba(28,28,30,.55)">{label}</text>
+          <circle cx={x} cy={y} r="5.5" fill={i%2===0?"#d9631f":"#2f6fb0"}/>
+          <text x={x} y={deg===0?y-14:deg===180?y+23:y+4} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="9.5" fontWeight="500" letterSpacing="1" fill="rgba(28,28,30,.78)">{label}</text>
         </g>);
       })}
-      <line x1="240" y1="30" x2="240" y2="390" stroke="rgba(28,28,30,.08)"/>
-      <line x1="60" y1="210" x2="420" y2="210" stroke="rgba(28,28,30,.08)"/>
+      <line x1="240" y1="30" x2="240" y2="390" stroke="rgba(28,28,30,.22)" strokeWidth="1.15"/>
+      <line x1="60" y1="210" x2="420" y2="210" stroke="rgba(28,28,30,.22)" strokeWidth="1.15"/>
     </svg>
 );
 
@@ -320,7 +326,7 @@ const Hero = () => {
 };
 
 /* ── generic full-bleed split section ── */
-const SplitSection = ({ id, bg, eyebrow, heading, headingEm, body, visual, atmosphere, reverse, children }) => (
+const SplitSection = ({ id, bg, eyebrow, heading, headingEm, body, visual, atmosphere, reverse, alignVisualToContent, children }) => (
     <section id={id} style={{ position:"relative", background:bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
       {atmosphere && <Atmosphere variant={atmosphere}/>}
       <div style={inner({ position:"relative", zIndex:1, padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
@@ -340,7 +346,7 @@ const SplitSection = ({ id, bg, eyebrow, heading, headingEm, body, visual, atmos
             )}
             {children}
           </div>
-          <div className="split-visual">
+          <div className={`split-visual${alignVisualToContent?" align-content":""}`}>
             <Reveal delay={100}>{visual}</Reveal>
           </div>
         </div>
@@ -527,7 +533,7 @@ const EnterpriseControlPlane = () => {
   return (
       <section id="enterprise-control-plane" style={{ position:"relative", background:C.bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
         <div style={inner({ padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
-          <div className="split-row" style={{ marginBottom:"4.5rem", alignItems:"center" }}>
+          <div className="split-row" style={{ marginBottom:"4.5rem", alignItems:"flex-start" }}>
             <div className="split-text">
               <Reveal>
                 <Eyebrow>Enterprise Control Plane</Eyebrow>
@@ -573,6 +579,7 @@ const Research = () => {
   return (
       <SplitSection id="research" bg={C.bg2} reverse eyebrow="Research &amp; Publications"
         heading="Written &amp; Built" headingEm="in the Open"
+        alignVisualToContent
         visual={<DocGraphic/>}>
         <div style={{ display:"flex", flexDirection:"column", gap:"1px", background:C.border, border:`1px solid ${C.border}`, borderRadius:"16px", overflow:"hidden" }}>
           {pubs.map((p,i) => (
