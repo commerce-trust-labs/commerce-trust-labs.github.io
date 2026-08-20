@@ -383,14 +383,14 @@ const Loop = () => {
       <section id="loop" style={{ position:"relative", background:C.bg3, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
         <div style={inner({ padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
           <Reveal>
-            <Eyebrow>Loop Engineering</Eyebrow>
+            <Eyebrow>Governed Agentic SDLC</Eyebrow>
             <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.1rem,3.4vw,3.2rem)", fontWeight:800, lineHeight:1.06, letterSpacing:"-.035em", color:C.text, marginBottom:"1.8rem", maxWidth:"22ch" }}>
-              An agentic SDLC, not just code generation
+              An 11-stage delivery loop with evidence and human gates
             </h2>
           </Reveal>
           <Reveal delay={120}>
             <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:"1.08rem", lineHeight:1.85, color:"rgba(28,28,30,.66)", maxWidth:"68ch", marginBottom:"3.5rem" }}>
-              Enterprise software doesn't move from prompt to production in one step. Eleven stages, coordinated by a supervisor that enforces stage-entry and stage-exit criteria — it won't let downstream work start on an artifact that hasn't been accepted. Four of the eleven stop for a human.
+              Enterprise software doesn't move from prompt to production in one step. The Governed Agentic SDLC Loop is the delivery workflow within the Engineering Confidence Platform: eleven stages coordinated by a supervisor that enforces stage-entry and stage-exit criteria. Downstream work cannot start on an artifact that has not been accepted, and four stages stop for a human.
             </p>
           </Reveal>
           <Reveal delay={200}>
@@ -514,7 +514,7 @@ const Operations = () => {
 /* ── ECP ── */
 const Ecp = () => {
   const pillars = [
-    { title:"One plane, many consumers", body:"Agentic Commerce, the SDLC Loop, and Agentic Operations all read from — and write evidence back into — the same governed context and policy layer, instead of each building its own." },
+    { title:"One plane, many consumers", body:"Agentic Commerce, the Engineering Confidence Platform, and Agentic Operations all read from — and write evidence back into — the same governed context and policy layer, instead of each building its own." },
     { title:"Configurable at every scope", body:"Context and policy are defined at the organization, domain, application, repository, and workflow level, so governance doesn't mean copy-pasting the same rules into every agent prompt." },
     { title:"Trust is structural, not a score", body:"Trust comes from correct identity, fresh evidence, a registered procedure and action, a valid policy decision, human authorization, and a verified outcome — not from a model's confidence." },
   ];
@@ -524,7 +524,7 @@ const Ecp = () => {
           <div className="split-row" style={{ marginBottom:"4.5rem", alignItems:"center" }}>
             <div className="split-text">
               <Reveal>
-                <Eyebrow>Enterprise Context Plan</Eyebrow>
+                <Eyebrow>Enterprise Control Plane</Eyebrow>
                 <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.1rem,3.4vw,3.2rem)", fontWeight:800, lineHeight:1.06, letterSpacing:"-.035em", color:C.text, marginBottom:"1.8rem" }}>
                   The Governed Plane Between{" "}
                   <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>Reasoning and Action</em>
@@ -558,8 +558,8 @@ const Ecp = () => {
 /* ── RESEARCH ── */
 const Research = () => {
   const pubs = [
-    { type:"Architecture", title:"agentic-sdlc-loop", desc:"The Loop Engine implementation — the governed, four-phase agentic SDLC described above, supervisor orchestration and all.", link:"https://github.com/PraneshSoma/agentic-sdlc-loop", linkLabel:"GitHub →" },
-    { type:"Architecture", title:"loop-engineering", desc:"Written architecture and reference material for the SDLC Loop — stage contracts, gates, and the audit model.", link:"https://github.com/PraneshSoma/loop-engineering", linkLabel:"GitHub →" },
+    { type:"Implementation", title:"agentic-sdlc-loop", desc:"The working reference implementation of the Governed Agentic SDLC Loop — supervisor orchestration, stage transitions, human gates, and evidence flow.", link:"https://github.com/PraneshSoma/agentic-sdlc-loop", linkLabel:"GitHub →" },
+    { type:"Reference Architecture", title:"loop-engineering", desc:"Architecture specifications for the same SDLC Loop — stage contracts, acceptance gates, traceability, and the audit model.", link:"https://github.com/PraneshSoma/loop-engineering", linkLabel:"GitHub →" },
     { type:"Platform", title:"agentic-operations-platform", desc:"The Agentic Operations runtime — trigger, context assembly, diagnosis, policy, approval, execution, and verification.", link:null, linkLabel:"Private repository" },
     { type:"Article", title:"Retry Storms in Distributed Commerce Infrastructure", desc:"Analysis of cascading failure patterns in high-volume retail systems and patterns for resilient distributed commerce infrastructure.", link:"https://medium.com/@praneshsoma/retry-storms-139869b956e3", linkLabel:"Read →" },
     { type:"Article", title:"AI Agents Are the New Bot Traffic — And Commerce Infrastructure Isn't Ready", desc:"How agentic, machine-speed traffic triggers retry storms and cascading failures in commerce infrastructure built for human interaction — and why the next generation of retail platforms needs a governance and control plane.", link:"https://medium.com/@praneshsoma/ai-agents-are-the-new-bot-traffic-and-commerce-infrastructure-isnt-ready-35e12e01158d", linkLabel:"Read →" },
@@ -607,14 +607,13 @@ const Milestones = () => {
   ];
   const ai=[
     {t:0.03,y:"Early 2025",a:"Agentic Commerce"},
-    {t:0.1475,y:"2025",a:"Repo Compare"},
-    {t:0.265,y:"2025",a:"Multi-Agent Commerce"},
-    {t:0.3825,y:"2026",a:"Loop Engineering"},
-    {t:0.50,y:"2026",a:"SDLC Loop"},
-    {t:0.6175,y:"2026",a:"Composite Context"},
-    {t:0.735,y:"2026",a:"PDLC"},
-    {t:0.8525,y:"2026",a:"Agentic Ops"},
-    {t:0.97,y:"2026",a:"ECP"},
+    {t:0.164,y:"2025",a:"Repo Compare"},
+    {t:0.298,y:"2025",a:"Multi-Agent Commerce"},
+    {t:0.432,y:"2026",a:"Governed SDLC Loop"},
+    {t:0.566,y:"2026",a:"Composite Context"},
+    {t:0.70,y:"2026",a:"PDLC"},
+    {t:0.834,y:"2026",a:"Agentic Ops"},
+    {t:0.97,y:"2026",a:"Enterprise Control Plane"},
   ];
   const ePath=`M${eP[0][0]} ${eP[0][1]} Q ${eP[1][0]} ${eP[1][1]} ${eP[2][0]} ${eP[2][1]}`;
   const aPath=`M${aP[0][0]} ${aP[0][1]} Q ${aP[1][0]} ${aP[1][1]} ${aP[2][0]} ${aP[2][1]}`;
@@ -702,7 +701,7 @@ const Team = () => (
               </h3>
               {[
                 "Pranesh Soma is a distributed systems architect with close to two decades of experience designing large-scale enterprise commerce systems across cart, checkout, pricing, identity, platform traffic, modernization, and complex data migrations.",
-                "Commerce Trust Labs is where that experience became architecture — the planner/worker model behind Agentic Commerce, the agentic SDLC loop, the composite-context model, the Agentic Operations runtime, and the Enterprise Context Plan that unifies them into a governed plane between AI reasoning and enterprise action.",
+                "Commerce Trust Labs is where that experience became architecture — the planner/worker model behind Agentic Commerce, the Governed Agentic SDLC Loop within the Engineering Confidence Platform, the composite-context model, and the Agentic Operations runtime, unified through an Enterprise Control Plane between AI reasoning and enterprise action.",
               ].map((para,i) => (
                   <p key={i} style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".95rem", lineHeight:1.85, color:"rgba(28,28,30,.64)", marginBottom:"1rem" }}>{para}</p>
               ))}
