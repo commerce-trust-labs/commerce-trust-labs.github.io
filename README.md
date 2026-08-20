@@ -96,11 +96,11 @@ The entire site lives in `src/CommerceTrustLabs.jsx`. Each section (Hero, Proble
 
 ## Deployment
 
-The site deploys automatically to GitHub Pages from the `main` branch.
+Every push to `main` triggers the GitHub Actions deployment workflow. The workflow builds the Vite application and publishes `dist/` to the `gh-pages` branch, which is served by GitHub Pages.
 
 ```bash
 npm run build
-# dist/ is served via GitHub Pages
+# GitHub Actions publishes dist/ to the gh-pages branch
 ```
 
 ---
