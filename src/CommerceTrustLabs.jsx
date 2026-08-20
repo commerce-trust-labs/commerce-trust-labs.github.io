@@ -164,14 +164,14 @@ const Hero = () => {
           <div style={{ minWidth:0, flex:"1 1 320px" }}>
             <div style={{ ...a(80), display:"flex", alignItems:"center", gap:".8rem", marginBottom:"1.6rem" }}>
               <div style={{ width:"2rem", height:"1px", background:C.accent, flexShrink:0 }}/>
-              <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".65rem", letterSpacing:".22em", textTransform:"uppercase", color:C.accent }}>AI-Governed Commerce Infrastructure</span>
+              <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".65rem", letterSpacing:".22em", textTransform:"uppercase", color:C.accent }}>AI Governance &amp; Control Infrastructure</span>
             </div>
             <h1 style={{ ...a(160), fontFamily:"'Syne',sans-serif", fontSize:"clamp(2.2rem,3.5vw,4rem)", fontWeight:800, lineHeight:1.0, letterSpacing:"-.03em", color:C.text, marginBottom:"1.5rem" }}>
-              The Trust<br/>Layer for<br/>
-              <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>Modern Commerce</em>
+              Where Tokens<br/>Become<br/>
+              <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>Trusted Actions</em>
             </h1>
             <p style={{ ...a(260), fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".84rem", lineHeight:1.85, color:C.muted, maxWidth:"38ch", marginBottom:"2.5rem" }}>
-              Commerce Trust Labs pioneers the governance infrastructure that enables AI-driven commerce to operate with regulatory compliance, transactional integrity, and national-scale resilience.
+              Commerce Trust Labs transforms AI intent into governed, authorized, policy-compliant, and auditable actions across modern commerce systems.
             </p>
             <div style={{ ...a(360), display:"flex", gap:"1rem", flexWrap:"wrap", marginBottom:"3rem" }}>
               <a href="#mission" className="bp">Our Mission →</a>
