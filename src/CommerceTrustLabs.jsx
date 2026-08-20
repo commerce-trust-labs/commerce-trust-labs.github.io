@@ -39,9 +39,10 @@ const GlobalStyle = () => (
     .nav-links{display:flex}
     .nav-burger{display:none}
     .nav-mobile-panel{display:none}
-    .split-row{display:flex;flex-wrap:wrap;gap:4rem;align-items:center}
+    .split-row{display:flex;flex-wrap:wrap;gap:clamp(4rem,6vw,7rem);align-items:center}
     .split-text{order:1;min-width:0;flex:1 1 340px}
-    .split-visual{order:2;min-width:0;flex:1 1 340px;max-width:440px;margin:0 auto}
+    .split-visual{order:2;min-width:0;flex:1 1 420px;max-width:580px;margin:0 auto}
+    .split-visual svg{filter:contrast(1.15) saturate(1.08)}
     .split-row.reverse .split-text{order:2}
     .split-row.reverse .split-visual{order:1}
     @media (max-width: 860px){
@@ -52,11 +53,15 @@ const GlobalStyle = () => (
       .split-text,.split-row.reverse .split-text{order:1}
       .split-visual,.split-row.reverse .split-visual{order:2}
     }
+    @media (min-width: 1440px){
+      .split-text{flex-basis:520px}
+      .split-visual{flex-basis:500px;max-width:620px}
+    }
   `}</style>
 );
 
 const inner = (extra = {}) => ({
-  maxWidth: "min(1240px, 100%)",
+  maxWidth: "min(1520px, 100%)",
   margin: "0 auto",
   padding: "0 clamp(1.25rem, 5vw, 3.5rem)",
   width: "100%",
@@ -143,12 +148,12 @@ const FragmentGraphic = () => (
       <rect x="0" y="0" width="480" height="420" fill="url(#fg)"/>
       {[[60,60,90,64,"CART"],[170,40,80,96,"PRICING"],[270,70,120,54,"CHECKOUT"],[60,180,140,80,"INVENTORY"],[220,180,90,110,"IDENTITY"],[330,190,100,66,"FULFILLMENT"],[60,290,110,70,"PROMOS"],[190,320,150,58,"ORDERS"],[360,290,80,80,"SERVICE"]].map(([x,y,w,h,label],i)=>(
           <g key={i}>
-            <rect x={x} y={y} width={w} height={h} rx="6" fill="none" stroke={i%3===0?"#d9631f":"rgba(28,28,30,.16)"} strokeOpacity={i%3===0?0.55:1} strokeWidth="1"/>
-            <text x={x+10} y={y+h/2+3} fontFamily="'DM Mono',monospace" fontSize="7" letterSpacing="1" fill={i%3===0?"#d9631f":"rgba(28,28,30,.4)"}>{label}</text>
+            <rect x={x} y={y} width={w} height={h} rx="6" fill="rgba(255,255,255,.46)" stroke={i%3===0?"#d9631f":"rgba(28,28,30,.3)"} strokeOpacity={i%3===0?0.9:1} strokeWidth="1.35"/>
+            <text x={x+10} y={y+h/2+3} fontFamily="'DM Mono',monospace" fontSize="8.5" letterSpacing="1" fill={i%3===0?"#b94d12":"rgba(28,28,30,.68)"}>{label}</text>
           </g>
       ))}
       {[[105,92,215,88],[310,97,270,125],[130,220,220,235],[280,235,410,245],[145,349,235,290]].map(([x1,y1,x2,y2],i)=>(
-          <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(28,28,30,.1)" strokeDasharray="3 5"/>
+          <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(28,28,30,.24)" strokeWidth="1.2" strokeDasharray="3 5"/>
       ))}
     </svg>
 );
