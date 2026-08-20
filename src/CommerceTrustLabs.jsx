@@ -153,39 +153,74 @@ const ScrollCue = () => (
 );
 
 /* ── SECTION VISUALS ── */
-const FragmentGraphic = () => (
+const OrchestratorGraphic = () => (
     <svg viewBox="0 0 480 420" fill="none" style={{ width:"100%", height:"auto", display:"block" }}>
-      <defs><radialGradient id="fg" cx="50%" cy="40%" r="60%"><stop offset="0%" stopColor="#d9631f" stopOpacity=".16"/><stop offset="100%" stopColor="#d9631f" stopOpacity="0"/></radialGradient></defs>
-      <rect x="0" y="0" width="480" height="420" fill="url(#fg)"/>
-      {[[60,60,90,64,"CART"],[170,40,80,96,"PRICING"],[270,70,120,54,"CHECKOUT"],[60,180,140,80,"INVENTORY"],[220,180,90,110,"IDENTITY"],[330,190,100,66,"FULFILLMENT"],[60,290,110,70,"PROMOS"],[190,320,150,58,"ORDERS"],[360,290,80,80,"SERVICE"]].map(([x,y,w,h,label],i)=>(
-          <g key={i}>
-            <rect x={x} y={y} width={w} height={h} rx="6" fill="rgba(255,255,255,.46)" stroke={i%3===0?"#d9631f":"rgba(28,28,30,.3)"} strokeOpacity={i%3===0?0.9:1} strokeWidth="1.35"/>
-            <text x={x+10} y={y+h/2+3} fontFamily="'DM Mono',monospace" fontSize="8.5" letterSpacing="1" fill={i%3===0?"#b94d12":"rgba(28,28,30,.68)"}>{label}</text>
-          </g>
+      <defs>
+        <radialGradient id="og" cx="50%" cy="48%" r="58%"><stop offset="0%" stopColor="#d9631f" stopOpacity=".18"/><stop offset="100%" stopColor="#d9631f" stopOpacity="0"/></radialGradient>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(28,28,30,.48)"/></marker>
+      </defs>
+      <rect x="0" y="0" width="480" height="420" fill="url(#og)"/>
+
+      <rect x="104" y="24" width="272" height="54" rx="10" fill="rgba(255,255,255,.78)" stroke="#d9631f" strokeWidth="1.6"/>
+      <text x="240" y="46" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="8" letterSpacing="1.1" fill="#b94d12">USER OUTCOME</text>
+      <text x="240" y="63" textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="11.5" fontWeight="700" fill="rgba(28,28,30,.82)">Find, validate, and complete a purchase</text>
+
+      <line x1="240" y1="78" x2="240" y2="118" stroke="rgba(28,28,30,.48)" strokeWidth="1.5" markerEnd="url(#arrow)"/>
+      <rect x="158" y="120" width="164" height="84" rx="12" fill="rgba(255,255,255,.86)" stroke="#d9631f" strokeWidth="2"/>
+      <text x="240" y="151" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="9.5" fontWeight="500" letterSpacing="1" fill="#b94d12">SUPERVISOR</text>
+      <text x="240" y="170" textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="12" fontWeight="700" fill="rgba(28,28,30,.82)">Plan · Delegate · Synthesize</text>
+      <text x="240" y="188" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="7.5" letterSpacing=".7" fill="rgba(28,28,30,.55)">SHARED CONTEXT + TASK STATE</text>
+
+      {[[28,264,96,58,"PRODUCT","AGENT"],[137,264,96,58,"PRICING","AGENT"],[247,264,96,58,"AVAILABILITY","AGENT"],[356,264,96,58,"FULFILLMENT","AGENT"]].map(([x,y,w,h,line1,line2],i)=>(
+        <g key={i}>
+          <line x1="240" y1="204" x2={x+w/2} y2={y-5} stroke="rgba(28,28,30,.4)" strokeWidth="1.35" strokeDasharray="4 5" markerEnd="url(#arrow)"/>
+          <rect x={x} y={y} width={w} height={h} rx="9" fill="rgba(255,255,255,.7)" stroke={i===0||i===3?"#d9631f":"rgba(28,28,30,.36)"} strokeWidth="1.4"/>
+          <text x={x+w/2} y={y+25} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="8" letterSpacing=".8" fill={i===0||i===3?"#b94d12":"rgba(28,28,30,.7)"}>{line1}</text>
+          <text x={x+w/2} y={y+40} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="7.5" letterSpacing=".8" fill="rgba(28,28,30,.5)">{line2}</text>
+        </g>
       ))}
-      {[[105,92,215,88],[310,97,270,125],[130,220,220,235],[280,235,410,245],[145,349,235,290]].map(([x1,y1,x2,y2],i)=>(
-          <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(28,28,30,.24)" strokeWidth="1.2" strokeDasharray="3 5"/>
-      ))}
+
+      <rect x="104" y="356" width="272" height="40" rx="9" fill="rgba(255,255,255,.72)" stroke="rgba(47,111,176,.7)" strokeWidth="1.5"/>
+      <text x="240" y="380" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="8" fontWeight="500" letterSpacing=".9" fill="#2f6fb0">POLICY · EVIDENCE · AUDIT</text>
     </svg>
 );
 
 const CompassGraphic = () => (
     <svg viewBox="0 0 480 420" fill="none" style={{ width:"100%", height:"auto", display:"block" }}>
-      <defs><radialGradient id="cg" cx="50%" cy="50%" r="55%"><stop offset="0%" stopColor="#d9631f" stopOpacity=".2"/><stop offset="100%" stopColor="#d9631f" stopOpacity="0"/></radialGradient></defs>
-      <circle cx="240" cy="210" r="180" fill="url(#cg)"/>
-      {[176,132,88].map((r,i)=>(<circle key={r} cx="240" cy="210" r={r} stroke={i===2?"rgba(217,99,31,.34)":"rgba(28,28,30,.24)"} strokeWidth={i===2?1.3:1.2} strokeDasharray={i===2?"3 5":"1 0"}/>))}
-      <circle cx="240" cy="210" r="48" fill="rgba(255,255,255,.72)" stroke="#d9631f" strokeWidth="1.8"/>
-      <text x="240" y="208" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="8" fontWeight="500" letterSpacing=".7" fill="#b94d12">CONTROL</text>
-      <text x="240" y="219" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="8" fontWeight="500" letterSpacing=".7" fill="#b94d12">PLANE</text>
-      {[["COMMERCE",0],["ENGINEERING",90],["OPERATIONS",180],["POLICY",270]].map(([label,deg],i)=>{
-        const r=176, rad=(deg-90)*Math.PI/180, x=240+r*Math.cos(rad), y=210+r*Math.sin(rad);
-        return (<g key={i}>
-          <circle cx={x} cy={y} r="5.5" fill={i%2===0?"#d9631f":"#2f6fb0"}/>
-          <text x={x} y={deg===0?y-14:deg===180?y+23:y+4} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="9.5" fontWeight="500" letterSpacing="1" fill="rgba(28,28,30,.78)">{label}</text>
-        </g>);
-      })}
-      <line x1="240" y1="30" x2="240" y2="390" stroke="rgba(28,28,30,.22)" strokeWidth="1.15"/>
-      <line x1="60" y1="210" x2="420" y2="210" stroke="rgba(28,28,30,.22)" strokeWidth="1.15"/>
+      <defs>
+        <radialGradient id="cg" cx="50%" cy="50%" r="58%"><stop offset="0%" stopColor="#d9631f" stopOpacity=".18"/><stop offset="100%" stopColor="#d9631f" stopOpacity="0"/></radialGradient>
+        <marker id="cycleArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#d9631f"/></marker>
+      </defs>
+      <rect x="18" y="18" width="444" height="384" rx="28" fill="url(#cg)" stroke="rgba(28,28,30,.22)" strokeWidth="1.3"/>
+      <text x="240" y="42" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="8.5" fontWeight="500" letterSpacing="1.1" fill="#b94d12">ENTERPRISE CONTROL PLANE</text>
+      <text x="240" y="57" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="7" letterSpacing=".65" fill="rgba(28,28,30,.48)">IDENTITY · POLICY · AUTHORIZATION · EVIDENCE</text>
+
+      <path d="M310 112 C360 125 386 153 396 190" stroke="#d9631f" strokeWidth="1.7" markerEnd="url(#cycleArrow)"/>
+      <path d="M396 260 C380 305 345 327 306 338" stroke="#d9631f" strokeWidth="1.7" markerEnd="url(#cycleArrow)"/>
+      <path d="M174 338 C128 326 98 300 84 262" stroke="#d9631f" strokeWidth="1.7" markerEnd="url(#cycleArrow)"/>
+      <path d="M84 190 C98 151 130 124 174 112" stroke="#d9631f" strokeWidth="1.7" markerEnd="url(#cycleArrow)"/>
+
+      {[
+        [156,72,168,62,"AGENTIC COMMERCE","Orchestrate outcomes"],
+        [326,180,132,82,"GOVERNED SDLC","Build with gates"],
+        [156,326,168,62,"AGENTIC OPERATIONS","Act and verify"],
+        [22,180,132,82,"VERIFIED OUTCOMES","Learn from evidence"],
+      ].map(([x,y,w,h,title,subtitle],i)=>(
+        <g key={title}>
+          <rect x={x} y={y} width={w} height={h} rx="10" fill="rgba(255,255,255,.86)" stroke={i%2===0?"#d9631f":"#2f6fb0"} strokeWidth="1.5"/>
+          <text x={x+w/2} y={y+h/2-3} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="8" fontWeight="500" letterSpacing=".75" fill={i%2===0?"#b94d12":"#2f6fb0"}>{title}</text>
+          <text x={x+w/2} y={y+h/2+15} textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="9" fontWeight="600" fill="rgba(28,28,30,.62)">{subtitle}</text>
+        </g>
+      ))}
+
+      <circle cx="240" cy="230" r="67" fill="rgba(255,255,255,.9)" stroke="#d9631f" strokeWidth="1.8"/>
+      <text x="240" y="220" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="9" fontWeight="500" letterSpacing=".8" fill="#b94d12">COMPOSITE</text>
+      <text x="240" y="234" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="9" fontWeight="500" letterSpacing=".8" fill="#b94d12">CONTEXT</text>
+      <text x="240" y="250" textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="8.5" fontWeight="600" fill="rgba(28,28,30,.55)">consumed by every stage</text>
+      <text x="240" y="263" textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="8" fontWeight="600" fill="rgba(28,28,30,.48)">enriched by every outcome</text>
+      {[[240,163,240,134],[307,230,326,230],[240,297,240,326],[173,230,154,230]].map(([x1,y1,x2,y2],i)=>(
+        <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(28,28,30,.3)" strokeWidth="1.2" strokeDasharray="3 4" markerStart="url(#cycleArrow)" markerEnd="url(#cycleArrow)"/>
+      ))}
     </svg>
 );
 
@@ -362,15 +397,15 @@ const SplitSection = ({ id, bg, eyebrow, heading, headingEm, body, visual, atmos
 /* ── STORY ── */
 const Story = () => {
   const items = [
-    { title:"Express an Outcome", body:"A user states an intent in natural language instead of navigating separate product, pricing, cart, checkout, and fulfillment systems one at a time." },
-    { title:"A Planner Decomposes It", body:"A planner breaks the intent into the specific commerce capabilities and bounded tasks required to fulfill it — without replacing the systems of record underneath." },
-    { title:"Workers Execute & Consolidate", body:"Specialized workers invoke the existing pricing, inventory, checkout, and order systems; the orchestration layer consolidates their output into one action or answer." },
+    { title:"Express an Outcome", body:"A user describes the result they need instead of navigating separate product, pricing, availability, and fulfillment workflows." },
+    { title:"The Supervisor Orchestrates", body:"A supervisor interprets the outcome, creates a task graph, delegates bounded work to specialized agents, and maintains shared context and execution state." },
+    { title:"Agents Execute; the Supervisor Synthesizes", body:"Domain agents invoke existing enterprise capabilities and return evidence. The supervisor resolves dependencies and consolidates their results into one governed action or answer." },
   ];
   return (
       <SplitSection id="story" bg={C.bg2} eyebrow="Origin"
-        heading="Agentic Commerce Started With" headingEm="a Fragmentation Problem"
-        body="Traditional commerce platforms expose their capabilities as separate pages, APIs, and workflows — product discovery, pricing, cart, checkout, identity, order creation, fulfillment. Even when each piece is mature on its own, the person using it has to understand how the organization divided the problem. The original insight was simple: let a user express an outcome, and let an orchestration layer figure out which commerce capabilities are needed to deliver it."
-        visual={<FragmentGraphic/>}>
+        heading="Agentic Commerce Started With" headingEm="Multi-Agent Orchestration"
+        body="Enterprise commerce capabilities are distributed across specialized systems and workflows. The first architecture used a supervisor-and-worker model: a user expressed an outcome, the supervisor decomposed it into bounded tasks, specialized agents invoked the required domain capabilities, and the supervisor synthesized their evidence into a single response. The model preserved existing systems of record while removing their fragmentation from the user experience."
+        visual={<OrchestratorGraphic/>}>
         <div style={{ display:"flex", flexDirection:"column", gap:"1.4rem", marginBottom:"2rem" }}>
           {items.map((p,i) => (
               <Reveal key={i} delay={220+i*70}>
@@ -531,7 +566,8 @@ const Operations = () => {
 /* ── ENTERPRISE CONTROL PLANE ── */
 const EnterpriseControlPlane = () => {
   const pillars = [
-    { title:"One plane, multiple workflows", body:"Agentic Commerce, the Engineering Confidence Platform, and Agentic Operations use the same governed context, identity, policy, authorization, and evidence foundation instead of recreating trust controls inside every workflow." },
+    { title:"One connected learning loop", body:"Agentic Commerce establishes outcome orchestration. The governed software-delivery loop builds and changes those capabilities safely. Agentic Operations executes controlled remediation, and verified production outcomes flow back as evidence for the next engineering and business decision." },
+    { title:"Composite Context compounds", body:"Every stage consumes the same assembled business, application, engineering, runtime, policy, and historical context. Each decision and verified outcome then enriches that context, allowing the next agent and workflow to begin with stronger evidence instead of starting over." },
     { title:"Configurable at every scope", body:"Context and policy are defined at the organization, domain, application, repository, and workflow level, so governance doesn't mean copy-pasting the same rules into every agent prompt." },
     { title:"Trust is structural, not a score", body:"Trust comes from correct identity, fresh evidence, a registered procedure and action, a valid policy decision, human authorization, and a verified outcome — not from a model's confidence." },
   ];
