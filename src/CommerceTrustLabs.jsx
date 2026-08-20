@@ -47,6 +47,13 @@ const GlobalStyle = () => (
     .research-row{display:grid!important;grid-template-columns:220px minmax(0,1fr) auto;column-gap:1.5rem;row-gap:.7rem}
     .research-type{align-self:center}
     .research-action{align-self:center;justify-self:end}
+    .note-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.4rem}
+    .note-card[open]{grid-column:1/-1}
+    .note-card summary{list-style:none}
+    .note-card summary::-webkit-details-marker{display:none}
+    .note-card summary:focus-visible{outline:2px solid #d9631f;outline-offset:5px;border-radius:12px}
+    .note-card[open] .note-plus{transform:rotate(45deg);background:#d9631f;color:#fff;border-color:#d9631f}
+    .note-story{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(2rem,5vw,5rem)}
     .split-row.reverse .split-text{order:2}
     .split-row.reverse .split-visual{order:1}
     @media (max-width: 860px){
@@ -59,6 +66,8 @@ const GlobalStyle = () => (
       .split-visual.align-content{padding-top:0}
       .research-row{grid-template-columns:1fr;gap:.65rem}
       .research-type,.research-action{justify-self:start}
+      .note-grid{grid-template-columns:1fr}
+      .note-story{grid-template-columns:1fr}
     }
     @media (min-width: 1440px){
       .split-text{flex-basis:520px}
@@ -163,7 +172,7 @@ const OrchestratorGraphic = () => (
 
       <rect x="104" y="24" width="272" height="54" rx="10" fill="rgba(255,255,255,.78)" stroke="#d9631f" strokeWidth="1.6"/>
       <text x="240" y="46" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="8" letterSpacing="1.1" fill="#b94d12">USER OUTCOME</text>
-      <text x="240" y="63" textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="11.5" fontWeight="700" fill="rgba(28,28,30,.82)">Find, validate, and complete a purchase</text>
+      <text x="240" y="63" textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="11.5" fontWeight="700" fill="rgba(28,28,30,.82)">Turn a project idea into a complete cart</text>
 
       <line x1="240" y1="78" x2="240" y2="118" stroke="rgba(28,28,30,.48)" strokeWidth="1.5" markerEnd="url(#arrow)"/>
       <rect x="158" y="120" width="164" height="84" rx="12" fill="rgba(255,255,255,.86)" stroke="#d9631f" strokeWidth="2"/>
@@ -171,7 +180,7 @@ const OrchestratorGraphic = () => (
       <text x="240" y="170" textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="12" fontWeight="700" fill="rgba(28,28,30,.82)">Plan · Delegate · Synthesize</text>
       <text x="240" y="188" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="7.5" letterSpacing=".7" fill="rgba(28,28,30,.55)">SHARED CONTEXT + TASK STATE</text>
 
-      {[[28,264,96,58,"PRODUCT","AGENT"],[137,264,96,58,"PRICING","AGENT"],[247,264,96,58,"AVAILABILITY","AGENT"],[356,264,96,58,"FULFILLMENT","AGENT"]].map(([x,y,w,h,line1,line2],i)=>(
+      {[[28,264,96,58,"CONTENT","AGENT"],[137,264,96,58,"PROJECT","AGENT"],[247,264,96,58,"CATALOG","AGENT"],[356,264,96,58,"CART","AGENT"]].map(([x,y,w,h,line1,line2],i)=>(
         <g key={i}>
           <line x1="240" y1="204" x2={x+w/2} y2={y-5} stroke="rgba(28,28,30,.4)" strokeWidth="1.35" strokeDasharray="4 5" markerEnd="url(#arrow)"/>
           <rect x={x} y={y} width={w} height={h} rx="9" fill="rgba(255,255,255,.7)" stroke={i===0||i===3?"#d9631f":"rgba(28,28,30,.36)"} strokeWidth="1.4"/>
@@ -181,7 +190,8 @@ const OrchestratorGraphic = () => (
       ))}
 
       <rect x="104" y="356" width="272" height="40" rx="9" fill="rgba(255,255,255,.72)" stroke="rgba(47,111,176,.7)" strokeWidth="1.5"/>
-      <text x="240" y="380" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="8" fontWeight="500" letterSpacing=".9" fill="#2f6fb0">POLICY · EVIDENCE · AUDIT</text>
+      <text x="240" y="375" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="7.5" fontWeight="500" letterSpacing=".8" fill="#2f6fb0">CATALOG GAP → MARKETPLACE OPTION</text>
+      <text x="240" y="387" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="6.8" letterSpacing=".65" fill="rgba(28,28,30,.52)">CUSTOMER INTENT → MERCHANDISING SIGNAL</text>
     </svg>
 );
 
@@ -282,7 +292,7 @@ const Nav = () => {
   const [solid, setSolid] = useState(false);
   const [active, setActive] = useState("");
   const [open, setOpen] = useState(false);
-  const links = [["story","Story"],["loop","Delivery Loop"],["context","Context"],["operations","Operations"],["enterprise-control-plane","Control Plane"],["research","Research"],["team","Creator"]];
+  const links = [["story","Story"],["loop","Delivery Loop"],["context","Context"],["operations","Operations"],["enterprise-control-plane","Control Plane"],["engineering-notes","Engineering Notes"],["research","Research"],["team","Creator"]];
   useEffect(() => {
     const fn = () => setSolid(window.scrollY > 40);
     window.addEventListener("scroll", fn);
@@ -397,14 +407,14 @@ const SplitSection = ({ id, bg, eyebrow, heading, headingEm, body, visual, atmos
 /* ── STORY ── */
 const Story = () => {
   const items = [
-    { title:"Express an Outcome", body:"A user describes the result they need instead of navigating separate product, pricing, availability, and fulfillment workflows." },
-    { title:"The Supervisor Orchestrates", body:"A supervisor interprets the outcome, creates a task graph, delegates bounded work to specialized agents, and maintains shared context and execution state." },
-    { title:"Agents Execute; the Supervisor Synthesizes", body:"Domain agents invoke existing enterprise capabilities and return evidence. The supervisor resolves dependencies and consolidates their results into one governed action or answer." },
+    { title:"Understand the Project", body:"A customer describes a do-it-yourself project or shares a video, article, or link. Content and planning agents infer the steps, materials, tools, quantities, and compatibility constraints." },
+    { title:"Build a Complete Project Cart", body:"The supervisor coordinates catalog, pricing, availability, and cart capabilities to match every required item—not merely recommend one product at a time." },
+    { title:"Turn Missing Products Into Merchandising Intelligence", body:"When an item is unavailable, the experience can offer an external marketplace option. That unmet purchase intent becomes a structured catalog-gap signal that helps merchandising teams prioritize assortment expansion." },
   ];
   return (
       <SplitSection id="story" bg={C.bg2} eyebrow="Origin"
-        heading="Agentic Commerce Started With" headingEm="Multi-Agent Orchestration"
-        body="Enterprise commerce capabilities are distributed across specialized systems and workflows. The first architecture used a supervisor-and-worker model: a user expressed an outcome, the supervisor decomposed it into bounded tasks, specialized agents invoked the required domain capabilities, and the supervisor synthesized their evidence into a single response. The model preserved existing systems of record while removing their fragmentation from the user experience."
+        heading="Agentic Commerce Started With" headingEm="the Project-to-Cart Gap"
+        body="In March 2025, the gap I encountered in project-based shopping was not a shortage of do-it-yourself content. Customers could find videos, articles, and inspiration, but there was no unified journey that understood a project, identified the complete bill of materials, matched every item to a retailer's catalog, and created a ready-to-buy cart. Agentic Commerce began as a multi-agent orchestrator designed to close that gap."
         visual={<OrchestratorGraphic/>}>
         <div style={{ display:"flex", flexDirection:"column", gap:"1.4rem", marginBottom:"2rem" }}>
           {items.map((p,i) => (
@@ -442,7 +452,7 @@ const Loop = () => {
           </Reveal>
           <Reveal delay={120}>
             <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:"1.08rem", lineHeight:1.85, color:"rgba(28,28,30,.66)", maxWidth:"68ch", marginBottom:"3.5rem" }}>
-              Enterprise software should not move from prompt to production in one step. The Governed Agentic Software Development Life Cycle Loop is the delivery workflow within the Engineering Confidence Platform: eleven stages coordinated by a supervisor that enforces entry and exit criteria. Downstream work cannot begin until its input artifact is accepted, and architecture decisions, low-level design, change approval, and release stop for human judgment.
+              In May 2026, this began as a portability experiment. Loop Engineering was already adding value through a Claude-driven way of carrying discovery, architecture decisions, implementation, and validation forward as one continuous body of work. I rebuilt the operating model as a GitHub Copilot simulation to test whether the value came from one assistant—or from the structure of the loop itself. The result was a supervisor-led, four-phase state machine that later expanded into eleven explicit delivery stages with evidence, persisted state, retries, and human gates.
             </p>
           </Reveal>
           <Reveal delay={200}>
@@ -466,7 +476,7 @@ const Loop = () => {
               ["Discovery → ADR → LLD","Requirements, architecture decisions, and low-level design as accepted, reviewable artifacts — with an explicit open-issue queue — before any code is written."],
               ["Story → Planning → Code / Test Gen","Design decomposes into traceable implementation units. Code and test generation run as separately-scoped agents, so an implementation never validates only its own assumptions."],
               ["RFC/PR → Shadow → Review","Every change ships with a review package — diff, requirement traceability, test results, and shadow-execution evidence comparing new behavior against the current production path."],
-              ["Release & Audit","Automated quality gates run before human review. Every stage transition is written to a hash-chained audit ledger — the release is only the last entry in it."],
+              ["Tiered Adoption & Audit","Bronze, Silver, and Gold adoption tiers scale the required agents, architecture decisions, CI evidence, audit workflow, and human gates with the risk and maturity of the engineering work."],
             ].map(([t,d],i) => (
                 <Reveal key={t} delay={280+i*70}>
                   <h4 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1rem", fontWeight:700, color:C.text, marginBottom:".5rem" }}>{t}</h4>
@@ -605,6 +615,131 @@ const EnterpriseControlPlane = () => {
           </div>
         </div>
       </section>
+  );
+};
+
+/* ── ENGINEERING NOTES ── */
+const EngineeringNotes = () => {
+  const notes = [
+    {
+      number:"01", era:"Early 2025 · Agentic Commerce",
+      title:"Content inspired the project, but it could not complete the purchase",
+      lead:"By March 2025, customers had abundant do-it-yourself videos, articles, and project inspiration. The missing experience was a unified path from that content—or from a customer's own idea—to every compatible item required for the project and a complete, purchasable cart.",
+      problem:"Search and recommendations worked one product at a time. The customer still had to interpret the project, derive a bill of materials, determine quantities and compatibility, find each item, recognize catalog gaps, and coordinate the final cart. A chatbot that only answered questions did not remove that work.",
+      decision:"Build a supervisor-and-worker orchestrator around the project outcome. A content agent interprets a video, article, link, or natural-language request. A project agent derives steps and required materials. Catalog agents resolve products, price, availability, and substitutes. A cart agent assembles the purchasable result. When the retailer cannot fulfill an item, a marketplace agent can surface an external option rather than leaving the project incomplete.",
+      trace:["Customer provides a project idea, video, article, or link","Agents derive steps, materials, tools, quantities, and constraints","Catalog capabilities match available products and substitutes","The orchestrator creates a complete project cart","Missing items route to marketplace options","Unmet purchase intent becomes a catalog-gap signal for merchandising"],
+      learned:"The architecture created two connected outcomes: a simpler project-to-cart journey for the customer and a demand-sensing loop for the retailer. External purchase intent revealed precisely which missing products prevented the retailer from owning the complete project. But coordinating content understanding, catalog decisions, cart actions, and feedback across multiple agents introduced a new delivery challenge.",
+      next:"That constraint produced the governed software-delivery loop."
+    },
+    {
+      number:"02", era:"May 2026 · Governed Agentic SDLC",
+      title:"Was the value in Claude—or in the engineering loop around it?",
+      lead:"Loop Engineering was already producing value in Claude by keeping research, architecture decisions, implementation intent, and validation connected across a long-running engineering problem. In May 2026, I used GitHub Copilot to simulate that workflow and test whether the operating model could survive outside the assistant where it originated.",
+      problem:"AI coding assistants typically started each task cold. Architectural decisions, constraints, prior research, and accepted trade-offs had to be rediscovered or manually restated. Even when one long-running Claude workflow accumulated that knowledge successfully, the value was difficult to reproduce, govern, or transfer across tools and engineers.",
+      decision:"Make the loop—not the model—the system. A supervisor called the Loop Engine coordinated four phases—Discovery, Design, Build, and Validate—along with their phase transitions, story queue, pre-flight checks, retry logic, persisted pipeline state, and human-in-the-loop gates. Artifact, Evidence, and Product repositories separated what was decided, why it was trusted, and what was being changed. The later reference architecture expanded that operating model into eleven traceable stages.",
+      trace:["Discovery maps stakeholders, consumers, pain points, and constraints","Design produces accepted architecture decisions and low-level design","Build decomposes accepted design into planned code and test work","Validate assembles review, shadow, and release evidence","The Loop Engine persists state, manages retries, and stops at human gates","The same workflow is reproduced across assistants without losing its contracts"],
+      learned:"The Copilot simulation showed that the durable advantage was not a particular assistant. It was accumulated engineering memory, explicit stage contracts, supervisor-controlled transitions, evidence, and human judgment. But every agent still spent time assembling overlapping fragments of repository, business, runtime, and decision context.",
+      next:"That constraint produced Composite Context."
+    },
+    {
+      number:"03", era:"2026 · Composite Context",
+      title:"The expensive part was repeatedly rebuilding reality",
+      lead:"An agent rarely fails because the enterprise has no information. It fails because the relevant facts live in different systems, arrive with different freshness, and lose their provenance when compressed into a prompt.",
+      problem:"Repository structure, architecture decisions, business rules, runtime telemetry, ownership, policy, and prior outcomes were retrieved independently by each workflow. This increased response latency, duplicated interpretation, and allowed two agents to act from different versions of reality.",
+      decision:"Treat context as a governed evidence product. Composite Context assembles claims from authoritative sources, preserves source and freshness metadata, resolves them at organization, domain, application, repository, and workflow scope, and exposes only the minimum evidence required by the current decision.",
+      trace:["Resolve the acting identity and scope","Collect claims from authoritative connectors","Mark missing, stale, and conflicting evidence","Assemble a decision-specific context package","Persist accepted decisions and verified outcomes back into context"],
+      learned:"Shared context improved consistency, but evidence alone could not decide whether an agent was permitted to act. The architecture still needed a reusable model for confidence, policy, approval, and release readiness.",
+      next:"That constraint produced the Engineering Confidence Platform."
+    },
+    {
+      number:"04", era:"2026 · Engineering Confidence Platform",
+      title:"Confidence could not be another model-generated number",
+      lead:"Once AI participated in architecture and software delivery, the important question changed from “Is the answer convincing?” to “What evidence makes this change acceptable at this risk level?”",
+      problem:"A single confidence score hides why a decision is safe. High model certainty cannot compensate for stale context, an unapproved architecture change, missing tests, an unauthorized actor, or an action outside the registered release procedure.",
+      decision:"Define confidence structurally. A change earns progression through traceable requirements, accepted decisions, evidence completeness, policy evaluation, risk-tiered human gates, immutable execution intent, and outcome verification. The platform applies those controls at application and repository scope while the delivery loop performs the work.",
+      trace:["Evidence establishes what is known","Policy evaluates the proposed action","Risk determines the required authorization","The accepted plan becomes immutable intent","Verification proves the resulting system state"],
+      learned:"The same governed-action pattern was not limited to code. Production support had the identical trust problem—only with shorter timelines and a larger blast radius.",
+      next:"That constraint produced Agentic Operations."
+    },
+    {
+      number:"05", era:"2026 · Agentic Operations",
+      title:"A successful API call is not a resolved incident",
+      lead:"Operational tickets appeared ideal for automation: detect a known symptom, run a standard procedure, and close the incident. The dangerous gap was everything between diagnosis and verified recovery.",
+      problem:"An agent could select the wrong procedure, diagnose from incomplete telemetry, mutate a plan after approval, execute with broad credentials, or report success because an API returned 200—even while the customer-facing condition remained broken.",
+      decision:"Build an evidence-grounded incident state machine. A synthetic Slack incident matches a registered operating procedure, assembles connector context, produces a claim-linked diagnosis, freezes a remediation plan, evaluates policy, waits at the required human gate, executes through scoped credentials, and closes only after outcome verification.",
+      trace:["Trigger → operating procedure match","Context → evidence-grounded diagnosis","Plan → registered action and frozen parameters","Policy → risk decision and human approval","Execution → scoped capability","Verification → observed recovery or rollback"],
+      learned:"Software delivery and production operations were using the same primitives: identity, authoritative context, registered actions, policy, authorization, immutable intent, controlled execution, and evidence. Rebuilding those controls per workflow would recreate the fragmentation the work began by removing.",
+      next:"That constraint produced the Enterprise Control Plane."
+    },
+    {
+      number:"06", era:"2026 · Enterprise Control Plane",
+      title:"The architecture converged on one governed-action model",
+      lead:"Agentic Commerce, software delivery, and production operations began as separate problems. Their implementations converged because every enterprise action must answer the same questions before it is trusted.",
+      problem:"Who is acting? What authoritative facts support the decision? Is the proposed action registered? Which policy applies at this scope? Who must authorize it? What exactly was approved? Did execution produce the intended outcome?",
+      decision:"Place a reusable Enterprise Control Plane between probabilistic reasoning and deterministic enterprise systems. Composite Context supplies governed evidence. Identity, policy, and authorization determine whether an action may proceed. Registered procedures constrain execution. Verification feeds the observed outcome back into the context shared by commerce, engineering, and operations.",
+      trace:["Models propose","Composite Context grounds","Policy and people authorize","Registered capabilities execute","Evidence verifies","Outcomes strengthen the next decision"],
+      learned:"The result is not a claim that every enterprise workflow is solved. It is a working architectural thesis: intelligence can vary by model and use case, while the infrastructure that converts reasoning into accountable action remains consistent.",
+      next:"Models produce tokens. Enterprises need trusted actions."
+    },
+  ];
+  return (
+    <section id="engineering-notes" style={{ position:"relative", background:C.bg3, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
+      <Atmosphere variant="warm"/>
+      <div style={inner({ position:"relative", zIndex:1, padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
+        <Reveal>
+          <Eyebrow center>Engineering Notes · The Complete Arc</Eyebrow>
+          <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.4rem,4.4vw,4.4rem)", fontWeight:800, lineHeight:1.02, letterSpacing:"-.045em", color:C.text, textAlign:"center", maxWidth:"17ch", margin:"0 auto 1.5rem" }}>
+            Six constraints. One evolving{" "}<em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>architecture</em>
+          </h2>
+          <p style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.06rem", lineHeight:1.8, color:C.muted, textAlign:"center", maxWidth:"68ch", margin:"0 auto 3.5rem" }}>
+            This work did not begin with a control plane diagram. Each architecture emerged because the previous one exposed a constraint it could not solve. Open a chapter to follow the problem, decision, execution trace, and the insight that led to the next system.
+          </p>
+        </Reveal>
+        <div className="note-grid">
+          {notes.map((n,i)=>(
+            <Reveal key={n.number} delay={(i%2)*80}>
+              <details className="note-card" open={i===0} style={{ background:"rgba(255,255,255,.82)", border:`1px solid ${C.border}`, borderRadius:"20px", overflow:"hidden", height:"100%" }}>
+                <summary style={{ cursor:"pointer", padding:"2rem", display:"flex", gap:"1.4rem", alignItems:"flex-start" }}>
+                  <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".72rem", color:C.accent, letterSpacing:".12em", paddingTop:".25rem" }}>{n.number}</span>
+                  <span style={{ flex:1, minWidth:0 }}>
+                    <span style={{ display:"block", fontFamily:"'DM Mono',monospace", fontSize:".58rem", letterSpacing:".13em", textTransform:"uppercase", color:C.blueHi, marginBottom:".7rem" }}>{n.era}</span>
+                    <span style={{ display:"block", fontFamily:"'Manrope',sans-serif", fontSize:"clamp(1.15rem,1.8vw,1.5rem)", fontWeight:800, letterSpacing:"-.025em", lineHeight:1.2, color:C.text }}>{n.title}</span>
+                    <span style={{ display:"block", fontFamily:"'Manrope',sans-serif", fontSize:".9rem", lineHeight:1.7, color:"rgba(28,28,30,.6)", marginTop:".8rem" }}>{n.lead}</span>
+                  </span>
+                  <span className="note-plus" aria-hidden="true" style={{ width:"2rem", height:"2rem", borderRadius:"50%", border:`1px solid ${C.border}`, display:"inline-flex", alignItems:"center", justifyContent:"center", flexShrink:0, transition:"all .25s", fontSize:"1.2rem" }}>+</span>
+                </summary>
+                <div className="note-story" style={{ borderTop:`1px solid ${C.border}`, padding:"clamp(2rem,5vw,4rem)" }}>
+                  <div>
+                    <Eyebrow>The constraint</Eyebrow>
+                    <p style={{ fontFamily:"'Instrument Serif',serif", fontSize:"1.35rem", lineHeight:1.55, color:C.text, marginBottom:"2rem" }}>{n.problem}</p>
+                    <h4 style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".15em", textTransform:"uppercase", color:C.accent, marginBottom:".8rem" }}>The architecture decision</h4>
+                    <p style={{ fontFamily:"'Manrope',sans-serif", fontSize:".94rem", lineHeight:1.85, color:"rgba(28,28,30,.66)" }}>{n.decision}</p>
+                  </div>
+                  <div>
+                    <div style={{ background:C.text, borderRadius:"16px", padding:"1.8rem", marginBottom:"1.6rem" }}>
+                      <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".58rem", letterSpacing:".16em", textTransform:"uppercase", color:"rgba(255,255,255,.46)", marginBottom:"1.1rem" }}>Execution trace</div>
+                      {n.trace.map((step,j)=>(
+                        <div key={step} style={{ display:"grid", gridTemplateColumns:"1.5rem 1fr", gap:".7rem", alignItems:"start", fontFamily:"'DM Mono',monospace", fontSize:".72rem", lineHeight:1.6, color:"rgba(255,255,255,.82)", padding: j?".65rem 0 0":"0" }}>
+                          <span style={{ color:C.accent }}>{String(j+1).padStart(2,"0")}</span><span>{step}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <h4 style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".15em", textTransform:"uppercase", color:C.blueHi, marginBottom:".8rem" }}>What it revealed</h4>
+                    <p style={{ fontFamily:"'Manrope',sans-serif", fontSize:".94rem", lineHeight:1.8, color:"rgba(28,28,30,.66)", marginBottom:"1.4rem" }}>{n.learned}</p>
+                    <p style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontSize:"1.2rem", lineHeight:1.5, color:C.accent, borderLeft:`2px solid ${C.accent}`, paddingLeft:"1rem" }}>{n.next}</p>
+                  </div>
+                </div>
+              </details>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal delay={100}>
+          <p style={{ fontFamily:"'DM Mono',monospace", fontSize:".65rem", lineHeight:1.8, color:"rgba(28,28,30,.42)", maxWidth:"78ch", margin:"2.5rem auto 0", textAlign:"center" }}>
+            These are generalized architecture stories and synthetic execution examples from independent research prototypes. They do not describe or disclose any employer or client system.
+          </p>
+        </Reveal>
+      </div>
+    </section>
   );
 };
 
@@ -801,6 +936,7 @@ export default function App() {
         <ContextSection/>
         <Operations/>
         <EnterpriseControlPlane/>
+        <EngineeringNotes/>
         <Research/>
         <Team/>
         <Footer/>
