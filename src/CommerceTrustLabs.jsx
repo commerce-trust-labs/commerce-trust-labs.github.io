@@ -292,7 +292,7 @@ const Nav = () => {
   const [solid, setSolid] = useState(false);
   const [active, setActive] = useState("");
   const [open, setOpen] = useState(false);
-  const links = [["story","Story"],["loop","Delivery Loop"],["context","Context"],["operations","Operations"],["enterprise-control-plane","Control Plane"],["engineering-notes","Engineering Notes"],["research","Research"],["team","Creator"]];
+  const links = [["story","Story"],["loop","Delivery Loop"],["context","Context"],["operations","Operations"],["enterprise-control-plane","Control Plane"],["roadmap","Roadmap"],["engineering-notes","Engineering Notes"],["research","Research"],["team","Creator"]];
   useEffect(() => {
     const fn = () => setSolid(window.scrollY > 40);
     window.addEventListener("scroll", fn);
@@ -618,6 +618,113 @@ const EnterpriseControlPlane = () => {
   );
 };
 
+/* ── ROADMAP ── */
+const Roadmap = () => {
+  const phases = [
+    {
+      n:"01", label:"Observe", title:"Transparent intelligence gateway",
+      body:"Use Claude Code as the first client. Proxy requests without rewriting them and establish a reliable baseline for user, repository, task, model, input/output tokens, cache behavior, latency, retries, compaction, and cost.",
+      proof:"Proof: a session-level cost and quality baseline"
+    },
+    {
+      n:"02", label:"Curate", title:"Composite Context through MCP",
+      body:"Expose task-specific architecture, repository, policy, runtime, and decision evidence as a context manifest. Record what was selected, what was excluded, source freshness, and why each item deserved tokens.",
+      proof:"Proof: lower context volume without missed evidence"
+    },
+    {
+      n:"03", label:"Govern", title:"Deterministic controls through hooks",
+      body:"Classify task and risk, enforce repository policy, constrain tool use, run validation after changes, require approval for high-risk actions, and return verified outcomes to the control plane.",
+      proof:"Proof: policy enforcement outside the model prompt"
+    },
+    {
+      n:"04", label:"Optimize", title:"Risk-aware intelligence routing",
+      body:"Assign token budgets, reuse stable context, delegate classification and summarization to lower-cost models, and escalate to frontier reasoning only when uncertainty, evidence conflict, or risk justifies it.",
+      proof:"Proof: measurable savings with quality held constant"
+    },
+  ];
+  const consoleViews = [
+    ["Session trace","Context, model, tool, retry, and escalation decisions"],
+    ["Token economics","Baseline cost, optimized cost, latency, and savings"],
+    ["Context manifest","Included and excluded evidence with reasons and freshness"],
+    ["Policy decisions","Allowed, blocked, escalated, approved, and verified actions"],
+  ];
+  return (
+    <section id="roadmap" style={{ position:"relative", background:C.text, color:"#fff", width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
+      <div style={{ position:"absolute", inset:0, background:"radial-gradient(circle at 78% 22%, rgba(47,111,176,.28), transparent 34%), radial-gradient(circle at 18% 76%, rgba(217,99,31,.2), transparent 32%)" }}/>
+      <div style={inner({ position:"relative", zIndex:1, padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
+        <Reveal>
+          <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".65rem", letterSpacing:".2em", textTransform:"uppercase", color:"#ed8a4d", marginBottom:"1.6rem" }}>Roadmap · The Next Control Plane</div>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))", gap:"clamp(2.5rem,6vw,7rem)", alignItems:"end", marginBottom:"4.5rem" }}>
+            <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.5rem,5vw,5rem)", fontWeight:800, lineHeight:1, letterSpacing:"-.05em", color:"#fff", maxWidth:"13ch" }}>
+              From traffic control to{" "}<em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:"#ed8a4d" }}>intelligence control</em>
+            </h2>
+            <div>
+              <p style={{ fontFamily:"'Instrument Serif',serif", fontSize:"clamp(1.25rem,1.8vw,1.6rem)", lineHeight:1.55, color:"rgba(255,255,255,.88)", marginBottom:"1.2rem" }}>
+                A reverse proxy decides where traffic should go. An intelligence control plane decides which context, model, tools, governance path, and token budget should handle an enterprise task.
+              </p>
+              <p style={{ fontFamily:"'Manrope',sans-serif", fontSize:".94rem", lineHeight:1.8, color:"rgba(255,255,255,.58)" }}>
+                The gateway market already covers provider routing, budgets, caching, and observability. The differentiated problem is context economics: assembling the smallest trustworthy evidence package for a task and proving that lower cost did not remove a requirement, policy, or production constraint.
+              </p>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal delay={100}>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(150px,1fr))", border:"1px solid rgba(255,255,255,.14)", borderRadius:"18px", overflow:"hidden", marginBottom:"4.5rem", background:"rgba(255,255,255,.035)" }}>
+            {["CLAUDE CODE","INTELLIGENCE DATA PLANE","COMPOSITE CONTEXT","MODEL + TOOL ROUTING","EVIDENCE + OUTCOME"].map((step,i)=>(
+              <div key={step} style={{ position:"relative", padding:"1.5rem 1.1rem", borderRight:i<4?"1px solid rgba(255,255,255,.12)":"none", minHeight:"92px", display:"flex", alignItems:"center", justifyContent:"center", textAlign:"center" }}>
+                <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".67rem", letterSpacing:".09em", lineHeight:1.5, color:i===0||i===4?"#ed8a4d":"rgba(255,255,255,.74)" }}>{step}</span>
+                {i<4 && <span aria-hidden="true" style={{ position:"absolute", right:"-.42rem", top:"50%", transform:"translateY(-50%)", zIndex:2, color:"#ed8a4d", fontSize:"1rem" }}>→</span>}
+              </div>
+            ))}
+          </div>
+        </Reveal>
+
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(250px,1fr))", gap:"1.2rem", marginBottom:"4.5rem" }}>
+          {phases.map((p,i)=>(
+            <Reveal key={p.n} delay={i*70}>
+              <div style={{ height:"100%", border:"1px solid rgba(255,255,255,.14)", borderRadius:"18px", padding:"2rem", background:"rgba(255,255,255,.045)" }}>
+                <div style={{ display:"flex", justifyContent:"space-between", gap:"1rem", alignItems:"center", marginBottom:"1.3rem" }}>
+                  <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".68rem", color:"#ed8a4d" }}>{p.n}</span>
+                  <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".56rem", letterSpacing:".14em", textTransform:"uppercase", color:"rgba(255,255,255,.4)" }}>{p.label}</span>
+                </div>
+                <h3 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.18rem", lineHeight:1.25, fontWeight:750, color:"#fff", marginBottom:"1rem" }}>{p.title}</h3>
+                <p style={{ fontFamily:"'Manrope',sans-serif", fontSize:".88rem", lineHeight:1.75, color:"rgba(255,255,255,.6)", marginBottom:"1.4rem" }}>{p.body}</p>
+                <p style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", lineHeight:1.55, color:"#ed8a4d" }}>{p.proof}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={120}>
+          <div style={{ borderTop:"1px solid rgba(255,255,255,.14)", paddingTop:"3.5rem" }} className="note-story">
+            <div>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".16em", textTransform:"uppercase", color:"#ed8a4d", marginBottom:"1rem" }}>First product experience</div>
+              <h3 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(1.8rem,3vw,2.8rem)", lineHeight:1.08, letterSpacing:"-.035em", color:"#fff", marginBottom:"1.2rem" }}>Claude Code first. Thin evidence console second.</h3>
+              <p style={{ fontFamily:"'Manrope',sans-serif", fontSize:".94rem", lineHeight:1.8, color:"rgba(255,255,255,.58)" }}>
+                The control plane should prove itself inside a real engineering workflow before becoming a large standalone application. Claude Code remains the primary experience; the UI exists to expose the decisions the gateway made and whether they preserved engineering quality.
+              </p>
+            </div>
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(2,minmax(0,1fr))", gap:"1px", background:"rgba(255,255,255,.12)", border:"1px solid rgba(255,255,255,.12)", borderRadius:"15px", overflow:"hidden" }}>
+              {consoleViews.map(([title,body])=>(
+                <div key={title} style={{ background:"#1d1d22", padding:"1.5rem" }}>
+                  <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".94rem", fontWeight:700, color:"#fff", marginBottom:".55rem" }}>{title}</div>
+                  <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".8rem", lineHeight:1.65, color:"rgba(255,255,255,.48)" }}>{body}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+        <Reveal delay={180}>
+          <p style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontSize:"clamp(1.3rem,2vw,1.8rem)", lineHeight:1.55, color:"#fff", textAlign:"center", maxWidth:"55ch", margin:"4rem auto 0" }}>
+            The objective is not fewer tokens at any cost. It is the smallest trustworthy context, the least expensive capable intelligence, and evidence that the outcome remained correct.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  );
+};
+
 /* ── ENGINEERING NOTES ── */
 const EngineeringNotes = () => {
   const notes = [
@@ -648,11 +755,21 @@ const EngineeringNotes = () => {
       problem:"Repository structure, architecture decisions, business rules, runtime telemetry, ownership, policy, and prior outcomes were retrieved independently by each workflow. This increased response latency, duplicated interpretation, and allowed two agents to act from different versions of reality.",
       decision:"Treat context as a governed evidence product. Composite Context assembles claims from authoritative sources, preserves source and freshness metadata, resolves them at organization, domain, application, repository, and workflow scope, and exposes only the minimum evidence required by the current decision.",
       trace:["Resolve the acting identity and scope","Collect claims from authoritative connectors","Mark missing, stale, and conflicting evidence","Assemble a decision-specific context package","Persist accepted decisions and verified outcomes back into context"],
-      learned:"Shared context improved consistency, but evidence alone could not decide whether an agent was permitted to act — it still needed identity, policy, authorization, and verification wrapped around it. That governed-action gap showed up most sharply in production support, where timelines are short and the blast radius is large.",
+      learned:"Shared context improved consistency, but evidence alone could not decide whether an agent was permitted to act. The architecture still needed a reusable model for confidence, policy, approval, and release readiness.",
+      next:"That constraint produced the Engineering Confidence Platform."
+    },
+    {
+      number:"04", era:"2026 · Engineering Confidence Platform",
+      title:"Confidence could not be another model-generated number",
+      lead:"Once AI participated in architecture and software delivery, the important question changed from “Is the answer convincing?” to “What evidence makes this change acceptable at this risk level?”",
+      problem:"A single confidence score hides why a decision is safe. High model certainty cannot compensate for stale context, an unapproved architecture change, missing tests, an unauthorized actor, or an action outside the registered release procedure.",
+      decision:"Define confidence structurally. A change earns progression through traceable requirements, accepted decisions, evidence completeness, policy evaluation, risk-tiered human gates, immutable execution intent, and outcome verification. The platform applies those controls at application and repository scope while the delivery loop performs the work.",
+      trace:["Evidence establishes what is known","Policy evaluates the proposed action","Risk determines the required authorization","The accepted plan becomes immutable intent","Verification proves the resulting system state"],
+      learned:"The same governed-action pattern was not limited to code. Production support had the identical trust problem—only with shorter timelines and a larger blast radius.",
       next:"That constraint produced Agentic Operations."
     },
     {
-      number:"04", era:"2026 · Agentic Operations",
+      number:"05", era:"2026 · Agentic Operations",
       title:"A successful API call is not a resolved incident",
       lead:"Operational tickets appeared ideal for automation: detect a known symptom, run a standard procedure, and close the incident. The dangerous gap was everything between diagnosis and verified recovery.",
       problem:"An agent could select the wrong procedure, diagnose from incomplete telemetry, mutate a plan after approval, execute with broad credentials, or report success because an API returned 200—even while the customer-facing condition remained broken.",
@@ -662,7 +779,7 @@ const EngineeringNotes = () => {
       next:"That constraint produced the Enterprise Control Plane."
     },
     {
-      number:"05", era:"2026 · Enterprise Control Plane",
+      number:"06", era:"2026 · Enterprise Control Plane",
       title:"The architecture converged on one governed-action model",
       lead:"Agentic Commerce, software delivery, and production operations began as separate problems. Their implementations converged because every enterprise action must answer the same questions before it is trusted.",
       problem:"Who is acting? What authoritative facts support the decision? Is the proposed action registered? Which policy applies at this scope? Who must authorize it? What exactly was approved? Did execution produce the intended outcome?",
@@ -679,7 +796,7 @@ const EngineeringNotes = () => {
         <Reveal>
           <Eyebrow center>Engineering Notes · The Complete Arc</Eyebrow>
           <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.4rem,4.4vw,4.4rem)", fontWeight:800, lineHeight:1.02, letterSpacing:"-.045em", color:C.text, textAlign:"center", maxWidth:"17ch", margin:"0 auto 1.5rem" }}>
-            Five constraints. One evolving{" "}<em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>architecture</em>
+            Six constraints. One evolving{" "}<em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>architecture</em>
           </h2>
           <p style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.06rem", lineHeight:1.8, color:C.muted, textAlign:"center", maxWidth:"68ch", margin:"0 auto 3.5rem" }}>
             This work did not begin with a control plane diagram. Each architecture emerged because the previous one exposed a constraint it could not solve. Open a chapter to follow the problem, decision, execution trace, and the insight that led to the next system.
@@ -880,7 +997,7 @@ const Team = () => (
               </h3>
               {[
                 "Pranesh Soma is a distributed systems architect with close to two decades of experience designing large-scale enterprise commerce systems across cart, checkout, pricing, identity, platform traffic, modernization, and complex data migrations.",
-                "Commerce Trust Labs turns that experience into a connected body of independent research: the planner-and-worker model behind Agentic Commerce, the governed software-delivery loop, the composite-context model, and the Agentic Operations runtime. The Enterprise Control Plane unifies them through shared context, policy, authorization, and evidence between AI reasoning and enterprise action.",
+                "Commerce Trust Labs turns that experience into a connected body of independent research: the planner-and-worker model behind Agentic Commerce, the governed software-delivery loop within the Engineering Confidence Platform, the composite-context model, and the Agentic Operations runtime. The Enterprise Control Plane unifies them through shared context, policy, authorization, and evidence between AI reasoning and enterprise action.",
               ].map((para,i) => (
                   <p key={i} style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".95rem", lineHeight:1.85, color:"rgba(28,28,30,.64)", marginBottom:"1rem" }}>{para}</p>
               ))}
@@ -926,6 +1043,7 @@ export default function App() {
         <ContextSection/>
         <Operations/>
         <EnterpriseControlPlane/>
+        <Roadmap/>
         <EngineeringNotes/>
         <Research/>
         <Team/>
