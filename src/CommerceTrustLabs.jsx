@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 
 const C = {
-  bg:"#050505", bg2:"#0c0c0e", bg3:"#111113",
-  accent:"#d9631f", blueHi:"#7bafe0",
-  text:"#f4f3f0", muted:"#8b8d92",
-  border:"rgba(244,243,240,0.08)",
-  glass:"rgba(255,255,255,0.025)"
+  bg:"#ffffff", bg2:"#f6f5f2", bg3:"#efede8",
+  accent:"#d9631f", blueHi:"#2f6fb0",
+  text:"#16161a", muted:"#5c5e66",
+  border:"rgba(28,28,30,0.12)",
+  glass:"rgba(28,28,30,0.02)"
 };
 
 const GlobalStyle = () => (
@@ -13,27 +13,27 @@ const GlobalStyle = () => (
     @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap');
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;overflow-x:hidden;width:100%;max-width:100vw}
-    body{background:#050505;color:#f4f3f0;font-family:'Manrope',sans-serif;overflow-x:hidden;width:100%;max-width:100vw;min-width:0}
+    body{background:#ffffff;color:#16161a;font-family:'Manrope',sans-serif;overflow-x:hidden;width:100%;max-width:100vw;min-width:0}
     #root{width:100%;min-width:0;overflow-x:hidden;max-width:100vw}
     ::selection{background:#d9631f;color:#fff}
     ::-webkit-scrollbar{width:3px}
-    ::-webkit-scrollbar-track{background:#050505}
+    ::-webkit-scrollbar-track{background:#ffffff}
     ::-webkit-scrollbar-thumb{background:#d9631f}
     @keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-2%,3%) scale(1.05)}}
     @keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(3%,-2%) scale(1.08)}}
     @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
-    .nl{position:relative;color:rgba(244,243,240,.55);text-decoration:none;font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.08em;transition:color .25s;white-space:nowrap}
-    .nl:hover,.nl.on{color:#f4f3f0}
+    .nl{position:relative;color:rgba(28,28,30,.55);text-decoration:none;font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.08em;transition:color .25s;white-space:nowrap}
+    .nl:hover,.nl.on{color:#16161a}
     .nl.on::after{content:'';position:absolute;left:0;right:0;bottom:-.5rem;height:1px;background:#d9631f}
-    .card:hover{background:rgba(255,255,255,0.035)!important;border-color:rgba(244,243,240,0.14)!important;transform:translateY(-2px)}
-    .row:hover{background:rgba(255,255,255,0.03)!important}
-    .pill{display:inline-flex;align-items:center;gap:.6rem;background:#f4f3f0;color:#050505;padding:.95rem 2rem;border-radius:999px;font-family:'Manrope',sans-serif;font-size:.8rem;font-weight:700;text-decoration:none;transition:all .25s;border:1px solid #f4f3f0}
+    .card:hover{background:rgba(28,28,30,0.05)!important;border-color:rgba(28,28,30,0.14)!important;transform:translateY(-2px)}
+    .row:hover{background:rgba(28,28,30,0.04)!important}
+    .pill{display:inline-flex;align-items:center;gap:.6rem;background:#16161a;color:#ffffff;padding:.95rem 2rem;border-radius:999px;font-family:'Manrope',sans-serif;font-size:.8rem;font-weight:700;text-decoration:none;transition:all .25s;border:1px solid #16161a}
     .pill:hover{background:#d9631f;border-color:#d9631f;color:#fff;transform:translateY(-1px)}
-    .pill2{display:inline-flex;align-items:center;gap:.6rem;background:transparent;color:#f4f3f0;padding:.95rem 2rem;border-radius:999px;font-family:'Manrope',sans-serif;font-size:.8rem;font-weight:700;text-decoration:none;border:1px solid rgba(244,243,240,.22);transition:all .25s}
-    .pill2:hover{border-color:#f4f3f0;background:rgba(244,243,240,.06);transform:translateY(-1px)}
-    .lk{opacity:.45;transition:opacity .2s;text-decoration:none;font-family:'DM Mono',monospace;font-size:.7rem;color:#f4f3f0;white-space:nowrap}
+    .pill2{display:inline-flex;align-items:center;gap:.6rem;background:transparent;color:#16161a;padding:.95rem 2rem;border-radius:999px;font-family:'Manrope',sans-serif;font-size:.8rem;font-weight:700;text-decoration:none;border:1px solid rgba(28,28,30,.22);transition:all .25s}
+    .pill2:hover{border-color:#16161a;background:rgba(28,28,30,.06);transform:translateY(-1px)}
+    .lk{opacity:.45;transition:opacity .2s;text-decoration:none;font-family:'DM Mono',monospace;font-size:.7rem;color:#16161a;white-space:nowrap}
     .lk:hover{opacity:1}
-    .fl{color:rgba(244,243,240,.35);text-decoration:none;transition:color .2s}
+    .fl{color:rgba(28,28,30,.35);text-decoration:none;transition:color .2s}
     .fl:hover{color:#d9631f}
     .nav-links{display:flex}
     .nav-burger{display:none}
@@ -118,7 +118,7 @@ const Atmosphere = ({ variant = "hero" }) => {
         <div style={{ position:"absolute", width:"40%", paddingBottom:"40%", left:"20%", bottom:"-15%", borderRadius:"50%", background:c3, filter:"blur(90px)", animation:"drift 30s ease-in-out infinite" }}/>
         <div style={{
           position:"absolute", inset:"-20%",
-          backgroundImage:"linear-gradient(rgba(244,243,240,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(244,243,240,.05) 1px, transparent 1px)",
+          backgroundImage:"linear-gradient(rgba(28,28,30,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(28,28,30,.05) 1px, transparent 1px)",
           backgroundSize:"56px 56px",
           maskImage:"radial-gradient(ellipse 60% 50% at 50% 40%, black, transparent)",
           WebkitMaskImage:"radial-gradient(ellipse 60% 50% at 50% 40%, black, transparent)"
@@ -129,8 +129,8 @@ const Atmosphere = ({ variant = "hero" }) => {
 
 const ScrollCue = () => (
     <div style={{ position:"absolute", left:"50%", bottom:"2.4rem", transform:"translateX(-50%)", display:"flex", flexDirection:"column", alignItems:"center", gap:".6rem", animation:"bob 2.4s ease-in-out infinite" }}>
-      <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".6rem", letterSpacing:".2em", textTransform:"uppercase", color:"rgba(244,243,240,.35)" }}>Scroll</span>
-      <svg width="14" height="20" viewBox="0 0 14 20" fill="none"><path d="M7 1v16M1 11l6 6 6-6" stroke="rgba(244,243,240,.35)" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
+      <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".6rem", letterSpacing:".2em", textTransform:"uppercase", color:"rgba(28,28,30,.35)" }}>Scroll</span>
+      <svg width="14" height="20" viewBox="0 0 14 20" fill="none"><path d="M7 1v16M1 11l6 6 6-6" stroke="rgba(28,28,30,.35)" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
     </div>
 );
 
@@ -141,12 +141,12 @@ const FragmentGraphic = () => (
       <rect x="0" y="0" width="480" height="420" fill="url(#fg)"/>
       {[[60,60,90,64,"CART"],[170,40,80,96,"PRICING"],[270,70,120,54,"CHECKOUT"],[60,180,140,80,"INVENTORY"],[220,180,90,110,"IDENTITY"],[330,190,100,66,"FULFILLMENT"],[60,290,110,70,"PROMOS"],[190,320,150,58,"ORDERS"],[360,290,80,80,"SERVICE"]].map(([x,y,w,h,label],i)=>(
           <g key={i}>
-            <rect x={x} y={y} width={w} height={h} rx="6" fill="none" stroke={i%3===0?"#d9631f":"rgba(244,243,240,.16)"} strokeOpacity={i%3===0?0.55:1} strokeWidth="1"/>
-            <text x={x+10} y={y+h/2+3} fontFamily="'DM Mono',monospace" fontSize="7" letterSpacing="1" fill={i%3===0?"#d9631f":"rgba(244,243,240,.4)"}>{label}</text>
+            <rect x={x} y={y} width={w} height={h} rx="6" fill="none" stroke={i%3===0?"#d9631f":"rgba(28,28,30,.16)"} strokeOpacity={i%3===0?0.55:1} strokeWidth="1"/>
+            <text x={x+10} y={y+h/2+3} fontFamily="'DM Mono',monospace" fontSize="7" letterSpacing="1" fill={i%3===0?"#d9631f":"rgba(28,28,30,.4)"}>{label}</text>
           </g>
       ))}
       {[[105,92,215,88],[310,97,270,125],[130,220,220,235],[280,235,410,245],[145,349,235,290]].map(([x1,y1,x2,y2],i)=>(
-          <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(244,243,240,.1)" strokeDasharray="3 5"/>
+          <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(28,28,30,.1)" strokeDasharray="3 5"/>
       ))}
     </svg>
 );
@@ -155,18 +155,18 @@ const CompassGraphic = () => (
     <svg viewBox="0 0 480 420" fill="none" style={{ width:"100%", height:"auto", display:"block" }}>
       <defs><radialGradient id="cg" cx="50%" cy="50%" r="55%"><stop offset="0%" stopColor="#d9631f" stopOpacity=".14"/><stop offset="100%" stopColor="#d9631f" stopOpacity="0"/></radialGradient></defs>
       <circle cx="240" cy="210" r="180" fill="url(#cg)"/>
-      {[176,132,88].map((r,i)=>(<circle key={r} cx="240" cy="210" r={r} stroke="rgba(244,243,240,.1)" strokeWidth="1" strokeDasharray={i===2?"2 5":"1 0"}/>))}
+      {[176,132,88].map((r,i)=>(<circle key={r} cx="240" cy="210" r={r} stroke="rgba(28,28,30,.1)" strokeWidth="1" strokeDasharray={i===2?"2 5":"1 0"}/>))}
       <circle cx="240" cy="210" r="44" fill="none" stroke="#d9631f" strokeWidth="1.2"/>
       <text x="240" y="215" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="8" letterSpacing="1" fill="#d9631f">ECP</text>
       {[["COMMERCE",0],["SDLC LOOP",90],["OPERATIONS",180],["POLICY",270]].map(([label,deg],i)=>{
         const r=176, rad=(deg-90)*Math.PI/180, x=240+r*Math.cos(rad), y=210+r*Math.sin(rad);
         return (<g key={i}>
           <circle cx={x} cy={y} r="4" fill={i%2===0?"#d9631f":"#7bafe0"} opacity="0.9"/>
-          <text x={x} y={deg===0?y-12:deg===180?y+20:y+4} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="7.5" letterSpacing="1" fill="rgba(244,243,240,.55)">{label}</text>
+          <text x={x} y={deg===0?y-12:deg===180?y+20:y+4} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="7.5" letterSpacing="1" fill="rgba(28,28,30,.55)">{label}</text>
         </g>);
       })}
-      <line x1="240" y1="30" x2="240" y2="390" stroke="rgba(244,243,240,.08)"/>
-      <line x1="60" y1="210" x2="420" y2="210" stroke="rgba(244,243,240,.08)"/>
+      <line x1="240" y1="30" x2="240" y2="390" stroke="rgba(28,28,30,.08)"/>
+      <line x1="60" y1="210" x2="420" y2="210" stroke="rgba(28,28,30,.08)"/>
     </svg>
 );
 
@@ -176,12 +176,12 @@ const NetworkGraphic = () => (
       <rect x="0" y="0" width="480" height="420" fill="url(#ng)"/>
       {[["APPLICATION",90,110],["RUNTIME",340,90],["HISTORY",400,240],["ENGINEERING",320,340],["BUSINESS",110,320]].map(([label,x,y],i)=>(
           <g key={label}>
-            <line x1={240} y1={210} x2={x} y2={y} stroke="rgba(244,243,240,.14)" strokeWidth="1"/>
+            <line x1={240} y1={210} x2={x} y2={y} stroke="rgba(28,28,30,.14)" strokeWidth="1"/>
             <circle cx={x} cy={y} r={i<3?6:4.5} fill={i<3?"#d9631f":"#7bafe0"} opacity={i<3?0.95:0.6}/>
-            <text x={x} y={y< 210 ? y-12 : y+18} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="8" letterSpacing="1" fill="rgba(244,243,240,.55)">{label}</text>
+            <text x={x} y={y< 210 ? y-12 : y+18} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="8" letterSpacing="1" fill="rgba(28,28,30,.55)">{label}</text>
           </g>
       ))}
-      <circle cx="240" cy="210" r="16" fill="#0c0c0e" stroke="#d9631f" strokeWidth="1.4"/>
+      <circle cx="240" cy="210" r="16" fill="#ffffff" stroke="#d9631f" strokeWidth="1.4"/>
       <text x="240" y="213" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="7" fill="#d9631f">CTX</text>
     </svg>
 );
@@ -192,20 +192,20 @@ const FlowGraphic = () => {
       <svg viewBox="0 0 480 420" fill="none" style={{ width:"100%", height:"auto", display:"block" }}>
         <defs><linearGradient id="flg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#7bafe0" stopOpacity=".14"/><stop offset="100%" stopColor="#7bafe0" stopOpacity="0"/></linearGradient></defs>
         <rect x="0" y="0" width="480" height="420" fill="url(#flg)"/>
-        <line x1="90" y1="40" x2="90" y2="380" stroke="rgba(244,243,240,.12)" strokeWidth="1"/>
+        <line x1="90" y1="40" x2="90" y2="380" stroke="rgba(28,28,30,.12)" strokeWidth="1"/>
         {steps.map((s,i)=>{
           const y = 40 + i*68;
           const isGate = s === "APPROVE";
           return (
               <g key={s}>
-                <circle cx="90" cy={y} r={isGate?9:6} fill={isGate?"#d9631f":"#0c0c0e"} stroke={isGate?"#d9631f":"#7bafe0"} strokeWidth="1.4"/>
-                <text x="115" y={y+4} fontFamily="'DM Mono',monospace" fontSize="10" letterSpacing="1.5" fill={isGate?"#d9631f":"rgba(244,243,240,.7)"}>{s}</text>
-                {isGate && <text x="115" y={y+20} fontFamily="'DM Mono',monospace" fontSize="7" letterSpacing="1" fill="rgba(244,243,240,.4)">HUMAN GATE</text>}
+                <circle cx="90" cy={y} r={isGate?9:6} fill={isGate?"#d9631f":"#ffffff"} stroke={isGate?"#d9631f":"#7bafe0"} strokeWidth="1.4"/>
+                <text x="115" y={y+4} fontFamily="'DM Mono',monospace" fontSize="10" letterSpacing="1.5" fill={isGate?"#d9631f":"rgba(28,28,30,.7)"}>{s}</text>
+                {isGate && <text x="115" y={y+20} fontFamily="'DM Mono',monospace" fontSize="7" letterSpacing="1" fill="rgba(28,28,30,.4)">HUMAN GATE</text>}
               </g>
           );
         })}
-        <path d="M300 40 L420 40 L420 380 L300 380" stroke="rgba(244,243,240,.08)" strokeWidth="1" fill="none" strokeDasharray="3 5"/>
-        <text x="308" y="30" fontFamily="'DM Mono',monospace" fontSize="7.5" letterSpacing="1" fill="rgba(244,243,240,.35)">EVIDENCE LEDGER</text>
+        <path d="M300 40 L420 40 L420 380 L300 380" stroke="rgba(28,28,30,.08)" strokeWidth="1" fill="none" strokeDasharray="3 5"/>
+        <text x="308" y="30" fontFamily="'DM Mono',monospace" fontSize="7.5" letterSpacing="1" fill="rgba(28,28,30,.35)">EVIDENCE LEDGER</text>
       </svg>
   );
 };
@@ -215,10 +215,10 @@ const DocGraphic = () => (
       <defs><radialGradient id="dg" cx="50%" cy="40%" r="55%"><stop offset="0%" stopColor="#d9631f" stopOpacity=".12"/><stop offset="100%" stopColor="#d9631f" stopOpacity="0"/></radialGradient></defs>
       <rect x="0" y="0" width="480" height="420" fill="url(#dg)"/>
       {[0,1,2].map(i=>(
-          <rect key={i} x={140-i*16} y={70+i*14} width="220" height="280" rx="10" fill="#0c0c0e" stroke="rgba(244,243,240,.12)" strokeWidth="1" transform={`rotate(${(i-1)*4} 250 210)`}/>
+          <rect key={i} x={140-i*16} y={70+i*14} width="220" height="280" rx="10" fill="#ffffff" stroke="rgba(28,28,30,.12)" strokeWidth="1" transform={`rotate(${(i-1)*4} 250 210)`}/>
       ))}
       <g transform="translate(120,90)">
-        {[0,1,2,3,4,5].map(i=>(<rect key={i} x="0" y={i*30} width={i%2===0?170:120} height="8" rx="4" fill={i===0?"#d9631f":"rgba(244,243,240,.14)"}/>))}
+        {[0,1,2,3,4,5].map(i=>(<rect key={i} x="0" y={i*30} width={i%2===0?170:120} height="8" rx="4" fill={i===0?"#d9631f":"rgba(28,28,30,.14)"}/>))}
       </g>
     </svg>
 );
@@ -243,7 +243,7 @@ const Nav = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-      <nav style={{ position:"fixed", top:0, left:0, right:0, zIndex:200, display:"flex", flexWrap:"wrap", justifyContent:"space-between", alignItems:"center", gap:"1rem", padding: solid ? ".9rem clamp(1.25rem, 5vw, 3.5rem)" : "1.5rem clamp(1.25rem, 5vw, 3.5rem)", background: solid||open ? "rgba(5,5,5,.86)" : "transparent", backdropFilter: (solid||open) ? "blur(18px) saturate(140%)" : "none", borderBottom:`1px solid ${(solid||open) ? C.border : "transparent"}`, transition:"all .35s cubic-bezier(.16,1,.3,1)", minWidth:0, maxWidth:"100vw" }}>
+      <nav style={{ position:"fixed", top:0, left:0, right:0, zIndex:200, display:"flex", flexWrap:"wrap", justifyContent:"space-between", alignItems:"center", gap:"1rem", padding: solid ? ".9rem clamp(1.25rem, 5vw, 3.5rem)" : "1.5rem clamp(1.25rem, 5vw, 3.5rem)", background: solid||open ? "rgba(255,255,255,.86)" : "transparent", backdropFilter: (solid||open) ? "blur(18px) saturate(140%)" : "none", borderBottom:`1px solid ${(solid||open) ? C.border : "transparent"}`, transition:"all .35s cubic-bezier(.16,1,.3,1)", minWidth:0, maxWidth:"100vw" }}>
         <a href="#" style={{ display:"flex", alignItems:"center", gap:".6rem", fontFamily:"'Manrope',sans-serif", fontSize:".8rem", fontWeight:700, letterSpacing:"-.01em", color:C.text, textDecoration:"none", flexShrink:0 }}>
           <span style={{ width:"1.6rem", height:"1.6rem", borderRadius:"6px", background:C.accent, display:"inline-flex", alignItems:"center", justifyContent:"center", fontFamily:"'DM Mono',monospace", fontSize:".62rem", color:"#fff" }}>CT</span>
           Commerce Trust Labs
@@ -265,7 +265,7 @@ const Nav = () => {
             }
           </svg>
         </button>
-        <div className={`nav-mobile-panel${open?" open":""}`} style={{ position:"absolute", top:"100%", left:0, right:0, background:"rgba(5,5,5,.97)", backdropFilter:"blur(18px)", borderBottom:`1px solid ${C.border}`, flexDirection:"column", padding:"1rem clamp(1.25rem, 5vw, 3.5rem) 1.6rem", gap:"1.1rem" }}>
+        <div className={`nav-mobile-panel${open?" open":""}`} style={{ position:"absolute", top:"100%", left:0, right:0, background:"rgba(255,255,255,.97)", backdropFilter:"blur(18px)", borderBottom:`1px solid ${C.border}`, flexDirection:"column", padding:"1rem clamp(1.25rem, 5vw, 3.5rem) 1.6rem", gap:"1.1rem" }}>
           {links.map(([id,l]) => (
               <a key={id} href={`#${id}`} onClick={()=>setOpen(false)} className={`nl${active===id?" on":""}`} style={{ fontSize:".82rem" }}>{l}</a>
           ))}
@@ -278,30 +278,30 @@ const Nav = () => {
 const Hero = () => {
   const [up, setUp] = useState(false);
   useEffect(() => { const t = setTimeout(() => setUp(true), 80); return () => clearTimeout(t); }, []);
-  const a = d => ({ opacity: up?1:0, transform: up?"none":"translateY(20px)", transition:`opacity .9s cubic-bezier(.16,1,.3,1) ${d}ms, transform .9s cubic-bezier(.16,1,.3,1) ${d}ms` });
+  const a = d => ({ opacity: up?1:0, transform: up?"none":"translateY(20px)", transition:`opacity 1s cubic-bezier(.16,1,.3,1) ${d}ms, transform 1s cubic-bezier(.16,1,.3,1) ${d}ms` });
   return (
       <section style={{ position:"relative", background:C.bg, minHeight:"100vh", display:"flex", alignItems:"center", overflow:"hidden", width:"100%", maxWidth:"100vw" }}>
         <Atmosphere variant="hero"/>
-        <div style={inner({ position:"relative", zIndex:1, padding:"9rem clamp(1.25rem, 5vw, 3.5rem) 6rem", textAlign:"center", display:"flex", flexDirection:"column", alignItems:"center" })}>
+        <div style={inner({ position:"relative", zIndex:1, padding:"10rem clamp(1.25rem, 5vw, 3.5rem) 7rem", textAlign:"center", display:"flex", flexDirection:"column", alignItems:"center" })}>
           <div style={{ ...a(60) }}>
             <Eyebrow center>Agentic Infrastructure for Enterprise Commerce</Eyebrow>
           </div>
-          <h1 style={{ ...a(150), fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.6rem,6vw,5.4rem)", fontWeight:800, lineHeight:1.02, letterSpacing:"-.035em", color:C.text, maxWidth:"18ch", marginBottom:"1.8rem" }}>
+          <h1 style={{ ...a(150), fontFamily:"'Manrope',sans-serif", fontSize:"clamp(3rem,7vw,6.5rem)", fontWeight:800, lineHeight:1.0, letterSpacing:"-.04em", color:C.text, maxWidth:"16ch", marginBottom:"2.2rem" }}>
             Where Tokens Become{" "}
             <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>Trusted Actions</em>
           </h1>
-          <p style={{ ...a(260), fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:"clamp(.95rem,1.4vw,1.15rem)", lineHeight:1.7, color:C.muted, maxWidth:"50ch", marginBottom:"2.6rem" }}>
-            A token is model-generated reasoning. A trusted action is what's left after it passes through composite context, evidence, policy, human approval, execution, and verification. We build the plane in between.
+          <p style={{ ...a(260), fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:"clamp(1.15rem,1.8vw,1.5rem)", lineHeight:1.65, color:"rgba(28,28,30,.72)", maxWidth:"42ch", marginBottom:"3.2rem" }}>
+            A token is model-generated reasoning. A trusted action is what's left after it passes through context, policy, human approval, and verification. We build the plane in between.
           </p>
-          <div style={{ ...a(360), display:"flex", gap:"1rem", flexWrap:"wrap", justifyContent:"center", marginBottom:"4.5rem" }}>
+          <div style={{ ...a(360), display:"flex", gap:"1.1rem", flexWrap:"wrap", justifyContent:"center", marginBottom:"5.5rem" }}>
             <a href="#story" className="pill">Read the Story →</a>
             <a href="https://github.com/PraneshSoma/agentic-sdlc-loop" target="_blank" rel="noreferrer" className="pill2">View on GitHub</a>
           </div>
-          <div style={{ ...a(460), display:"flex", flexWrap:"wrap", gap:"1px", background:C.border, border:`1px solid ${C.border}`, borderRadius:"16px", overflow:"hidden", maxWidth:"640px", width:"100%" }}>
+          <div style={{ ...a(480), display:"flex", flexWrap:"wrap", justifyContent:"center", gap:"clamp(2rem, 6vw, 5rem)", width:"100%" }}>
             {[["Composite","Context Model"],["Governed","SDLC Loop"],["Human-Gated","Agentic Ops"]].map(([v,d]) => (
-                <div key={v} style={{ background:"rgba(255,255,255,.02)", padding:"1.4rem 1rem", flex:"1 1 160px", minWidth:0, textAlign:"center" }}>
-                  <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.05rem", fontWeight:800, color:C.accent, marginBottom:".3rem" }}>{v}</div>
-                  <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".6rem", letterSpacing:".1em", textTransform:"uppercase", color:C.muted }}>{d}</div>
+                <div key={v} style={{ textAlign:"center" }}>
+                  <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.35rem", fontWeight:800, color:C.text, marginBottom:".4rem", letterSpacing:"-.01em" }}>{v}</div>
+                  <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".64rem", letterSpacing:".16em", textTransform:"uppercase", color:C.accent }}>{d}</div>
                 </div>
             ))}
           </div>
@@ -315,19 +315,19 @@ const Hero = () => {
 const SplitSection = ({ id, bg, eyebrow, heading, headingEm, body, visual, atmosphere, reverse, children }) => (
     <section id={id} style={{ position:"relative", background:bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
       {atmosphere && <Atmosphere variant={atmosphere}/>}
-      <div style={inner({ position:"relative", zIndex:1, padding:"7rem clamp(1.25rem, 5vw, 3.5rem)" })}>
+      <div style={inner({ position:"relative", zIndex:1, padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
         <div className={`split-row${reverse?" reverse":""}`}>
           <div className="split-text">
             <Reveal>
               <Eyebrow>{eyebrow}</Eyebrow>
-              <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(1.9rem,3vw,2.8rem)", fontWeight:800, lineHeight:1.08, letterSpacing:"-.03em", color:C.text, marginBottom:"1.6rem" }}>
+              <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.1rem,3.4vw,3.2rem)", fontWeight:800, lineHeight:1.06, letterSpacing:"-.035em", color:C.text, marginBottom:"1.8rem" }}>
                 {heading}{" "}
                 {headingEm && <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>{headingEm}</em>}
               </h2>
             </Reveal>
             {body && (
                 <Reveal delay={140}>
-                  <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".95rem", lineHeight:1.85, color:C.muted, maxWidth:"56ch", marginBottom:"2rem" }}>{body}</p>
+                  <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:"1.08rem", lineHeight:1.85, color:"rgba(28,28,30,.66)", maxWidth:"54ch", marginBottom:"2.4rem" }}>{body}</p>
                 </Reveal>
             )}
             {children}
@@ -355,15 +355,15 @@ const Story = () => {
         <div style={{ display:"flex", flexDirection:"column", gap:"1.4rem", marginBottom:"2rem" }}>
           {items.map((p,i) => (
               <Reveal key={i} delay={220+i*70}>
-                <div style={{ borderLeft:`2px solid ${C.accent}`, paddingLeft:"1.4rem" }}>
-                  <h4 style={{ fontFamily:"'Manrope',sans-serif", fontSize:".92rem", fontWeight:700, color:C.text, marginBottom:".35rem" }}>{p.title}</h4>
-                  <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".82rem", lineHeight:1.75, color:C.muted }}>{p.body}</p>
+                <div style={{ borderLeft:`2px solid ${C.accent}`, paddingLeft:"1.5rem" }}>
+                  <h4 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.02rem", fontWeight:700, color:C.text, marginBottom:".4rem" }}>{p.title}</h4>
+                  <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".92rem", lineHeight:1.75, color:"rgba(28,28,30,.62)" }}>{p.body}</p>
                 </div>
               </Reveal>
           ))}
         </div>
         <Reveal delay={460}>
-          <p style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontSize:"1.05rem", lineHeight:1.6, color:C.text, borderLeft:`3px solid ${C.accent}`, paddingLeft:"1.2rem" }}>
+          <p style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontSize:"1.3rem", lineHeight:1.55, color:C.text, borderLeft:`3px solid ${C.accent}`, paddingLeft:"1.4rem" }}>
             Making the planner smarter didn't make the system safe or deployable. The harder problem was converting AI reasoning into a governed, authorized, evidence-backed, auditable action — that shift is why Commerce Trust Labs exists.
           </p>
         </Reveal>
@@ -379,15 +379,15 @@ const Loop = () => {
   const gated = new Set(["ADR","LLD","RFC/PR","Release"]);
   return (
       <section id="loop" style={{ position:"relative", background:C.bg3, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
-        <div style={inner({ padding:"7rem clamp(1.25rem, 5vw, 3.5rem)" })}>
+        <div style={inner({ padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
           <Reveal>
             <Eyebrow>Loop Engineering</Eyebrow>
-            <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(1.9rem,3vw,2.8rem)", fontWeight:800, lineHeight:1.08, letterSpacing:"-.03em", color:C.text, marginBottom:"1.6rem", maxWidth:"22ch" }}>
+            <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.1rem,3.4vw,3.2rem)", fontWeight:800, lineHeight:1.06, letterSpacing:"-.035em", color:C.text, marginBottom:"1.8rem", maxWidth:"22ch" }}>
               An agentic SDLC, not just code generation
             </h2>
           </Reveal>
           <Reveal delay={120}>
-            <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".95rem", lineHeight:1.85, color:C.muted, maxWidth:"70ch", marginBottom:"3.5rem" }}>
+            <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:"1.08rem", lineHeight:1.85, color:"rgba(28,28,30,.66)", maxWidth:"68ch", marginBottom:"3.5rem" }}>
               Enterprise software doesn't move from prompt to production in one step. Eleven stages, coordinated by a supervisor that enforces stage-entry and stage-exit criteria — it won't let downstream work start on an artifact that hasn't been accepted. Four of the eleven stop for a human.
             </p>
           </Reveal>
@@ -398,10 +398,10 @@ const Loop = () => {
                     <div key={s} style={{ display:"flex", alignItems:"center", flex: i===stages.length-1 ? "0 0 auto" : "1 1 auto" }}>
                       <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:".7rem", flexShrink:0 }}>
                         <div style={{ width: gated.has(s)?"1.1rem":".7rem", height: gated.has(s)?"1.1rem":".7rem", borderRadius:"50%", background: gated.has(s)?C.accent:"transparent", border:`1.5px solid ${gated.has(s)?C.accent:C.blueHi}` }}/>
-                        <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".05em", color: gated.has(s)?C.accent:"rgba(244,243,240,.6)", whiteSpace:"nowrap" }}>{s}</div>
-                        {gated.has(s) && <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".54rem", letterSpacing:".05em", color:"rgba(244,243,240,.32)", whiteSpace:"nowrap" }}>human gate</div>}
+                        <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".05em", color: gated.has(s)?C.accent:"rgba(28,28,30,.6)", whiteSpace:"nowrap" }}>{s}</div>
+                        {gated.has(s) && <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".54rem", letterSpacing:".05em", color:"rgba(28,28,30,.32)", whiteSpace:"nowrap" }}>human gate</div>}
                       </div>
-                      {i < stages.length-1 && <div style={{ flex:1, height:"1px", background:"rgba(244,243,240,.14)", marginTop:".35rem" }}/>}
+                      {i < stages.length-1 && <div style={{ flex:1, height:"1px", background:"rgba(28,28,30,.14)", marginTop:".35rem" }}/>}
                     </div>
                 ))}
               </div>
@@ -415,8 +415,8 @@ const Loop = () => {
               ["Release & Audit","Automated quality gates run before human review. Every stage transition is written to a hash-chained audit ledger — the release is only the last entry in it."],
             ].map(([t,d],i) => (
                 <Reveal key={t} delay={280+i*70}>
-                  <h4 style={{ fontFamily:"'Manrope',sans-serif", fontSize:".92rem", fontWeight:700, color:C.text, marginBottom:".5rem" }}>{t}</h4>
-                  <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".82rem", lineHeight:1.75, color:C.muted }}>{d}</p>
+                  <h4 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1rem", fontWeight:700, color:C.text, marginBottom:".5rem" }}>{t}</h4>
+                  <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".92rem", lineHeight:1.75, color:"rgba(28,28,30,.62)" }}>{d}</p>
                 </Reveal>
             ))}
           </div>
@@ -441,17 +441,17 @@ const ContextSection = () => {
         <div style={{ display:"flex", flexDirection:"column", gap:"1.1rem", marginBottom:"2rem" }}>
           {layers.map((l,i) => (
               <Reveal key={i} delay={200+i*60}>
-                <div style={{ borderLeft:`2px solid ${i<3?C.accent:C.blueHi}`, paddingLeft:"1.4rem" }}>
-                  <h4 style={{ fontFamily:"'Manrope',sans-serif", fontSize:".88rem", fontWeight:700, color:C.text, marginBottom:".3rem" }}>{l.n}</h4>
-                  <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".8rem", lineHeight:1.7, color:C.muted }}>{l.body}</p>
+                <div style={{ borderLeft:`2px solid ${i<3?C.accent:C.blueHi}`, paddingLeft:"1.5rem" }}>
+                  <h4 style={{ fontFamily:"'Manrope',sans-serif", fontSize:".98rem", fontWeight:700, color:C.text, marginBottom:".35rem" }}>{l.n}</h4>
+                  <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".9rem", lineHeight:1.7, color:"rgba(28,28,30,.62)" }}>{l.body}</p>
                 </div>
               </Reveal>
           ))}
         </div>
         <Reveal delay={520}>
           <div style={{ border:`1px solid ${C.border}`, borderRadius:"14px", padding:"1.6rem 1.8rem", background:C.glass }}>
-            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".76rem", color:C.blueHi, marginBottom:".6rem" }}>Context assembled from connectors (missing: 0, stale: 0)</div>
-            <div style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".78rem", color:C.muted, lineHeight:1.7 }}>Every element carries its source, retrieval time, and confidence — so a diagnosis can only use evidence that's current, complete, and tied to the right tenant and environment.</div>
+            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".82rem", color:C.blueHi, marginBottom:".7rem" }}>Context assembled from connectors (missing: 0, stale: 0)</div>
+            <div style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".88rem", color:"rgba(28,28,30,.62)", lineHeight:1.7 }}>Every element carries its source, retrieval time, and confidence — so a diagnosis can only use evidence that's current, complete, and tied to the right tenant and environment.</div>
           </div>
         </Reveal>
       </SplitSection>
@@ -479,21 +479,21 @@ const Operations = () => {
         body="The Agentic Operations Platform applies these principles to operational work — incidents, production tickets, data reconciliation, entitlement issues. Agents never hold production write credentials directly: they propose a plan built from a registered action, and a separately governed execution layer performs it only after policy and approval clear."
         visual={<FlowGraphic/>}>
         <Reveal delay={200}>
-          <div style={{ border:`1px solid ${C.border}`, borderRadius:"10px", background:"#000", overflow:"hidden", marginBottom:"1.4rem" }}>
+          <div style={{ border:`1px solid ${C.border}`, borderRadius:"10px", background:"#f4f2ec", overflow:"hidden", marginBottom:"1.4rem" }}>
             <div style={{ display:"flex", alignItems:"center", gap:".5rem", padding:".7rem 1rem", borderBottom:`1px solid ${C.border}` }}>
-              <span style={{ width:"8px", height:"8px", borderRadius:"50%", background:"rgba(244,243,240,.18)" }}/>
-              <span style={{ width:"8px", height:"8px", borderRadius:"50%", background:"rgba(244,243,240,.18)" }}/>
-              <span style={{ width:"8px", height:"8px", borderRadius:"50%", background:"rgba(244,243,240,.18)" }}/>
-              <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", color:"rgba(244,243,240,.35)", marginLeft:".4rem" }}>INC-1002 — checkout-service</span>
+              <span style={{ width:"8px", height:"8px", borderRadius:"50%", background:"rgba(28,28,30,.18)" }}/>
+              <span style={{ width:"8px", height:"8px", borderRadius:"50%", background:"rgba(28,28,30,.18)" }}/>
+              <span style={{ width:"8px", height:"8px", borderRadius:"50%", background:"rgba(28,28,30,.18)" }}/>
+              <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", color:"rgba(28,28,30,.35)", marginLeft:".4rem" }}>INC-1002 — checkout-service</span>
             </div>
             <div style={{ padding:"1.1rem 1.2rem", overflowX:"auto" }}>
               <div style={{ minWidth:"max-content" }}>
                 {log.map(([t,state,actor,msg],i) => (
                     <div key={i} style={{ display:"flex", gap:".8rem", fontFamily:"'DM Mono',monospace", fontSize:".7rem", lineHeight:1.9, whiteSpace:"nowrap" }}>
-                      <span style={{ color:"rgba(244,243,240,.25)" }}>{t}</span>
-                      <span style={{ color: state==="APPROVED"||state==="RESOLVED" ? C.accent : state==="WAITING_APPROVAL" ? "#e0b34a" : C.blueHi, flexShrink:0, width:"9.5rem" }}>{state}</span>
-                      <span style={{ color:"rgba(244,243,240,.4)", flexShrink:0 }}>{actor}</span>
-                      <span style={{ color:"rgba(244,243,240,.72)" }}>{msg}</span>
+                      <span style={{ color:"rgba(28,28,30,.25)" }}>{t}</span>
+                      <span style={{ color: state==="APPROVED"||state==="RESOLVED" ? C.accent : state==="WAITING_APPROVAL" ? "#b07d15" : C.blueHi, flexShrink:0, width:"9.5rem" }}>{state}</span>
+                      <span style={{ color:"rgba(28,28,30,.4)", flexShrink:0 }}>{actor}</span>
+                      <span style={{ color:"rgba(28,28,30,.72)" }}>{msg}</span>
                     </div>
                 ))}
               </div>
@@ -501,7 +501,7 @@ const Operations = () => {
           </div>
         </Reveal>
         <Reveal delay={280}>
-          <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".78rem", color:"rgba(244,243,240,.35)", lineHeight:1.7 }}>
+          <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".88rem", color:"rgba(28,28,30,.4)", lineHeight:1.7 }}>
             This is an architecture and working prototype, not a production deployment claim. Approved plans are immutable, execution never runs on unrestricted credentials, and an incident closes only after a verified outcome — not just a successful API call.
           </p>
         </Reveal>
@@ -518,18 +518,18 @@ const Ecp = () => {
   ];
   return (
       <section id="ecp" style={{ position:"relative", background:C.bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
-        <div style={inner({ padding:"7rem clamp(1.25rem, 5vw, 3.5rem)" })}>
-          <div className="split-row" style={{ marginBottom:"4rem", alignItems:"center" }}>
+        <div style={inner({ padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
+          <div className="split-row" style={{ marginBottom:"4.5rem", alignItems:"center" }}>
             <div className="split-text">
               <Reveal>
                 <Eyebrow>Enterprise Context Plan</Eyebrow>
-                <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(1.9rem,3vw,2.8rem)", fontWeight:800, lineHeight:1.08, letterSpacing:"-.03em", color:C.text, marginBottom:"1.6rem" }}>
+                <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.1rem,3.4vw,3.2rem)", fontWeight:800, lineHeight:1.06, letterSpacing:"-.035em", color:C.text, marginBottom:"1.8rem" }}>
                   The Governed Plane Between{" "}
                   <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>Reasoning and Action</em>
                 </h2>
               </Reveal>
               <Reveal delay={140}>
-                <p style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontSize:"clamp(1.1rem,1.6vw,1.4rem)", lineHeight:1.5, color:C.text, maxWidth:"36ch" }}>
+                <p style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontSize:"clamp(1.3rem,1.9vw,1.7rem)", lineHeight:1.5, color:C.text, maxWidth:"34ch" }}>
                   "Intelligence proposes; the control plane governs; enterprise systems execute; evidence proves the outcome."
                 </p>
               </Reveal>
@@ -541,9 +541,9 @@ const Ecp = () => {
           <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(260px, 1fr))", gap:"1.25rem" }}>
             {pillars.map((p,i) => (
                 <Reveal key={i} delay={i*100}>
-                  <div className="card" style={{ background:C.glass, border:`1px solid ${C.border}`, borderRadius:"20px", padding:"2.4rem", height:"100%", cursor:"default", transition:"all .3s", borderTop:`2px solid ${C.accent}` }}>
-                    <h3 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.02rem", fontWeight:700, color:C.text, marginBottom:".9rem" }}>{p.title}</h3>
-                    <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".84rem", lineHeight:1.8, color:C.muted }}>{p.body}</p>
+                  <div className="card" style={{ background:C.glass, border:`1px solid ${C.border}`, borderRadius:"20px", padding:"2.6rem", height:"100%", cursor:"default", transition:"all .3s", borderTop:`2px solid ${C.accent}` }}>
+                    <h3 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.12rem", fontWeight:700, color:C.text, marginBottom:"1rem" }}>{p.title}</h3>
+                    <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".92rem", lineHeight:1.8, color:"rgba(28,28,30,.62)" }}>{p.body}</p>
                   </div>
                 </Reveal>
             ))}
@@ -572,8 +572,8 @@ const Research = () => {
                 <div className="row" style={{ background:C.bg, padding:"1.6rem 1.8rem", display:"flex", flexWrap:"wrap", gap:"1.2rem", alignItems:"center", minWidth:0, transition:"background .25s" }}>
                   <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".56rem", letterSpacing:".15em", textTransform:"uppercase", color:C.accent, flexShrink:0 }}>{p.type}</div>
                   <div style={{ minWidth:0, flex:"1 1 180px" }}>
-                    <div style={{ fontFamily:"'Manrope',sans-serif", fontWeight:700, fontSize:".88rem", color:C.text, marginBottom:".3rem" }}>{p.title}</div>
-                    <div style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".76rem", color:C.muted, lineHeight:1.6 }}>{p.desc}</div>
+                    <div style={{ fontFamily:"'Manrope',sans-serif", fontWeight:700, fontSize:".98rem", color:C.text, marginBottom:".35rem" }}>{p.title}</div>
+                    <div style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".86rem", color:"rgba(28,28,30,.6)", lineHeight:1.6 }}>{p.desc}</div>
                   </div>
                   {p.link
                       ? <a href={p.link} target="_blank" rel="noreferrer" className="lk" style={{ flexShrink:0 }}>{p.linkLabel}</a>
@@ -590,7 +590,7 @@ const Research = () => {
 /* ── TEAM ── */
 const Team = () => (
     <section id="team" style={{ position:"relative", background:C.bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
-      <div style={inner({ position:"relative", zIndex:1, padding:"7rem clamp(1.25rem, 5vw, 3.5rem)" })}>
+      <div style={inner({ position:"relative", zIndex:1, padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
         <Reveal><Eyebrow center>Founder</Eyebrow></Reveal>
         <Reveal delay={100}>
           <div style={{ display:"flex", flexWrap:"wrap", gap:"3.5rem", alignItems:"start", border:`1px solid ${C.border}`, borderRadius:"24px", padding:"3rem", background:C.glass, minWidth:0, maxWidth:"960px", margin:"0 auto" }}>
@@ -603,7 +603,7 @@ const Team = () => (
               <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".1em", textTransform:"uppercase", color:C.accent, textAlign:"center" }}>Founder &amp; Chief Architect</div>
             </div>
             <div style={{ minWidth:0, flex:"1 1 320px" }}>
-              <h3 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(1.3rem,2vw,1.7rem)", fontWeight:800, lineHeight:1.15, letterSpacing:"-.03em", color:C.text, marginBottom:"1.8rem" }}>
+              <h3 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(1.5rem,2.4vw,2.1rem)", fontWeight:800, lineHeight:1.12, letterSpacing:"-.035em", color:C.text, marginBottom:"1.8rem" }}>
                 Nearly Two Decades Inside{" "}
                 <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>the Commerce Lifecycle</em>
               </h3>
@@ -612,7 +612,7 @@ const Team = () => (
                 "As an engineering leader within one of the United States' largest retail platforms, he built traffic management and reverse-proxy infrastructure that held up under large-scale bot attacks, led reactive and GraphQL-based checkout architectures, and ran the PAB Graph-to-Cassandra parity migration — reconciling two systems of record before retiring the old one.",
                 "That firsthand view of how many independent systems a single commerce transaction actually touches is what led directly to Commerce Trust Labs: an agent orchestrating across that surface area needs a governed context and control layer, not just a better prompt.",
               ].map((para,i) => (
-                  <p key={i} style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".86rem", lineHeight:1.85, color:C.muted, marginBottom:"1rem" }}>{para}</p>
+                  <p key={i} style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".95rem", lineHeight:1.85, color:"rgba(28,28,30,.64)", marginBottom:"1rem" }}>{para}</p>
               ))}
               <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(110px,1fr))", gap:"1px", background:C.border, border:`1px solid ${C.border}`, borderRadius:"14px", overflow:"hidden", marginTop:"1.8rem" }}>
                 {[["Cart &","Checkout"],["Pricing &","Promotions"],["Identity &","Hierarchy"],["Traffic &","Resilience"]].map(([v,d]) => (
@@ -639,13 +639,13 @@ const Footer = () => (
             <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.1rem", fontWeight:800, color:C.text }}>Commerce Trust Labs</div>
           </div>
           <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".66rem", color:C.muted, marginBottom:"1rem" }}>Agentic Infrastructure for Enterprise Commerce — Atlanta, Georgia, USA</div>
-          <div style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".72rem", color:"rgba(244,243,240,.22)", lineHeight:1.8, maxWidth:"42ch" }}>Commerce Trust Labs is an independent research and engineering initiative building the governed context and control plane between AI reasoning and enterprise action.</div>
+          <div style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".72rem", color:"rgba(28,28,30,.22)", lineHeight:1.8, maxWidth:"42ch" }}>Commerce Trust Labs is an independent research and engineering initiative building the governed context and control plane between AI reasoning and enterprise action.</div>
         </div>
         <div style={{ textAlign:"right", fontFamily:"'DM Mono',monospace", fontSize:".7rem", lineHeight:2.4, minWidth:0, flex:"1 1 200px" }}>
           {[["commercetrustlabs.org","https://commercetrustlabs.org"],["github.com/PraneshSoma","https://github.com/PraneshSoma"],["contact@commercetrustlabs.org","mailto:contact@commercetrustlabs.org"]].map(([label,href]) => (
               <div key={label}><a href={href} className="fl">{label}</a></div>
           ))}
-          <div style={{ color:"rgba(244,243,240,.14)", marginTop:".5rem", fontSize:".62rem" }}>© 2025 Commerce Trust Labs. All rights reserved.</div>
+          <div style={{ color:"rgba(28,28,30,.14)", marginTop:".5rem", fontSize:".62rem" }}>© 2025 Commerce Trust Labs. All rights reserved.</div>
         </div>
       </div>
     </footer>
