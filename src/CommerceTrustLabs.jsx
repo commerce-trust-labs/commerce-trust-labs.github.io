@@ -1,44 +1,62 @@
 import { useState, useEffect, useRef } from "react";
 
 const C = {
-  bg:"#0b0f14", bg2:"#111820", bg3:"#161e28",
-  accent:"#c4501a", blueHi:"#6fa3d8",
-  text:"#e8e4dc", muted:"#7a8494",
-  border:"rgba(232,228,220,0.08)"
+  bg:"#050505", bg2:"#0c0c0e", bg3:"#111113",
+  accent:"#d9631f", blueHi:"#7bafe0",
+  text:"#f4f3f0", muted:"#8b8d92",
+  border:"rgba(244,243,240,0.08)",
+  glass:"rgba(255,255,255,0.025)"
 };
 
 const GlobalStyle = () => (
     <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@300;400&family=Instrument+Serif:ital@0;1&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap');
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;overflow-x:hidden;width:100%;max-width:100vw}
-    body{background:#0b0f14;color:#e8e4dc;font-family:'Syne',sans-serif;overflow-x:hidden;width:100%;max-width:100vw;min-width:0}
+    body{background:#050505;color:#f4f3f0;font-family:'Manrope',sans-serif;overflow-x:hidden;width:100%;max-width:100vw;min-width:0}
     #root{width:100%;min-width:0;overflow-x:hidden;max-width:100vw}
-    ::selection{background:#c4501a;color:#fff}
+    ::selection{background:#d9631f;color:#fff}
     ::-webkit-scrollbar{width:3px}
-    ::-webkit-scrollbar-track{background:#0b0f14}
-    ::-webkit-scrollbar-thumb{background:#c4501a}
-    @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-    .nl{color:#7a8494;text-decoration:none;font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;transition:color .2s}
-    .nl:hover,.nl.on{color:#c4501a}
-    .ch:hover{background:#161e28!important}
-    .pr:hover{background:#161e28!important}
-    .bp{display:inline-flex;align-items:center;gap:.5rem;background:#c4501a;color:#fff;padding:.8rem 1.6rem;font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;transition:background .2s}
-    .bp:hover{background:#e06030}
-    .bg2btn{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:#e8e4dc;padding:.8rem 1.6rem;font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border:1px solid rgba(232,228,220,.1);transition:border-color .2s}
-    .bg2btn:hover{border-color:rgba(232,228,220,.3)}
-    .lk{opacity:.4;transition:opacity .2s;text-decoration:none;font-family:'DM Mono',monospace;font-size:.68rem;color:#e8e4dc;white-space:nowrap}
+    ::-webkit-scrollbar-track{background:#050505}
+    ::-webkit-scrollbar-thumb{background:#d9631f}
+    @keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-2%,3%) scale(1.05)}}
+    @keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(3%,-2%) scale(1.08)}}
+    @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+    .nl{position:relative;color:rgba(244,243,240,.55);text-decoration:none;font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.08em;transition:color .25s;white-space:nowrap}
+    .nl:hover,.nl.on{color:#f4f3f0}
+    .nl.on::after{content:'';position:absolute;left:0;right:0;bottom:-.5rem;height:1px;background:#d9631f}
+    .card:hover{background:rgba(255,255,255,0.035)!important;border-color:rgba(244,243,240,0.14)!important;transform:translateY(-2px)}
+    .row:hover{background:rgba(255,255,255,0.03)!important}
+    .pill{display:inline-flex;align-items:center;gap:.6rem;background:#f4f3f0;color:#050505;padding:.95rem 2rem;border-radius:999px;font-family:'Manrope',sans-serif;font-size:.8rem;font-weight:700;text-decoration:none;transition:all .25s;border:1px solid #f4f3f0}
+    .pill:hover{background:#d9631f;border-color:#d9631f;color:#fff;transform:translateY(-1px)}
+    .pill2{display:inline-flex;align-items:center;gap:.6rem;background:transparent;color:#f4f3f0;padding:.95rem 2rem;border-radius:999px;font-family:'Manrope',sans-serif;font-size:.8rem;font-weight:700;text-decoration:none;border:1px solid rgba(244,243,240,.22);transition:all .25s}
+    .pill2:hover{border-color:#f4f3f0;background:rgba(244,243,240,.06);transform:translateY(-1px)}
+    .lk{opacity:.45;transition:opacity .2s;text-decoration:none;font-family:'DM Mono',monospace;font-size:.7rem;color:#f4f3f0;white-space:nowrap}
     .lk:hover{opacity:1}
-    .fl{color:rgba(232,228,220,.3);text-decoration:none;transition:color .2s}
-    .fl:hover{color:#c4501a}
+    .fl{color:rgba(244,243,240,.35);text-decoration:none;transition:color .2s}
+    .fl:hover{color:#d9631f}
+    .nav-links{display:flex}
+    .nav-burger{display:none}
+    .nav-mobile-panel{display:none}
+    .split-row{display:flex;flex-wrap:wrap;gap:4rem;align-items:center}
+    .split-text{order:1;min-width:0;flex:1 1 340px}
+    .split-visual{order:2;min-width:0;flex:1 1 340px;max-width:440px;margin:0 auto}
+    .split-row.reverse .split-text{order:2}
+    .split-row.reverse .split-visual{order:1}
+    @media (max-width: 860px){
+      .nav-links{display:none}
+      .nav-burger{display:inline-flex}
+      .nav-mobile-panel.open{display:flex}
+      .split-text,.split-row.reverse .split-text{order:1}
+      .split-visual,.split-row.reverse .split-visual{order:2}
+    }
   `}</style>
 );
 
-/* shared wrapper style — never spread over itself, no horizontal overflow */
 const inner = (extra = {}) => ({
-  maxWidth: "min(1200px, 100%)",
+  maxWidth: "min(1240px, 100%)",
   margin: "0 auto",
-  padding: "0 clamp(1rem, 5vw, 3rem)",
+  padding: "0 clamp(1.25rem, 5vw, 3.5rem)",
   width: "100%",
   minWidth: 0,
   boxSizing: "border-box",
@@ -63,205 +81,342 @@ const Reveal = ({ children, delay = 0 }) => {
   return (
       <div ref={ref} style={{
         opacity: v ? 1 : 0,
-        transform: v ? "none" : "translateY(20px)",
-        transition: `opacity .7s ease ${delay}ms, transform .7s ease ${delay}ms`
+        transform: v ? "none" : "translateY(24px)",
+        transition: `opacity .8s cubic-bezier(.16,1,.3,1) ${delay}ms, transform .8s cubic-bezier(.16,1,.3,1) ${delay}ms`
       }}>
         {children}
       </div>
   );
 };
 
-const Label = ({ children, light }) => (
-    <div style={{ display:"flex", alignItems:"center", gap:"1rem", marginBottom:"2rem" }}>
-      <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".6rem", letterSpacing:".25em", textTransform:"uppercase", color: light ? "rgba(232,228,220,.22)" : C.muted, whiteSpace:"nowrap" }}>{children}</span>
-      <div style={{ flex:1, height:"1px", background: light ? "rgba(232,228,220,.05)" : C.border }} />
+const Eyebrow = ({ children, center }) => (
+    center ? (
+        <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:".7rem", marginBottom:"1.6rem" }}>
+          <span style={{ width:"1.4rem", height:"1px", background:C.accent, display:"inline-block" }}/>
+          <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".65rem", letterSpacing:".22em", textTransform:"uppercase", color:C.accent, textAlign:"center" }}>{children}</span>
+        </div>
+    ) : (
+        <div style={{ display:"flex", alignItems:"center", gap:".6rem", marginBottom:"1.6rem" }}>
+          <span style={{ width:"1.4rem", height:"1px", background:C.accent, display:"inline-block", flexShrink:0 }}/>
+          <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".65rem", letterSpacing:".22em", textTransform:"uppercase", color:C.accent }}>{children}</span>
+        </div>
+    )
+);
+
+/* ── ATMOSPHERE ── */
+const Atmosphere = ({ variant = "hero" }) => {
+  const palettes = {
+    hero:  ["rgba(217,99,31,.22)","rgba(123,175,224,.14)","rgba(217,99,31,.10)"],
+    warm:  ["rgba(217,99,31,.16)","rgba(217,99,31,.06)","rgba(123,175,224,.08)"],
+    cool:  ["rgba(123,175,224,.16)","rgba(123,175,224,.06)","rgba(217,99,31,.08)"],
+  };
+  const [c1,c2,c3] = palettes[variant] || palettes.hero;
+  return (
+      <div style={{ position:"absolute", inset:0, overflow:"hidden", pointerEvents:"none" }}>
+        <div style={{ position:"absolute", width:"60%", paddingBottom:"60%", left:"-10%", top:"-15%", borderRadius:"50%", background:c1, filter:"blur(90px)", animation:"drift 22s ease-in-out infinite" }}/>
+        <div style={{ position:"absolute", width:"50%", paddingBottom:"50%", right:"-10%", top:"10%", borderRadius:"50%", background:c2, filter:"blur(100px)", animation:"drift2 26s ease-in-out infinite" }}/>
+        <div style={{ position:"absolute", width:"40%", paddingBottom:"40%", left:"20%", bottom:"-15%", borderRadius:"50%", background:c3, filter:"blur(90px)", animation:"drift 30s ease-in-out infinite" }}/>
+        <div style={{
+          position:"absolute", inset:"-20%",
+          backgroundImage:"linear-gradient(rgba(244,243,240,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(244,243,240,.05) 1px, transparent 1px)",
+          backgroundSize:"56px 56px",
+          maskImage:"radial-gradient(ellipse 60% 50% at 50% 40%, black, transparent)",
+          WebkitMaskImage:"radial-gradient(ellipse 60% 50% at 50% 40%, black, transparent)"
+        }}/>
+      </div>
+  );
+};
+
+const ScrollCue = () => (
+    <div style={{ position:"absolute", left:"50%", bottom:"2.4rem", transform:"translateX(-50%)", display:"flex", flexDirection:"column", alignItems:"center", gap:".6rem", animation:"bob 2.4s ease-in-out infinite" }}>
+      <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".6rem", letterSpacing:".2em", textTransform:"uppercase", color:"rgba(244,243,240,.35)" }}>Scroll</span>
+      <svg width="14" height="20" viewBox="0 0 14 20" fill="none"><path d="M7 1v16M1 11l6 6 6-6" stroke="rgba(244,243,240,.35)" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
     </div>
+);
+
+/* ── SECTION VISUALS ── */
+const FragmentGraphic = () => (
+    <svg viewBox="0 0 480 420" fill="none" style={{ width:"100%", height:"auto", display:"block" }}>
+      <defs><radialGradient id="fg" cx="50%" cy="40%" r="60%"><stop offset="0%" stopColor="#d9631f" stopOpacity=".16"/><stop offset="100%" stopColor="#d9631f" stopOpacity="0"/></radialGradient></defs>
+      <rect x="0" y="0" width="480" height="420" fill="url(#fg)"/>
+      {[[60,60,90,64,"CART"],[170,40,80,96,"PRICING"],[270,70,120,54,"CHECKOUT"],[60,180,140,80,"INVENTORY"],[220,180,90,110,"IDENTITY"],[330,190,100,66,"FULFILLMENT"],[60,290,110,70,"PROMOS"],[190,320,150,58,"ORDERS"],[360,290,80,80,"SERVICE"]].map(([x,y,w,h,label],i)=>(
+          <g key={i}>
+            <rect x={x} y={y} width={w} height={h} rx="6" fill="none" stroke={i%3===0?"#d9631f":"rgba(244,243,240,.16)"} strokeOpacity={i%3===0?0.55:1} strokeWidth="1"/>
+            <text x={x+10} y={y+h/2+3} fontFamily="'DM Mono',monospace" fontSize="7" letterSpacing="1" fill={i%3===0?"#d9631f":"rgba(244,243,240,.4)"}>{label}</text>
+          </g>
+      ))}
+      {[[105,92,215,88],[310,97,270,125],[130,220,220,235],[280,235,410,245],[145,349,235,290]].map(([x1,y1,x2,y2],i)=>(
+          <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(244,243,240,.1)" strokeDasharray="3 5"/>
+      ))}
+    </svg>
+);
+
+const CompassGraphic = () => (
+    <svg viewBox="0 0 480 420" fill="none" style={{ width:"100%", height:"auto", display:"block" }}>
+      <defs><radialGradient id="cg" cx="50%" cy="50%" r="55%"><stop offset="0%" stopColor="#d9631f" stopOpacity=".14"/><stop offset="100%" stopColor="#d9631f" stopOpacity="0"/></radialGradient></defs>
+      <circle cx="240" cy="210" r="180" fill="url(#cg)"/>
+      {[176,132,88].map((r,i)=>(<circle key={r} cx="240" cy="210" r={r} stroke="rgba(244,243,240,.1)" strokeWidth="1" strokeDasharray={i===2?"2 5":"1 0"}/>))}
+      <circle cx="240" cy="210" r="44" fill="none" stroke="#d9631f" strokeWidth="1.2"/>
+      <text x="240" y="215" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="8" letterSpacing="1" fill="#d9631f">ECP</text>
+      {[["COMMERCE",0],["SDLC LOOP",90],["OPERATIONS",180],["POLICY",270]].map(([label,deg],i)=>{
+        const r=176, rad=(deg-90)*Math.PI/180, x=240+r*Math.cos(rad), y=210+r*Math.sin(rad);
+        return (<g key={i}>
+          <circle cx={x} cy={y} r="4" fill={i%2===0?"#d9631f":"#7bafe0"} opacity="0.9"/>
+          <text x={x} y={deg===0?y-12:deg===180?y+20:y+4} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="7.5" letterSpacing="1" fill="rgba(244,243,240,.55)">{label}</text>
+        </g>);
+      })}
+      <line x1="240" y1="30" x2="240" y2="390" stroke="rgba(244,243,240,.08)"/>
+      <line x1="60" y1="210" x2="420" y2="210" stroke="rgba(244,243,240,.08)"/>
+    </svg>
+);
+
+const NetworkGraphic = () => (
+    <svg viewBox="0 0 480 420" fill="none" style={{ width:"100%", height:"auto", display:"block" }}>
+      <defs><radialGradient id="ng" cx="50%" cy="50%" r="55%"><stop offset="0%" stopColor="#7bafe0" stopOpacity=".16"/><stop offset="100%" stopColor="#7bafe0" stopOpacity="0"/></radialGradient></defs>
+      <rect x="0" y="0" width="480" height="420" fill="url(#ng)"/>
+      {[["APPLICATION",90,110],["RUNTIME",340,90],["HISTORY",400,240],["ENGINEERING",320,340],["BUSINESS",110,320]].map(([label,x,y],i)=>(
+          <g key={label}>
+            <line x1={240} y1={210} x2={x} y2={y} stroke="rgba(244,243,240,.14)" strokeWidth="1"/>
+            <circle cx={x} cy={y} r={i<3?6:4.5} fill={i<3?"#d9631f":"#7bafe0"} opacity={i<3?0.95:0.6}/>
+            <text x={x} y={y< 210 ? y-12 : y+18} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="8" letterSpacing="1" fill="rgba(244,243,240,.55)">{label}</text>
+          </g>
+      ))}
+      <circle cx="240" cy="210" r="16" fill="#0c0c0e" stroke="#d9631f" strokeWidth="1.4"/>
+      <text x="240" y="213" textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="7" fill="#d9631f">CTX</text>
+    </svg>
+);
+
+const FlowGraphic = () => {
+  const steps = ["TRIGGER","CONTEXT","DIAGNOSE","PLAN","APPROVE","VERIFY"];
+  return (
+      <svg viewBox="0 0 480 420" fill="none" style={{ width:"100%", height:"auto", display:"block" }}>
+        <defs><linearGradient id="flg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#7bafe0" stopOpacity=".14"/><stop offset="100%" stopColor="#7bafe0" stopOpacity="0"/></linearGradient></defs>
+        <rect x="0" y="0" width="480" height="420" fill="url(#flg)"/>
+        <line x1="90" y1="40" x2="90" y2="380" stroke="rgba(244,243,240,.12)" strokeWidth="1"/>
+        {steps.map((s,i)=>{
+          const y = 40 + i*68;
+          const isGate = s === "APPROVE";
+          return (
+              <g key={s}>
+                <circle cx="90" cy={y} r={isGate?9:6} fill={isGate?"#d9631f":"#0c0c0e"} stroke={isGate?"#d9631f":"#7bafe0"} strokeWidth="1.4"/>
+                <text x="115" y={y+4} fontFamily="'DM Mono',monospace" fontSize="10" letterSpacing="1.5" fill={isGate?"#d9631f":"rgba(244,243,240,.7)"}>{s}</text>
+                {isGate && <text x="115" y={y+20} fontFamily="'DM Mono',monospace" fontSize="7" letterSpacing="1" fill="rgba(244,243,240,.4)">HUMAN GATE</text>}
+              </g>
+          );
+        })}
+        <path d="M300 40 L420 40 L420 380 L300 380" stroke="rgba(244,243,240,.08)" strokeWidth="1" fill="none" strokeDasharray="3 5"/>
+        <text x="308" y="30" fontFamily="'DM Mono',monospace" fontSize="7.5" letterSpacing="1" fill="rgba(244,243,240,.35)">EVIDENCE LEDGER</text>
+      </svg>
+  );
+};
+
+const DocGraphic = () => (
+    <svg viewBox="0 0 480 420" fill="none" style={{ width:"100%", height:"auto", display:"block" }}>
+      <defs><radialGradient id="dg" cx="50%" cy="40%" r="55%"><stop offset="0%" stopColor="#d9631f" stopOpacity=".12"/><stop offset="100%" stopColor="#d9631f" stopOpacity="0"/></radialGradient></defs>
+      <rect x="0" y="0" width="480" height="420" fill="url(#dg)"/>
+      {[0,1,2].map(i=>(
+          <rect key={i} x={140-i*16} y={70+i*14} width="220" height="280" rx="10" fill="#0c0c0e" stroke="rgba(244,243,240,.12)" strokeWidth="1" transform={`rotate(${(i-1)*4} 250 210)`}/>
+      ))}
+      <g transform="translate(120,90)">
+        {[0,1,2,3,4,5].map(i=>(<rect key={i} x="0" y={i*30} width={i%2===0?170:120} height="8" rx="4" fill={i===0?"#d9631f":"rgba(244,243,240,.14)"}/>))}
+      </g>
+    </svg>
 );
 
 /* ── NAV ── */
 const Nav = () => {
   const [solid, setSolid] = useState(false);
   const [active, setActive] = useState("");
+  const [open, setOpen] = useState(false);
+  const links = [["story","Story"],["loop","Loop"],["context","Context"],["operations","Operations"],["ecp","Control Plane"],["research","Research"],["team","Team"]];
   useEffect(() => {
     const fn = () => setSolid(window.scrollY > 40);
     window.addEventListener("scroll", fn);
     return () => window.removeEventListener("scroll", fn);
   }, []);
   useEffect(() => {
-    const ids = ["problem","mission","technology","interest","research","team"];
     const o = new IntersectionObserver(es => {
       es.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
     }, { threshold: 0.3 });
-    ids.forEach(id => { const el = document.getElementById(id); if (el) o.observe(el); });
+    links.forEach(([id]) => { const el = document.getElementById(id); if (el) o.observe(el); });
     return () => o.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-      <nav style={{ position:"fixed", top:0, left:0, right:0, zIndex:200, display:"flex", flexWrap:"wrap", justifyContent:"space-between", alignItems:"center", gap:"1rem", padding:"1rem clamp(1rem, 5vw, 3rem)", background: solid ? "rgba(11,15,20,.97)" : "rgba(11,15,20,.5)", backdropFilter:"blur(16px)", borderBottom:`1px solid ${solid ? C.border : "transparent"}`, transition:"all .3s", minWidth:0, maxWidth:"100vw" }}>
-        <a href="#" style={{ fontFamily:"'DM Mono',monospace", fontSize:".7rem", letterSpacing:".2em", textTransform:"uppercase", color:C.text, textDecoration:"none", flexShrink:0 }}>Commerce Trust Labs</a>
-        <div style={{ display:"flex", flexWrap:"wrap", gap:"clamp(1rem, 2vw, 2rem)", minWidth:0 }}>
-          {[["problem","Problem"],["mission","Mission"],["technology","Technology"],["interest","Impact"],["research","Research"],["team","Team"]].map(([id,l]) => (
+      <nav style={{ position:"fixed", top:0, left:0, right:0, zIndex:200, display:"flex", flexWrap:"wrap", justifyContent:"space-between", alignItems:"center", gap:"1rem", padding: solid ? ".9rem clamp(1.25rem, 5vw, 3.5rem)" : "1.5rem clamp(1.25rem, 5vw, 3.5rem)", background: solid||open ? "rgba(5,5,5,.86)" : "transparent", backdropFilter: (solid||open) ? "blur(18px) saturate(140%)" : "none", borderBottom:`1px solid ${(solid||open) ? C.border : "transparent"}`, transition:"all .35s cubic-bezier(.16,1,.3,1)", minWidth:0, maxWidth:"100vw" }}>
+        <a href="#" style={{ display:"flex", alignItems:"center", gap:".6rem", fontFamily:"'Manrope',sans-serif", fontSize:".8rem", fontWeight:700, letterSpacing:"-.01em", color:C.text, textDecoration:"none", flexShrink:0 }}>
+          <span style={{ width:"1.6rem", height:"1.6rem", borderRadius:"6px", background:C.accent, display:"inline-flex", alignItems:"center", justifyContent:"center", fontFamily:"'DM Mono',monospace", fontSize:".62rem", color:"#fff" }}>CT</span>
+          Commerce Trust Labs
+        </a>
+        <div className="nav-links" style={{ flexWrap:"wrap", gap:"clamp(1rem, 2vw, 1.6rem)", minWidth:0 }}>
+          {links.map(([id,l]) => (
               <a key={id} href={`#${id}`} className={`nl${active===id?" on":""}`}>{l}</a>
+          ))}
+        </div>
+        <button
+            onClick={() => setOpen(o=>!o)}
+            className="nav-burger"
+            aria-label="Toggle menu"
+            style={{ alignItems:"center", justifyContent:"center", width:"2.2rem", height:"2.2rem", background:"transparent", border:`1px solid ${C.border}`, borderRadius:"8px", cursor:"pointer", flexShrink:0 }}>
+          <svg width="16" height="12" viewBox="0 0 16 12" fill="none" style={{ flexShrink:0, display:"block" }}>
+            {open
+                ? <path d="M1 1l14 10M15 1L1 11" stroke={C.text} strokeWidth="1.4" strokeLinecap="round"/>
+                : <><line x1="0" y1="1" x2="16" y2="1" stroke={C.text} strokeWidth="1.4"/><line x1="0" y1="6" x2="16" y2="6" stroke={C.text} strokeWidth="1.4"/><line x1="0" y1="11" x2="16" y2="11" stroke={C.text} strokeWidth="1.4"/></>
+            }
+          </svg>
+        </button>
+        <div className={`nav-mobile-panel${open?" open":""}`} style={{ position:"absolute", top:"100%", left:0, right:0, background:"rgba(5,5,5,.97)", backdropFilter:"blur(18px)", borderBottom:`1px solid ${C.border}`, flexDirection:"column", padding:"1rem clamp(1.25rem, 5vw, 3.5rem) 1.6rem", gap:"1.1rem" }}>
+          {links.map(([id,l]) => (
+              <a key={id} href={`#${id}`} onClick={()=>setOpen(false)} className={`nl${active===id?" on":""}`} style={{ fontSize:".82rem" }}>{l}</a>
           ))}
         </div>
       </nav>
   );
 };
 
-/* ── TICKER ── */
-const Ticker = () => {
-  const items = ["AI Commerce Governance","◆","Open Governance Framework","◆","Real-time Policy Enforcement","◆","Settlement Architecture","◆","Federated Trust Network","◆","AI-Native Control Plane","◆"];
-  return (
-      <div style={{ background:C.accent, overflow:"hidden", padding:".55rem 0", whiteSpace:"nowrap", width:"100%", maxWidth:"100vw" }}>
-        <div style={{ display:"inline-flex", gap:"3rem", animation:"ticker 28s linear infinite" }}>
-          {[...items,...items].map((t,i) => (
-              <span key={i} style={{ fontFamily:"'DM Mono',monospace", fontSize:".68rem", letterSpacing:".2em", textTransform:"uppercase", color:"rgba(255,255,255,.9)" }}>{t}</span>
-          ))}
-        </div>
-      </div>
-  );
-};
-
-/* ── NETWORK SVG ── */
-const Network = () => (
-    <svg viewBox="0 0 500 500" fill="none" style={{ width:"100%", maxWidth:"420px", display:"block" }}>
-      <defs>
-        <radialGradient id="rg" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#c4501a" stopOpacity="0.12"/>
-          <stop offset="100%" stopColor="#c4501a" stopOpacity="0"/>
-        </radialGradient>
-      </defs>
-      <circle cx="250" cy="250" r="190" fill="url(#rg)"/>
-      <circle cx="250" cy="250" r="180" stroke="#e8e4dc" strokeWidth="0.4" strokeDasharray="4 8" opacity="0.07"/>
-      <circle cx="250" cy="250" r="120" stroke="#e8e4dc" strokeWidth="0.4" strokeDasharray="3 6" opacity="0.05"/>
-      <circle cx="250" cy="250" r="60" stroke="#c4501a" strokeWidth="0.6" strokeDasharray="2 5" opacity="0.2"/>
-      {[[250,70],[415,170],[415,330],[250,430],[85,330],[85,170]].map(([x,y],i) => (
-          <circle key={i} cx={x} cy={y} r="5" fill={i%2===0?"#c4501a":"#6fa3d8"} opacity="0.9"/>
-      ))}
-      {[[250,70,415,170],[415,170,415,330],[415,330,250,430],[250,430,85,330],[85,330,85,170],[85,170,250,70]].map(([x1,y1,x2,y2],i) => (
-          <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#e8e4dc" strokeWidth="0.5" opacity="0.08"/>
-      ))}
-      {[[250,165],[335,208],[335,293],[250,335],[165,293],[165,208]].map(([x,y],i) => [
-        <circle key={`c${i}`} cx={x} cy={y} r="3" fill={i%2===0?"#c4501a":"#6fa3d8"} opacity="0.55"/>,
-        <line key={`l${i}`} x1="250" y1="250" x2={x} y2={y} stroke="#c4501a" strokeWidth="0.8" opacity="0.28"/>
-      ])}
-      <circle cx="250" cy="250" r="8" fill="#c4501a" opacity="0.35"/>
-      <circle cx="250" cy="250" r="4" fill="#c4501a"/>
-      {[[255,62,"#c4501a","POLICY ENGINE"],[424,165,"#6fa3d8","COMPLIANCE"],[424,342,"#6fa3d8","SETTLEMENT"],[180,450,"#7a8494","ANALYTICS"],[2,342,"#c4501a","GOVERNANCE"],[2,165,"#6fa3d8","TRUST LAYER"]].map(([x,y,col,label],i) => (
-          <text key={i} x={x} y={y} fontFamily="'DM Mono',monospace" fontSize="8" fill={col} opacity="0.8">{label}</text>
-      ))}
-    </svg>
-);
-
 /* ── HERO ── */
 const Hero = () => {
   const [up, setUp] = useState(false);
   useEffect(() => { const t = setTimeout(() => setUp(true), 80); return () => clearTimeout(t); }, []);
-  const a = d => ({ opacity: up?1:0, transform: up?"none":"translateY(16px)", transition:`opacity .7s ease ${d}ms, transform .7s ease ${d}ms` });
+  const a = d => ({ opacity: up?1:0, transform: up?"none":"translateY(20px)", transition:`opacity .9s cubic-bezier(.16,1,.3,1) ${d}ms, transform .9s cubic-bezier(.16,1,.3,1) ${d}ms` });
   return (
-      <section style={{ background:C.bg, paddingTop:"68px", minHeight:"100vh", overflow:"hidden", width:"100%", maxWidth:"100vw" }}>
-        <div style={inner({ minHeight:"calc(100vh - 68px)", display:"flex", flexWrap:"wrap", gap:"4rem", alignItems:"center", padding:"4rem clamp(1rem, 5vw, 3rem)" })}>
-          {/* LEFT */}
-          <div style={{ minWidth:0, flex:"1 1 320px" }}>
-            <div style={{ ...a(80), display:"flex", alignItems:"center", gap:".8rem", marginBottom:"1.6rem" }}>
-              <div style={{ width:"2rem", height:"1px", background:C.accent, flexShrink:0 }}/>
-              <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".65rem", letterSpacing:".22em", textTransform:"uppercase", color:C.accent }}>AI Governance &amp; Control Infrastructure</span>
-            </div>
-            <h1 style={{ ...a(160), fontFamily:"'Syne',sans-serif", fontSize:"clamp(2.2rem,3.5vw,4rem)", fontWeight:800, lineHeight:1.0, letterSpacing:"-.03em", color:C.text, marginBottom:"1.5rem" }}>
-              Where Tokens<br/>Become<br/>
-              <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>Trusted Actions</em>
-            </h1>
-            <p style={{ ...a(260), fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".84rem", lineHeight:1.85, color:C.muted, maxWidth:"38ch", marginBottom:"2.5rem" }}>
-              Commerce Trust Labs transforms AI intent into governed, authorized, policy-compliant, and auditable actions across modern commerce systems.
-            </p>
-            <div style={{ ...a(360), display:"flex", gap:"1rem", flexWrap:"wrap", marginBottom:"3rem" }}>
-              <a href="#mission" className="bp">Our Mission →</a>
-              <a href="https://github.com/commerce-trust-labs" target="_blank" rel="noreferrer" className="bg2btn">GitHub →</a>
-            </div>
-            <div style={{ ...a(440), display:"flex", flexWrap:"wrap", gap:"1px", background:C.border, border:`1px solid ${C.border}` }}>
-              {[["Open","Reference Arch"],["Real-time","Policy Engine"],["AI-Native","Governance"]].map(([v,d]) => (
-                  <div key={v} style={{ background:C.bg2, padding:"1.2rem 1rem", flex:"1 1 100px", minWidth:0 }}>
-                    <div style={{ fontFamily:"'Syne',sans-serif", fontSize:"1rem", fontWeight:800, color:C.accent, marginBottom:".3rem" }}>{v}</div>
-                    <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".58rem", letterSpacing:".1em", textTransform:"uppercase", color:C.muted }}>{d}</div>
-                  </div>
-              ))}
-            </div>
+      <section style={{ position:"relative", background:C.bg, minHeight:"100vh", display:"flex", alignItems:"center", overflow:"hidden", width:"100%", maxWidth:"100vw" }}>
+        <Atmosphere variant="hero"/>
+        <div style={inner({ position:"relative", zIndex:1, padding:"9rem clamp(1.25rem, 5vw, 3.5rem) 6rem", textAlign:"center", display:"flex", flexDirection:"column", alignItems:"center" })}>
+          <div style={{ ...a(60) }}>
+            <Eyebrow center>Agentic Infrastructure for Enterprise Commerce</Eyebrow>
           </div>
-          {/* RIGHT */}
-          <div style={{ minWidth:0, flex:"1 1 320px", display:"flex", justifyContent:"center", alignItems:"center", position:"relative" }}>
-            <div style={{ position:"absolute", inset:0, background:"radial-gradient(ellipse at center,rgba(196,80,26,.07) 0%,transparent 70%)", pointerEvents:"none" }}/>
-            <Network/>
+          <h1 style={{ ...a(150), fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.6rem,6vw,5.4rem)", fontWeight:800, lineHeight:1.02, letterSpacing:"-.035em", color:C.text, maxWidth:"18ch", marginBottom:"1.8rem" }}>
+            Where Tokens Become{" "}
+            <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>Trusted Actions</em>
+          </h1>
+          <p style={{ ...a(260), fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:"clamp(.95rem,1.4vw,1.15rem)", lineHeight:1.7, color:C.muted, maxWidth:"50ch", marginBottom:"2.6rem" }}>
+            A token is model-generated reasoning. A trusted action is what's left after it passes through composite context, evidence, policy, human approval, execution, and verification. We build the plane in between.
+          </p>
+          <div style={{ ...a(360), display:"flex", gap:"1rem", flexWrap:"wrap", justifyContent:"center", marginBottom:"4.5rem" }}>
+            <a href="#story" className="pill">Read the Story →</a>
+            <a href="https://github.com/PraneshSoma/agentic-sdlc-loop" target="_blank" rel="noreferrer" className="pill2">View on GitHub</a>
+          </div>
+          <div style={{ ...a(460), display:"flex", flexWrap:"wrap", gap:"1px", background:C.border, border:`1px solid ${C.border}`, borderRadius:"16px", overflow:"hidden", maxWidth:"640px", width:"100%" }}>
+            {[["Composite","Context Model"],["Governed","SDLC Loop"],["Human-Gated","Agentic Ops"]].map(([v,d]) => (
+                <div key={v} style={{ background:"rgba(255,255,255,.02)", padding:"1.4rem 1rem", flex:"1 1 160px", minWidth:0, textAlign:"center" }}>
+                  <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.05rem", fontWeight:800, color:C.accent, marginBottom:".3rem" }}>{v}</div>
+                  <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".6rem", letterSpacing:".1em", textTransform:"uppercase", color:C.muted }}>{d}</div>
+                </div>
+            ))}
           </div>
         </div>
+        <ScrollCue/>
       </section>
   );
 };
 
-/* ── PROBLEM ── */
-const Problem = () => {
+/* ── generic full-bleed split section ── */
+const SplitSection = ({ id, bg, eyebrow, heading, headingEm, body, visual, atmosphere, reverse, children }) => (
+    <section id={id} style={{ position:"relative", background:bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
+      {atmosphere && <Atmosphere variant={atmosphere}/>}
+      <div style={inner({ position:"relative", zIndex:1, padding:"7rem clamp(1.25rem, 5vw, 3.5rem)" })}>
+        <div className={`split-row${reverse?" reverse":""}`}>
+          <div className="split-text">
+            <Reveal>
+              <Eyebrow>{eyebrow}</Eyebrow>
+              <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(1.9rem,3vw,2.8rem)", fontWeight:800, lineHeight:1.08, letterSpacing:"-.03em", color:C.text, marginBottom:"1.6rem" }}>
+                {heading}{" "}
+                {headingEm && <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>{headingEm}</em>}
+              </h2>
+            </Reveal>
+            {body && (
+                <Reveal delay={140}>
+                  <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".95rem", lineHeight:1.85, color:C.muted, maxWidth:"56ch", marginBottom:"2rem" }}>{body}</p>
+                </Reveal>
+            )}
+            {children}
+          </div>
+          <div className="split-visual">
+            <Reveal delay={100}>{visual}</Reveal>
+          </div>
+        </div>
+      </div>
+    </section>
+);
+
+/* ── STORY ── */
+const Story = () => {
   const items = [
-    { title:"Fragmented Regulatory Compliance", body:"U.S. retailers face significant compliance exposure navigating state-level eco-fee mandates, data privacy laws, and tax regulations — with no unified governance layer to enforce cross-jurisdictional policy at scale." },
-    { title:"AI Systems Lack Trust Controls", body:"As AI agents increasingly orchestrate pricing, inventory, and customer interactions, there is no established framework to audit, constrain, or certify their behavior against regulatory and ethical standards." },
-    { title:"Settlement Infrastructure Gaps", body:"The proliferation of payment methods, digital wallets, and embedded finance has outpaced settlement architectures — creating systemic risk across the U.S. retail economy." },
-    { title:"No Cross-Retailer Visibility Standard", body:"Unlike financial services — which share fraud signals through federated networks — retail commerce has no equivalent trust layer, leaving each retailer isolated from industry-wide threat intelligence." },
+    { title:"Express an Outcome", body:"A user states an intent in natural language instead of navigating separate product, pricing, cart, checkout, and fulfillment systems one at a time." },
+    { title:"A Planner Decomposes It", body:"A planner breaks the intent into the specific commerce capabilities and bounded tasks required to fulfill it — without replacing the systems of record underneath." },
+    { title:"Workers Execute & Consolidate", body:"Specialized workers invoke the existing pricing, inventory, checkout, and order systems; the orchestration layer consolidates their output into one action or answer." },
   ];
   return (
-      <section id="problem" style={{ background:C.bg2, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
-        <div style={inner({ padding:"6rem clamp(1rem, 5vw, 3rem)" })}>
-          <Label light>The Problem</Label>
-          <div style={{ display:"flex", flexWrap:"wrap", gap:"4rem", alignItems:"start" }}>
-            <div style={{ minWidth:0, flex:"1 1 280px" }}>
-              <Reveal>
-                <h2 style={{ fontFamily:"'Syne',sans-serif", fontSize:"clamp(1.8rem,2.5vw,2.6rem)", fontWeight:800, lineHeight:1.05, letterSpacing:"-.03em", color:C.text }}>
-                  AI Commerce<br/>Operates Without<br/>
-                  <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", color:C.accent }}>a Governance Layer</em>
-                </h2>
+      <SplitSection id="story" bg={C.bg2} eyebrow="Origin"
+        heading="Agentic Commerce Started With" headingEm="a Fragmentation Problem"
+        body="Traditional commerce platforms expose their capabilities as separate pages, APIs, and workflows — product discovery, pricing, cart, checkout, identity, order creation, fulfillment. Even when each piece is mature on its own, the person using it has to understand how the organization divided the problem. The original insight was simple: let a user express an outcome, and let an orchestration layer figure out which commerce capabilities are needed to deliver it."
+        visual={<FragmentGraphic/>}>
+        <div style={{ display:"flex", flexDirection:"column", gap:"1.4rem", marginBottom:"2rem" }}>
+          {items.map((p,i) => (
+              <Reveal key={i} delay={220+i*70}>
+                <div style={{ borderLeft:`2px solid ${C.accent}`, paddingLeft:"1.4rem" }}>
+                  <h4 style={{ fontFamily:"'Manrope',sans-serif", fontSize:".92rem", fontWeight:700, color:C.text, marginBottom:".35rem" }}>{p.title}</h4>
+                  <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".82rem", lineHeight:1.75, color:C.muted }}>{p.body}</p>
+                </div>
               </Reveal>
-              <Reveal delay={180}>
-                <p style={{ fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".8rem", lineHeight:1.85, color:C.muted, marginTop:"1.5rem" }}>
-                  The U.S. retail economy is rapidly adopting AI — but without governance infrastructure to ensure these systems operate safely, fairly, and in compliance with national standards.
-                </p>
-              </Reveal>
-            </div>
-            <div style={{ display:"flex", flexDirection:"column", gap:"1.8rem", minWidth:0, flex:"1 1 280px" }}>
-              {items.map((p,i) => (
-                  <Reveal key={i} delay={i*80}>
-                    <div style={{ borderLeft:`2px solid ${C.accent}`, paddingLeft:"1.4rem" }}>
-                      <h4 style={{ fontFamily:"'Syne',sans-serif", fontSize:".88rem", fontWeight:700, color:C.text, marginBottom:".4rem" }}>{p.title}</h4>
-                      <p style={{ fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".75rem", lineHeight:1.75, color:C.muted }}>{p.body}</p>
-                    </div>
-                  </Reveal>
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
-      </section>
+        <Reveal delay={460}>
+          <p style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontSize:"1.05rem", lineHeight:1.6, color:C.text, borderLeft:`3px solid ${C.accent}`, paddingLeft:"1.2rem" }}>
+            Making the planner smarter didn't make the system safe or deployable. The harder problem was converting AI reasoning into a governed, authorized, evidence-backed, auditable action — that shift is why Commerce Trust Labs exists.
+          </p>
+        </Reveal>
+      </SplitSection>
   );
 };
 
-/* ── MISSION ── */
-const Mission = () => {
-  const pillars = [
-    { n:"01", title:"Govern AI in Commerce", body:"We build the policy and trust layer that allows AI agents to operate within retail commerce — setting enforceable behavioral constraints, audit trails, and regulatory guardrails that protect consumers, businesses, and the broader economy." },
-    { n:"02", title:"A National Trust Standard", body:"We envision a shared governance infrastructure — analogous to PCI-DSS for payments or NIST for cybersecurity — that defines how AI systems participate in commerce: open, interoperable, and nationally significant." },
-    { n:"03", title:"Protecting the U.S. Economy", body:"U.S. retail commerce is critical national infrastructure. Our work reduces systemic compliance risk, enables AI adoption at scale, and ensures the transition to agentic commerce serves the national interest." },
+/* ── LOOP ── */
+const Loop = () => {
+  const stages = [
+    "Discovery","ADR","LLD","Story Gen","Planning","Code Gen","Test Gen","RFC/PR","Shadow","Review","Release"
   ];
+  const gated = new Set(["ADR","LLD","RFC/PR","Release"]);
   return (
-      <section id="mission" style={{ background:C.bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
-        <div style={inner({ padding:"6rem clamp(1rem, 5vw, 3rem)" })}>
-          <Label>Mission & Vision</Label>
+      <section id="loop" style={{ position:"relative", background:C.bg3, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
+        <div style={inner({ padding:"7rem clamp(1.25rem, 5vw, 3.5rem)" })}>
           <Reveal>
-            <p style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontSize:"clamp(1.2rem,1.8vw,1.7rem)", lineHeight:1.4, color:C.text, maxWidth:"32ch", marginBottom:"4rem", paddingLeft:"1rem", borderLeft:`3px solid ${C.accent}` }}>
-              "To build the governance infrastructure that makes AI-driven commerce trustworthy, compliant, and resilient at national scale."
+            <Eyebrow>Loop Engineering</Eyebrow>
+            <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(1.9rem,3vw,2.8rem)", fontWeight:800, lineHeight:1.08, letterSpacing:"-.03em", color:C.text, marginBottom:"1.6rem", maxWidth:"22ch" }}>
+              An agentic SDLC, not just code generation
+            </h2>
+          </Reveal>
+          <Reveal delay={120}>
+            <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".95rem", lineHeight:1.85, color:C.muted, maxWidth:"70ch", marginBottom:"3.5rem" }}>
+              Enterprise software doesn't move from prompt to production in one step. Eleven stages, coordinated by a supervisor that enforces stage-entry and stage-exit criteria — it won't let downstream work start on an artifact that hasn't been accepted. Four of the eleven stop for a human.
             </p>
           </Reveal>
-          <div style={{ display:"flex", flexWrap:"wrap", gap:"1px", background:C.border, border:`1px solid ${C.border}`, overflow:"hidden" }}>
-            {pillars.map((p,i) => (
-                <Reveal key={i} delay={i*100}>
-                  <div className="ch" style={{ background:C.bg2, padding:"2.5rem", height:"100%", cursor:"default", transition:"background .25s", flex:"1 1 260px", minWidth:0 }}>
-                    <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".6rem", letterSpacing:".2em", color:C.accent, marginBottom:"1rem" }}>{p.n} —</div>
-                    <h3 style={{ fontFamily:"'Syne',sans-serif", fontSize:"1rem", fontWeight:700, color:C.text, marginBottom:".8rem" }}>{p.title}</h3>
-                    <p style={{ fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".75rem", lineHeight:1.75, color:C.muted }}>{p.body}</p>
-                  </div>
+          <Reveal delay={200}>
+            <div style={{ overflowX:"auto", paddingBottom:"1rem" }}>
+              <div style={{ display:"flex", alignItems:"flex-start", gap:0, minWidth:"760px" }}>
+                {stages.map((s,i) => (
+                    <div key={s} style={{ display:"flex", alignItems:"center", flex: i===stages.length-1 ? "0 0 auto" : "1 1 auto" }}>
+                      <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:".7rem", flexShrink:0 }}>
+                        <div style={{ width: gated.has(s)?"1.1rem":".7rem", height: gated.has(s)?"1.1rem":".7rem", borderRadius:"50%", background: gated.has(s)?C.accent:"transparent", border:`1.5px solid ${gated.has(s)?C.accent:C.blueHi}` }}/>
+                        <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".05em", color: gated.has(s)?C.accent:"rgba(244,243,240,.6)", whiteSpace:"nowrap" }}>{s}</div>
+                        {gated.has(s) && <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".54rem", letterSpacing:".05em", color:"rgba(244,243,240,.32)", whiteSpace:"nowrap" }}>human gate</div>}
+                      </div>
+                      {i < stages.length-1 && <div style={{ flex:1, height:"1px", background:"rgba(244,243,240,.14)", marginTop:".35rem" }}/>}
+                    </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(240px, 1fr))", gap:"2.5rem", marginTop:"3rem" }}>
+            {[
+              ["Discovery → ADR → LLD","Requirements, architecture decisions, and low-level design as accepted, reviewable artifacts — with an explicit open-issue queue — before any code is written."],
+              ["Story → Planning → Code / Test Gen","Design decomposes into traceable implementation units. Code and test generation run as separately-scoped agents, so an implementation never validates only its own assumptions."],
+              ["RFC/PR → Shadow → Review","Every change ships with a review package — diff, requirement traceability, test results, and shadow-execution evidence comparing new behavior against the current production path."],
+              ["Release & Audit","Automated quality gates run before human review. Every stage transition is written to a hash-chained audit ledger — the release is only the last entry in it."],
+            ].map(([t,d],i) => (
+                <Reveal key={t} delay={280+i*70}>
+                  <h4 style={{ fontFamily:"'Manrope',sans-serif", fontSize:".92rem", fontWeight:700, color:C.text, marginBottom:".5rem" }}>{t}</h4>
+                  <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".82rem", lineHeight:1.75, color:C.muted }}>{d}</p>
                 </Reveal>
             ))}
           </div>
@@ -270,101 +425,128 @@ const Mission = () => {
   );
 };
 
-/* ── TECHNOLOGY ── */
-const Technology = () => {
-  const cards = [
-    { tag:"Layer 1 — Compliance", title:"Regulatory Rule Engine", body:"A dynamic policy engine that ingests jurisdiction-specific regulations — eco-fees, sales tax, data residency, consumer protection — and enforces them in real-time across multi-retailer commerce pipelines." },
-    { tag:"Layer 2 — Trust", title:"AI Agent Governance", body:"A certification and runtime monitoring framework for AI agents in commerce — pricing bots, recommendation engines, inventory orchestrators — providing behavioral auditing and constraint enforcement." },
-    { tag:"Layer 3 — Settlement", title:"Distributed Settlement Architecture", body:"A next-generation settlement layer designed for the fragmented payments landscape — supporting real-time reconciliation across wallets, BNPL instruments, and embedded finance products." },
-    { tag:"Layer 4 — Intelligence", title:"Cross-Retailer Trust Network", body:"A federated intelligence network enabling participating retailers to share anonymized threat signals, compliance patterns, and governance benchmarks — creating collective defense infrastructure." },
+/* ── CONTEXT ── */
+const ContextSection = () => {
+  const layers = [
+    { n:"Application Context", body:"What the system is — owning team, dependencies, registered actions, and operating procedures." },
+    { n:"Runtime Context", body:"What's happening now — alerts, logs, metrics, traces, deployment state, and current health." },
+    { n:"Historical Evidence", body:"What's happened before — prior incidents, remediations, outcomes, and human overrides." },
+    { n:"Engineering Context — Phase 2", body:"Connects a runtime signal back to the repository, commit, and change that likely caused it." },
+    { n:"Business Context — Phase 3", body:"Weighs criticality, customer impact, and business ownership into the policy decision." },
   ];
   return (
-      <section id="technology" style={{ background:C.bg3, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
-        <div style={inner({ padding:"6rem clamp(1rem, 5vw, 3rem)" })}>
-          <Label light>Reference Architecture</Label>
-          <div style={{ display:"flex", flexWrap:"wrap", gap:"3rem", alignItems:"end", marginBottom:"3rem" }}>
-            <Reveal>
-              <div style={{ minWidth:0, flex:"1 1 280px" }}>
-                <h2 style={{ fontFamily:"'Syne',sans-serif", fontSize:"clamp(1.5rem,2.2vw,2.2rem)", fontWeight:800, lineHeight:1.05, letterSpacing:"-.03em", color:C.text }}>
-                  Commerce Control Plane —{" "}
-                  <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", color:C.blueHi }}>Governance Framework</em>
-                </h2>
-              </div>
-            </Reveal>
-            <Reveal delay={150}>
-              <div style={{ minWidth:0, flex:"1 1 280px" }}>
-                <p style={{ fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".82rem", lineHeight:1.85, color:C.muted }}>A reference architecture for governance in AI-driven commerce — sitting between commerce platforms and the regulations, policies, and trust standards that govern them.</p>
-              </div>
-            </Reveal>
-          </div>
-          <div style={{ display:"flex", flexWrap:"wrap", gap:"1px", background:C.border, border:`1px solid ${C.border}`, overflow:"hidden" }}>
-            {cards.map((c,i) => (
-                <Reveal key={i} delay={i*80}>
-                  <div className="ch" style={{ background:C.bg2, padding:"2.5rem", position:"relative", overflow:"hidden", height:"100%", cursor:"default", transition:"background .25s", flex:"1 1 280px", minWidth:0 }}>
-                    <div style={{ position:"absolute", bottom:"-.5rem", right:"1rem", fontSize:"4.5rem", fontWeight:800, color:"rgba(232,228,220,.03)", lineHeight:1, fontFamily:"'Syne',sans-serif", pointerEvents:"none" }}>0{i+1}</div>
-                    <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".58rem", letterSpacing:".2em", textTransform:"uppercase", color:C.blueHi, marginBottom:".8rem" }}>{c.tag}</div>
-                    <h3 style={{ fontFamily:"'Syne',sans-serif", fontSize:"1rem", fontWeight:700, color:C.text, marginBottom:".8rem" }}>{c.title}</h3>
-                    <p style={{ fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".75rem", lineHeight:1.75, color:C.muted }}>{c.body}</p>
-                  </div>
-                </Reveal>
-            ))}
-          </div>
+      <SplitSection id="context" bg={C.bg} eyebrow="Composite Context"
+        heading="Context Assembled From Multiple Authoritative Sources"
+        body="An enterprise decision rarely depends on one prompt or one database. Composite context is built on demand by connectors, each pulling a bounded piece of information from its authoritative source, then normalized into a single package — with source, freshness, and confidence tracked for every element it contains.">
+        <div style={{ display:"flex", flexDirection:"column", gap:"1.1rem", marginBottom:"2rem" }}>
+          {layers.map((l,i) => (
+              <Reveal key={i} delay={200+i*60}>
+                <div style={{ borderLeft:`2px solid ${i<3?C.accent:C.blueHi}`, paddingLeft:"1.4rem" }}>
+                  <h4 style={{ fontFamily:"'Manrope',sans-serif", fontSize:".88rem", fontWeight:700, color:C.text, marginBottom:".3rem" }}>{l.n}</h4>
+                  <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".8rem", lineHeight:1.7, color:C.muted }}>{l.body}</p>
+                </div>
+              </Reveal>
+          ))}
         </div>
-      </section>
+        <Reveal delay={520}>
+          <div style={{ border:`1px solid ${C.border}`, borderRadius:"14px", padding:"1.6rem 1.8rem", background:C.glass }}>
+            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".76rem", color:C.blueHi, marginBottom:".6rem" }}>Context assembled from connectors (missing: 0, stale: 0)</div>
+            <div style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".78rem", color:C.muted, lineHeight:1.7 }}>Every element carries its source, retrieval time, and confidence — so a diagnosis can only use evidence that's current, complete, and tied to the right tenant and environment.</div>
+          </div>
+        </Reveal>
+      </SplitSection>
   );
 };
 
-/* ── INTEREST ── */
-const Interest = () => {
-  const cards = [
-    { tag:"National Scale", title:"U.S. Retail Economy at Risk", body:"AI governance failures in commerce infrastructure carry macro-economic consequences. The systems we govern process consumer transactions at national scale." },
-    { tag:"Regulatory Gap", title:"No Unified Compliance Standard", body:"State-level regulatory frameworks with no interoperable compliance layer — a structural gap creating significant exposure across major U.S. retailers." },
-    { tag:"Open Infrastructure", title:"Public-Benefit Initiative", body:"Our reference architectures are developed as open infrastructure — not proprietary products — to maximize national-level adoption and industry-wide impact." },
+/* ── OPERATIONS ── */
+const Operations = () => {
+  const log = [
+    ["10:42:03","TRIGGER","slack","error spike reported on checkout-service"],
+    ["10:42:04","OPC_MATCHED","opc_error_spike","outcome MATCHED"],
+    ["10:42:06","CONTEXT","connectors","assembled (missing: 0, stale: 0)"],
+    ["10:42:11","DIAGNOSED","investigator","deploy-induced error spike on checkout-service — evidence-grounded"],
+    ["10:42:12","PLANNED","planner","1 step, 1 registered action: restart_service {\"version\":\"1.3.0\"}"],
+    ["10:42:12","POLICY","policy-engine","R2 action in production → REQUIRE_APPROVAL"],
+    ["10:44:51","WAITING_APPROVAL","sam-oncall → senior_oncall","frozen plan + evidence sent for review"],
+    ["10:47:20","APPROVED","senior_oncall","reason: deploy-induced spike; restart is the registered R2 remediation"],
+    ["10:47:24","EXECUTING","execution-svc","restart_service run under registered action, scoped credential"],
+    ["10:49:02","VERIFYING","verifier","health, error rate, traffic checked against recovery window"],
+    ["10:49:41","RESOLVED","control-tower","incident closed — outcome verified, evidence ledger updated"],
   ];
   return (
-      <section id="interest" style={{ background:C.bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
-        <div style={inner({ padding:"6rem clamp(1rem, 5vw, 3rem)" })}>
-          <Label>Why This Matters</Label>
-          <div style={{ display:"flex", flexWrap:"wrap", gap:"4rem", alignItems:"start" }}>
-            <div style={{ minWidth:0, flex:"1 1 280px" }}>
+      <SplitSection id="operations" bg={C.bg2} reverse eyebrow="Agentic Operations"
+        heading="From Trigger to Verified Resolution"
+        body="The Agentic Operations Platform applies these principles to operational work — incidents, production tickets, data reconciliation, entitlement issues. Agents never hold production write credentials directly: they propose a plan built from a registered action, and a separately governed execution layer performs it only after policy and approval clear."
+        visual={<FlowGraphic/>}>
+        <Reveal delay={200}>
+          <div style={{ border:`1px solid ${C.border}`, borderRadius:"10px", background:"#000", overflow:"hidden", marginBottom:"1.4rem" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:".5rem", padding:".7rem 1rem", borderBottom:`1px solid ${C.border}` }}>
+              <span style={{ width:"8px", height:"8px", borderRadius:"50%", background:"rgba(244,243,240,.18)" }}/>
+              <span style={{ width:"8px", height:"8px", borderRadius:"50%", background:"rgba(244,243,240,.18)" }}/>
+              <span style={{ width:"8px", height:"8px", borderRadius:"50%", background:"rgba(244,243,240,.18)" }}/>
+              <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", color:"rgba(244,243,240,.35)", marginLeft:".4rem" }}>INC-1002 — checkout-service</span>
+            </div>
+            <div style={{ padding:"1.1rem 1.2rem", overflowX:"auto" }}>
+              <div style={{ minWidth:"max-content" }}>
+                {log.map(([t,state,actor,msg],i) => (
+                    <div key={i} style={{ display:"flex", gap:".8rem", fontFamily:"'DM Mono',monospace", fontSize:".7rem", lineHeight:1.9, whiteSpace:"nowrap" }}>
+                      <span style={{ color:"rgba(244,243,240,.25)" }}>{t}</span>
+                      <span style={{ color: state==="APPROVED"||state==="RESOLVED" ? C.accent : state==="WAITING_APPROVAL" ? "#e0b34a" : C.blueHi, flexShrink:0, width:"9.5rem" }}>{state}</span>
+                      <span style={{ color:"rgba(244,243,240,.4)", flexShrink:0 }}>{actor}</span>
+                      <span style={{ color:"rgba(244,243,240,.72)" }}>{msg}</span>
+                    </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Reveal>
+        <Reveal delay={280}>
+          <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".78rem", color:"rgba(244,243,240,.35)", lineHeight:1.7 }}>
+            This is an architecture and working prototype, not a production deployment claim. Approved plans are immutable, execution never runs on unrestricted credentials, and an incident closes only after a verified outcome — not just a successful API call.
+          </p>
+        </Reveal>
+      </SplitSection>
+  );
+};
+
+/* ── ECP ── */
+const Ecp = () => {
+  const pillars = [
+    { title:"One plane, many consumers", body:"Agentic Commerce, the SDLC Loop, and Agentic Operations all read from — and write evidence back into — the same governed context and policy layer, instead of each building its own." },
+    { title:"Configurable at every scope", body:"Context and policy are defined at the organization, domain, application, repository, and workflow level, so governance doesn't mean copy-pasting the same rules into every agent prompt." },
+    { title:"Trust is structural, not a score", body:"Trust comes from correct identity, fresh evidence, a registered procedure and action, a valid policy decision, human authorization, and a verified outcome — not from a model's confidence." },
+  ];
+  return (
+      <section id="ecp" style={{ position:"relative", background:C.bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
+        <div style={inner({ padding:"7rem clamp(1.25rem, 5vw, 3.5rem)" })}>
+          <div className="split-row" style={{ marginBottom:"4rem", alignItems:"center" }}>
+            <div className="split-text">
               <Reveal>
-                <h2 style={{ fontFamily:"'Syne',sans-serif", fontSize:"clamp(1.5rem,2.2vw,2.4rem)", fontWeight:800, lineHeight:1.05, letterSpacing:"-.03em", color:C.text, marginBottom:"1.5rem" }}>
-                  Infrastructure for the<br/>
-                  <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", color:C.accent }}>National Interest</em>
+                <Eyebrow>Enterprise Context Plan</Eyebrow>
+                <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(1.9rem,3vw,2.8rem)", fontWeight:800, lineHeight:1.08, letterSpacing:"-.03em", color:C.text, marginBottom:"1.6rem" }}>
+                  The Governed Plane Between{" "}
+                  <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>Reasoning and Action</em>
                 </h2>
               </Reveal>
               <Reveal delay={140}>
-                <p style={{ fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".82rem", lineHeight:1.9, color:C.muted, marginBottom:"2rem" }}>
-                  AI systems are rapidly becoming active participants in commerce — setting prices, recommending products, executing transactions, managing inventory. Without governance infrastructure, these systems introduce systemic risks including regulatory violations, market manipulation, and large-scale consumer harm.
-                  <br/><br/>
-                  Commerce Trust Labs develops the governance infrastructure needed to ensure AI-driven commerce operates safely, transparently, and in the national economic interest.
+                <p style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontSize:"clamp(1.1rem,1.6vw,1.4rem)", lineHeight:1.5, color:C.text, maxWidth:"36ch" }}>
+                  "Intelligence proposes; the control plane governs; enterprise systems execute; evidence proves the outcome."
                 </p>
               </Reveal>
-              <Reveal delay={240}>
-                <div style={{ border:`1px solid ${C.border}`, padding:"2rem" }}>
-                  <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".58rem", letterSpacing:".2em", textTransform:"uppercase", color:C.muted, marginBottom:".8rem" }}>Open Repository</div>
-                  <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".76rem", color:C.blueHi, marginBottom:".3rem" }}>commerce-trust-labs /</div>
-                  <div style={{ fontFamily:"'Syne',sans-serif", fontSize:"1.05rem", fontWeight:700, color:C.text, marginBottom:".8rem" }}>commerce-control-plane</div>
-                  <div style={{ fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".73rem", color:C.muted, lineHeight:1.7, marginBottom:"1.2rem" }}>Reference architecture for AI-native governance layers in distributed commerce infrastructure.</div>
-                  <div style={{ display:"flex", gap:"1rem", flexWrap:"wrap", marginBottom:"1.2rem" }}>
-                    {["Java / Spring","Open Source"].map(t => <span key={t} style={{ fontFamily:"'DM Mono',monospace", fontSize:".64rem", color:C.muted }}>◆ {t}</span>)}
-                    <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".64rem", color:C.accent }}>◆ Active</span>
+            </div>
+            <div className="split-visual">
+              <Reveal delay={100}><CompassGraphic/></Reveal>
+            </div>
+          </div>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(260px, 1fr))", gap:"1.25rem" }}>
+            {pillars.map((p,i) => (
+                <Reveal key={i} delay={i*100}>
+                  <div className="card" style={{ background:C.glass, border:`1px solid ${C.border}`, borderRadius:"20px", padding:"2.4rem", height:"100%", cursor:"default", transition:"all .3s", borderTop:`2px solid ${C.accent}` }}>
+                    <h3 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.02rem", fontWeight:700, color:C.text, marginBottom:".9rem" }}>{p.title}</h3>
+                    <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".84rem", lineHeight:1.8, color:C.muted }}>{p.body}</p>
                   </div>
-                  <a href="https://github.com/commerce-trust-labs" target="_blank" rel="noreferrer" className="bp" style={{ fontSize:".66rem", padding:".65rem 1.3rem" }}>View on GitHub →</a>
-                </div>
-              </Reveal>
-            </div>
-            <div style={{ display:"flex", flexDirection:"column", gap:"1rem", minWidth:0, flex:"1 1 280px" }}>
-              {cards.map((c,i) => (
-                  <Reveal key={i} delay={i*90}>
-                    <div className="ch" style={{ background:C.bg2, border:`1px solid ${C.border}`, padding:"1.6rem 1.8rem", cursor:"default", transition:"background .25s", minWidth:0 }}>
-                      <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".56rem", letterSpacing:".2em", textTransform:"uppercase", color:C.accent, marginBottom:".4rem" }}>{c.tag}</div>
-                      <div style={{ fontFamily:"'Syne',sans-serif", fontWeight:700, fontSize:".88rem", color:C.text, marginBottom:".4rem" }}>{c.title}</div>
-                      <div style={{ fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".73rem", color:C.muted, lineHeight:1.7 }}>{c.body}</div>
-                    </div>
-                  </Reveal>
-              ))}
-            </div>
+                </Reveal>
+            ))}
           </div>
         </div>
       </section>
@@ -373,111 +555,70 @@ const Interest = () => {
 
 /* ── RESEARCH ── */
 const Research = () => {
-const pubs = [
-  {
-    type: "Architecture",
-    title: "Governance Control Plane Reference Architecture",
-    desc: "Open reference architecture for AI-governed commerce systems — policy engine design, compliance orchestration, and settlement patterns.",
-    link: "https://github.com/commerce-trust-labs/commerce-control-plane",
-    linkLabel: "GitHub →"
-  },
-  {
-    type: "Whitepaper",
-    title: "AI Commerce Governance Framework (2026)",
-    desc: "A framework for certifying, monitoring, and constraining AI agent behavior in retail commerce environments at national scale.",
-    link: null,
-    linkLabel: "Forthcoming"
-  },
-  {
-    type: "Article",
-    title: "Retry Storms in Distributed Commerce Infrastructure",
-    desc: "Analysis of cascading failure patterns in high-volume retail systems and patterns for resilient distributed commerce infrastructure.",
-    link: "https://medium.com/@praneshsoma/retry-storms-139869b956e3",
-    linkLabel: "Read →"
-  },
-  {
-    type: "Article",
-    title: "AI Agents Are the New Bot Traffic — And Commerce Infrastructure Isn't Ready",
-    desc: "AI agents are beginning to generate machine-speed traffic across retail systems that were designed for human interaction. This article explores how agentic traffic can trigger retry storms, hidden automation loops, and cascading failures in commerce infrastructure—and why the next generation of retail platforms must build governance and control planes to stabilize the ecosystem.",
-    link: "https://medium.com/@praneshsoma/ai-agents-are-the-new-bot-traffic-and-commerce-infrastructure-isnt-ready-35e12e01158d",
-    linkLabel: "Read →"
-  },
-  {
-    type: "Framework",
-    title: "AI-Agent Governance Framework for Retail Platforms",
-    desc: "Behavioral constraint specifications, audit trail standards, and explainability requirements for AI agents in U.S. retail commerce.",
-    link: null,
-    linkLabel: "Forthcoming"
-  }
-];
+  const pubs = [
+    { type:"Architecture", title:"agentic-sdlc-loop", desc:"The Loop Engine implementation — the governed, four-phase agentic SDLC described above, supervisor orchestration and all.", link:"https://github.com/PraneshSoma/agentic-sdlc-loop", linkLabel:"GitHub →" },
+    { type:"Architecture", title:"loop-engineering", desc:"Written architecture and reference material for the SDLC Loop — stage contracts, gates, and the audit model.", link:"https://github.com/PraneshSoma/loop-engineering", linkLabel:"GitHub →" },
+    { type:"Platform", title:"agentic-operations-platform", desc:"The Agentic Operations runtime — trigger, context assembly, diagnosis, policy, approval, execution, and verification.", link:null, linkLabel:"Private repository" },
+    { type:"Article", title:"Retry Storms in Distributed Commerce Infrastructure", desc:"Analysis of cascading failure patterns in high-volume retail systems and patterns for resilient distributed commerce infrastructure.", link:"https://medium.com/@praneshsoma/retry-storms-139869b956e3", linkLabel:"Read →" },
+    { type:"Article", title:"AI Agents Are the New Bot Traffic — And Commerce Infrastructure Isn't Ready", desc:"How agentic, machine-speed traffic triggers retry storms and cascading failures in commerce infrastructure built for human interaction — and why the next generation of retail platforms needs a governance and control plane.", link:"https://medium.com/@praneshsoma/ai-agents-are-the-new-bot-traffic-and-commerce-infrastructure-isnt-ready-35e12e01158d", linkLabel:"Read →" },
+  ];
   return (
-      <section id="research" style={{ background:C.bg2, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
-        <div style={inner({ padding:"6rem clamp(1rem, 5vw, 3rem)" })}>
-          <Label light>Research & Publications</Label>
-          <Reveal>
-            <h2 style={{ fontFamily:"'Syne',sans-serif", fontSize:"clamp(1.5rem,2.2vw,2.2rem)", fontWeight:800, letterSpacing:"-.03em", color:C.text, marginBottom:"3rem", lineHeight:1.05 }}>
-              Intellectual Contributions{" "}
-              <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", color:C.accent }}>to the Field</em>
-            </h2>
-          </Reveal>
-          <div style={{ display:"flex", flexDirection:"column", gap:"1px", background:C.border, border:`1px solid ${C.border}` }}>
-            {pubs.map((p,i) => (
-                <Reveal key={i} delay={i*60}>
-                  <div className="pr" style={{ background:C.bg, padding:"1.6rem 2rem", display:"flex", flexWrap:"wrap", gap:"1.5rem", alignItems:"center", minWidth:0 }}>
-                    <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".56rem", letterSpacing:".15em", textTransform:"uppercase", color:C.accent, flexShrink:0 }}>{p.type}</div>
-                    <div style={{ minWidth:0, flex:"1 1 200px" }}>
-                      <div style={{ fontFamily:"'Syne',sans-serif", fontWeight:700, fontSize:".88rem", color:C.text, marginBottom:".3rem" }}>{p.title}</div>
-                      <div style={{ fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".71rem", color:C.muted, lineHeight:1.6 }}>{p.desc}</div>
-                    </div>
-                    {p.link
-                        ? <a href={p.link} target="_blank" rel="noreferrer" className="lk" style={{ flexShrink:0 }}>{p.linkLabel}</a>
-                        : <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".66rem", color:C.muted, whiteSpace:"nowrap", flexShrink:0 }}>{p.linkLabel}</span>
-                    }
+      <SplitSection id="research" bg={C.bg2} reverse eyebrow="Research &amp; Publications"
+        heading="Written &amp; Built" headingEm="in the Open"
+        visual={<DocGraphic/>}>
+        <div style={{ display:"flex", flexDirection:"column", gap:"1px", background:C.border, border:`1px solid ${C.border}`, borderRadius:"16px", overflow:"hidden" }}>
+          {pubs.map((p,i) => (
+              <Reveal key={i} delay={180+i*60}>
+                <div className="row" style={{ background:C.bg, padding:"1.6rem 1.8rem", display:"flex", flexWrap:"wrap", gap:"1.2rem", alignItems:"center", minWidth:0, transition:"background .25s" }}>
+                  <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".56rem", letterSpacing:".15em", textTransform:"uppercase", color:C.accent, flexShrink:0 }}>{p.type}</div>
+                  <div style={{ minWidth:0, flex:"1 1 180px" }}>
+                    <div style={{ fontFamily:"'Manrope',sans-serif", fontWeight:700, fontSize:".88rem", color:C.text, marginBottom:".3rem" }}>{p.title}</div>
+                    <div style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".76rem", color:C.muted, lineHeight:1.6 }}>{p.desc}</div>
                   </div>
-                </Reveal>
-            ))}
-          </div>
+                  {p.link
+                      ? <a href={p.link} target="_blank" rel="noreferrer" className="lk" style={{ flexShrink:0 }}>{p.linkLabel}</a>
+                      : <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".68rem", color:C.muted, whiteSpace:"nowrap", flexShrink:0 }}>{p.linkLabel}</span>
+                  }
+                </div>
+              </Reveal>
+          ))}
         </div>
-      </section>
+      </SplitSection>
   );
 };
 
 /* ── TEAM ── */
 const Team = () => (
-    <section id="team" style={{ background:C.bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
-      <div style={inner({ padding:"6rem clamp(1rem, 5vw, 3rem)" })}>
-        <Label>Founder</Label>
-        <Reveal>
-          <div style={{ display:"flex", flexWrap:"wrap", gap:"4rem", alignItems:"start", border:`1px solid ${C.border}`, padding:"3rem", minWidth:0 }}>
-              <div style={{ flexShrink:0, minWidth:0, width:"220px" }}>
-                <div style={{ width:"100%", aspectRatio:"3/4", background:C.bg2, border:`1px solid ${C.border}`, marginBottom:"1.2rem", position:"relative", overflow:"hidden" }}>
-                    <img
-                        src="/Pranesh.PNG"
-                        alt="Pranesh Soma"
-                        style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center top", display:"block" }}
-                    />
-                    <div style={{ position:"absolute", bottom:0, left:0, right:0, height:"3px", background:C.accent }}/>
-                </div>
-              <div style={{ fontFamily:"'Syne',sans-serif", fontSize:"1rem", fontWeight:700, color:C.text, marginBottom:".3rem" }}>Pranesh Soma</div>
-              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".12em", textTransform:"uppercase", color:C.accent }}>Founder & Chief Architect</div>
+    <section id="team" style={{ position:"relative", background:C.bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
+      <div style={inner({ position:"relative", zIndex:1, padding:"7rem clamp(1.25rem, 5vw, 3.5rem)" })}>
+        <Reveal><Eyebrow center>Founder</Eyebrow></Reveal>
+        <Reveal delay={100}>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:"3.5rem", alignItems:"start", border:`1px solid ${C.border}`, borderRadius:"24px", padding:"3rem", background:C.glass, minWidth:0, maxWidth:"960px", margin:"0 auto" }}>
+            <div style={{ flexShrink:0, minWidth:0, width:"220px", margin:"0 auto" }}>
+              <div style={{ width:"100%", aspectRatio:"3/4", background:C.bg2, borderRadius:"16px", border:`1px solid ${C.border}`, marginBottom:"1.2rem", position:"relative", overflow:"hidden" }}>
+                <img src="/Pranesh.PNG" alt="Pranesh Soma" style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center top", display:"block" }}/>
+                <div style={{ position:"absolute", bottom:0, left:0, right:0, height:"3px", background:C.accent }}/>
+              </div>
+              <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.05rem", fontWeight:700, color:C.text, marginBottom:".3rem", textAlign:"center" }}>Pranesh Soma</div>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".1em", textTransform:"uppercase", color:C.accent, textAlign:"center" }}>Founder &amp; Chief Architect</div>
             </div>
-            <div style={{ minWidth:0, flex:"1 1 280px" }}>
-              <h3 style={{ fontFamily:"'Syne',sans-serif", fontSize:"clamp(1.2rem,1.8vw,1.6rem)", fontWeight:800, lineHeight:1.1, letterSpacing:"-.03em", color:C.text, marginBottom:"1.8rem" }}>
-                Building the{" "}
-                <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400 }}>Infrastructure That Commerce Runs On</em>
+            <div style={{ minWidth:0, flex:"1 1 320px" }}>
+              <h3 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(1.3rem,2vw,1.7rem)", fontWeight:800, lineHeight:1.15, letterSpacing:"-.03em", color:C.text, marginBottom:"1.8rem" }}>
+                Nearly Two Decades Inside{" "}
+                <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>the Commerce Lifecycle</em>
               </h3>
               {[
-                "Pranesh Soma is a distributed systems architect and commerce infrastructure engineer with nearly two decades of hands-on experience designing the governance, compliance, and resilience layers that power national-scale retail operations.",
-                "As an engineering leader within one of the United States' largest retail platforms, Pranesh designed and deployed systems that prevented significant regulatory exposure, stabilized mission-critical infrastructure under large-scale bot attacks, and built the foundational patterns now being formalized into Commerce Trust Labs' open governance framework.",
-                "His expertise is platform-agnostic and transferable — the governance architectures he has designed are as applicable to mid-market e-commerce platforms, government digital services, and financial infrastructure as they are to enterprise retail.",
+                "Pranesh Soma is a distributed systems architect who has spent close to twenty years building the commerce systems that agentic infrastructure now has to plan around — customer identity and org-hierarchy platforms, cart and checkout orchestration, multi-promotion pricing, eProcurement, store-order creation, custom-product offerings, and post-order servicing.",
+                "As an engineering leader within one of the United States' largest retail platforms, he built traffic management and reverse-proxy infrastructure that held up under large-scale bot attacks, led reactive and GraphQL-based checkout architectures, and ran the PAB Graph-to-Cassandra parity migration — reconciling two systems of record before retiring the old one.",
+                "That firsthand view of how many independent systems a single commerce transaction actually touches is what led directly to Commerce Trust Labs: an agent orchestrating across that surface area needs a governed context and control layer, not just a better prompt.",
               ].map((para,i) => (
-                  <p key={i} style={{ fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".78rem", lineHeight:1.9, color:C.muted, marginBottom:"1rem" }}>{para}</p>
+                  <p key={i} style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".86rem", lineHeight:1.85, color:C.muted, marginBottom:"1rem" }}>{para}</p>
               ))}
-              <div style={{ display:"flex", flexWrap:"wrap", gap:"1px", background:C.border, border:`1px solid ${C.border}`, marginTop:"1.8rem" }}>
-                {[["Open","Reference Arch"],["Real-time","Policy Engine"],["Federated","Trust Network"],["AI-Native","Governance"]].map(([v,d]) => (
-                    <div key={v} style={{ background:C.bg2, padding:"1rem", flex:"1 1 120px", minWidth:0 }}>
-                      <div style={{ fontFamily:"'Syne',sans-serif", fontSize:".9rem", fontWeight:800, color:C.accent, marginBottom:".3rem" }}>{v}</div>
-                      <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".56rem", letterSpacing:".1em", textTransform:"uppercase", color:C.muted }}>{d}</div>
+              <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(110px,1fr))", gap:"1px", background:C.border, border:`1px solid ${C.border}`, borderRadius:"14px", overflow:"hidden", marginTop:"1.8rem" }}>
+                {[["Cart &","Checkout"],["Pricing &","Promotions"],["Identity &","Hierarchy"],["Traffic &","Resilience"]].map(([v,d]) => (
+                    <div key={v+d} style={{ background:C.bg2, padding:"1.1rem", textAlign:"center" }}>
+                      <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".8rem", fontWeight:800, color:C.accent, marginBottom:".3rem" }}>{v}</div>
+                      <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".56rem", letterSpacing:".08em", textTransform:"uppercase", color:C.muted }}>{d}</div>
                     </div>
                 ))}
               </div>
@@ -491,17 +632,20 @@ const Team = () => (
 /* ── FOOTER ── */
 const Footer = () => (
     <footer style={{ background:C.bg2, borderTop:`1px solid ${C.border}`, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
-      <div style={inner({ padding:"3rem clamp(1rem, 5vw, 3rem)", display:"flex", flexWrap:"wrap", gap:"2rem", alignItems:"end" })}>
-        <div style={{ minWidth:0, flex:"1 1 280px" }}>
-          <div style={{ fontFamily:"'Syne',sans-serif", fontSize:"1.1rem", fontWeight:800, color:C.text, marginBottom:".5rem" }}>Commerce Trust Labs</div>
-          <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".66rem", color:C.muted, marginBottom:"1rem" }}>AI-Governed Commerce Infrastructure — Atlanta, Georgia, USA</div>
-          <div style={{ fontFamily:"'DM Mono',monospace", fontWeight:300, fontSize:".64rem", color:"rgba(232,228,220,.18)", lineHeight:1.8, maxWidth:"42ch" }}>Commerce Trust Labs is an independent research and technology initiative focused on governance infrastructure for AI-driven commerce systems.</div>
+      <div style={inner({ padding:"4rem clamp(1.25rem, 5vw, 3.5rem) 3rem", display:"flex", flexWrap:"wrap", gap:"2rem", alignItems:"end" })}>
+        <div style={{ minWidth:0, flex:"1 1 300px" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:".6rem", marginBottom:".8rem" }}>
+            <span style={{ width:"1.6rem", height:"1.6rem", borderRadius:"6px", background:C.accent, display:"inline-flex", alignItems:"center", justifyContent:"center", fontFamily:"'DM Mono',monospace", fontSize:".62rem", color:"#fff" }}>CT</span>
+            <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.1rem", fontWeight:800, color:C.text }}>Commerce Trust Labs</div>
+          </div>
+          <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".66rem", color:C.muted, marginBottom:"1rem" }}>Agentic Infrastructure for Enterprise Commerce — Atlanta, Georgia, USA</div>
+          <div style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".72rem", color:"rgba(244,243,240,.22)", lineHeight:1.8, maxWidth:"42ch" }}>Commerce Trust Labs is an independent research and engineering initiative building the governed context and control plane between AI reasoning and enterprise action.</div>
         </div>
-        <div style={{ textAlign:"right", fontFamily:"'DM Mono',monospace", fontSize:".66rem", lineHeight:2.4, minWidth:0, flex:"1 1 200px" }}>
-          {[["commercetrustlabs.org","https://commercetrustlabs.org"],["github.com/commerce-trust-labs","https://github.com/commerce-trust-labs"],["contact@commercetrustlabs.org","mailto:contact@commercetrustlabs.org"]].map(([label,href]) => (
+        <div style={{ textAlign:"right", fontFamily:"'DM Mono',monospace", fontSize:".7rem", lineHeight:2.4, minWidth:0, flex:"1 1 200px" }}>
+          {[["commercetrustlabs.org","https://commercetrustlabs.org"],["github.com/PraneshSoma","https://github.com/PraneshSoma"],["contact@commercetrustlabs.org","mailto:contact@commercetrustlabs.org"]].map(([label,href]) => (
               <div key={label}><a href={href} className="fl">{label}</a></div>
           ))}
-          <div style={{ color:"rgba(232,228,220,.1)", marginTop:".5rem", fontSize:".6rem" }}>© 2025 Commerce Trust Labs. All rights reserved.</div>
+          <div style={{ color:"rgba(244,243,240,.14)", marginTop:".5rem", fontSize:".62rem" }}>© 2025 Commerce Trust Labs. All rights reserved.</div>
         </div>
       </div>
     </footer>
@@ -513,11 +657,11 @@ export default function App() {
         <GlobalStyle/>
         <Nav/>
         <Hero/>
-        <Ticker/>
-        <Problem/>
-        <Mission/>
-        <Technology/>
-        <Interest/>
+        <Story/>
+        <Loop/>
+        <ContextSection/>
+        <Operations/>
+        <Ecp/>
         <Research/>
         <Team/>
         <Footer/>
