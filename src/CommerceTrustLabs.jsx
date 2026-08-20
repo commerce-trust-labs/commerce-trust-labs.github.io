@@ -35,6 +35,7 @@ const GlobalStyle = () => (
     .lk:hover{opacity:1}
     .fl{color:rgba(28,28,30,.35);text-decoration:none;transition:color .2s}
     .fl:hover{color:#d9631f}
+    .arc-hint{display:none}
     .nav-links{display:flex}
     .nav-burger{display:none}
     .nav-mobile-panel{display:none}
@@ -44,6 +45,7 @@ const GlobalStyle = () => (
     .split-row.reverse .split-text{order:2}
     .split-row.reverse .split-visual{order:1}
     @media (max-width: 860px){
+      .arc-hint{display:block}
       .nav-links{display:none}
       .nav-burger{display:inline-flex}
       .nav-mobile-panel.open{display:flex}
@@ -228,7 +230,7 @@ const Nav = () => {
   const [solid, setSolid] = useState(false);
   const [active, setActive] = useState("");
   const [open, setOpen] = useState(false);
-  const links = [["story","Story"],["loop","Loop"],["context","Context"],["operations","Operations"],["ecp","Control Plane"],["research","Research"],["team","Team"]];
+  const links = [["story","Story"],["loop","Loop"],["context","Context"],["operations","Operations"],["ecp","Control Plane"],["journey","Journey"],["research","Research"],["team","Team"]];
   useEffect(() => {
     const fn = () => setSolid(window.scrollY > 40);
     window.addEventListener("scroll", fn);
@@ -587,6 +589,91 @@ const Research = () => {
   );
 };
 
+/* ── MILESTONES (double-arc career timeline) ── */
+const Milestones = () => {
+  const bez = (P0,P1,P2,t) => { const m=1-t; return [ m*m*P0[0]+2*m*t*P1[0]+t*t*P2[0], m*m*P0[1]+2*m*t*P1[1]+t*t*P2[1] ]; };
+  const eP=[[115,342],[500,18],[885,342]];
+  const aP=[[190,342],[500,122],[810,342]];
+  const enterprise=[
+    {t:0.03,y:"2006",a:"Commerce",b:"foundations"},
+    {t:0.19,y:"2018",a:"Traffic Manager",b:"reverse-proxy control"},
+    {t:0.35,y:"2019",a:"Cart Commons",b:"shared capabilities"},
+    {t:0.50,y:"2021–23",a:"Reactive checkout",b:"~3× throughput"},
+    {t:0.66,y:"2023–24",a:"eProcurement",b:"25+ engineer team"},
+    {t:0.82,y:"2024–25",a:"Custom Product",b:"offering + search"},
+    {t:0.97,y:"2026",a:"Customer Platform",b:"graph → Cassandra"},
+  ];
+  const ai=[
+    {t:0.04,y:"Early 2025",a:"Agentic Commerce",b:"planner / worker"},
+    {t:0.28,y:"2025",a:"Loop Engineering",b:"agentic SDLC"},
+    {t:0.50,y:"2025–26",a:"Composite Context",b:"governed evidence"},
+    {t:0.72,y:"2026",a:"Agentic Operations",b:"trigger → verified"},
+    {t:0.96,y:"2026",a:"Context Plane",b:"the control plane"},
+  ];
+  const ePath=`M${eP[0][0]} ${eP[0][1]} Q ${eP[1][0]} ${eP[1][1]} ${eP[2][0]} ${eP[2][1]}`;
+  const aPath=`M${aP[0][0]} ${aP[0][1]} Q ${aP[1][0]} ${aP[1][1]} ${aP[2][0]} ${aP[2][1]}`;
+  return (
+      <section id="journey" style={{ position:"relative", background:C.bg3, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
+        <div style={inner({ padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
+          <Reveal>
+            <Eyebrow center>The Journey</Eyebrow>
+            <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.1rem,3.4vw,3.2rem)", fontWeight:800, lineHeight:1.06, letterSpacing:"-.035em", color:C.text, textAlign:"center", maxWidth:"20ch", margin:"0 auto 1.2rem" }}>
+              Two arcs, one throughline
+            </h2>
+            <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:"1.08rem", lineHeight:1.75, color:C.muted, textAlign:"center", maxWidth:"58ch", margin:"0 auto 2.2rem" }}>
+              Nearly two decades building enterprise commerce systems — then turning that same instinct for control, evidence, and safe migration toward the governed infrastructure agentic AI needs.
+            </p>
+            <div style={{ display:"flex", justifyContent:"center", flexWrap:"wrap", gap:"1.6rem", marginBottom:"2.5rem" }}>
+              <span style={{ display:"inline-flex", alignItems:"center", gap:".5rem", fontFamily:"'DM Mono',monospace", fontSize:".68rem", letterSpacing:".12em", textTransform:"uppercase", color:C.muted }}>
+                <span style={{ width:".7rem", height:".7rem", borderRadius:"50%", background:C.blueHi }}/> Enterprise commerce
+              </span>
+              <span style={{ display:"inline-flex", alignItems:"center", gap:".5rem", fontFamily:"'DM Mono',monospace", fontSize:".68rem", letterSpacing:".12em", textTransform:"uppercase", color:C.muted }}>
+                <span style={{ width:".7rem", height:".7rem", borderRadius:"50%", background:C.accent }}/> Agentic AI architecture
+              </span>
+            </div>
+          </Reveal>
+          <Reveal delay={150}>
+            <div style={{ overflowX:"auto", paddingBottom:".5rem" }}>
+              <svg viewBox="0 118 1000 300" style={{ width:"100%", minWidth:"780px", height:"auto", display:"block" }}>
+                <defs>
+                  <linearGradient id="eg" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#2f6fb0"/><stop offset="55%" stopColor="#4f74c0"/><stop offset="100%" stopColor="#6a54b8"/>
+                  </linearGradient>
+                  <linearGradient id="ag" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#d9631f"/><stop offset="60%" stopColor="#dd7a24"/><stop offset="100%" stopColor="#e0a636"/>
+                  </linearGradient>
+                </defs>
+                <line x1="60" y1="342" x2="940" y2="342" stroke={C.border} strokeWidth="1"/>
+                {/* soft rainbow bands */}
+                <path d={ePath} stroke="url(#eg)" strokeWidth="12" fill="none" opacity="0.10" strokeLinecap="round"/>
+                <path d={aPath} stroke="url(#ag)" strokeWidth="12" fill="none" opacity="0.10" strokeLinecap="round"/>
+                <path d={ePath} stroke="url(#eg)" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+                <path d={aPath} stroke="url(#ag)" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+                {enterprise.map((m,i)=>{ const [x,y]=bez(eP[0],eP[1],eP[2],m.t); return (
+                    <g key={"e"+i}>
+                      <circle cx={x} cy={y} r="5" fill="#fff" stroke={C.blueHi} strokeWidth="2"/>
+                      <text x={x} y={y-42} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="12" letterSpacing="0.5" fill={C.blueHi}>{m.y}</text>
+                      <text x={x} y={y-25} textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="14.5" fontWeight="700" fill={C.text}>{m.a}</text>
+                      <text x={x} y={y-10} textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="11" fill={C.muted}>{m.b}</text>
+                    </g>
+                ); })}
+                {ai.map((m,i)=>{ const [x,y]=bez(aP[0],aP[1],aP[2],m.t); return (
+                    <g key={"a"+i}>
+                      <circle cx={x} cy={y} r="5" fill="#fff" stroke={C.accent} strokeWidth="2"/>
+                      <text x={x} y={y+24} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="12" letterSpacing="0.5" fill={C.accent}>{m.y}</text>
+                      <text x={x} y={y+41} textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="14.5" fontWeight="700" fill={C.text}>{m.a}</text>
+                      <text x={x} y={y+56} textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="11" fill={C.muted}>{m.b}</text>
+                    </g>
+                ); })}
+              </svg>
+            </div>
+            <div className="arc-hint" style={{ textAlign:"center", marginTop:".6rem", fontFamily:"'DM Mono',monospace", fontSize:".6rem", letterSpacing:".18em", textTransform:"uppercase", color:C.muted }}>Scroll the timeline →</div>
+          </Reveal>
+        </div>
+      </section>
+  );
+};
+
 /* ── TEAM ── */
 const Team = () => (
     <section id="team" style={{ position:"relative", background:C.bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
@@ -662,6 +749,7 @@ export default function App() {
         <ContextSection/>
         <Operations/>
         <Ecp/>
+        <Milestones/>
         <Research/>
         <Team/>
         <Footer/>
