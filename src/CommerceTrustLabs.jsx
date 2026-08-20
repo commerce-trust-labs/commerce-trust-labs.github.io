@@ -430,9 +430,12 @@ const Hero = () => {
           <p style={{ ...a(260), fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:"clamp(1.15rem,1.8vw,1.5rem)", lineHeight:1.65, color:"rgba(28,28,30,.72)", maxWidth:"42ch", marginBottom:"3.2rem" }}>
             Tokens carry model output. Trusted action emerges only when that output is grounded in authoritative context, evaluated by policy, authorized at the right risk level, executed through registered procedures, and verified with evidence. Commerce Trust Labs explores the control plane in between.
           </p>
-          <div style={{ ...a(360), display:"flex", gap:"1.1rem", flexWrap:"wrap", justifyContent:"center", marginBottom:"5.5rem" }}>
+          <div style={{ ...a(360), display:"flex", gap:"1.1rem", flexWrap:"wrap", justifyContent:"center", marginBottom:"2.2rem" }}>
             <a href="#story" className="pill">Read the Story →</a>
             <a href="https://github.com/PraneshSoma/agentic-sdlc-loop" target="_blank" rel="noreferrer" className="pill2">View on GitHub</a>
+          </div>
+          <div style={{ ...a(420), fontFamily:"'DM Mono',monospace", fontSize:".74rem", letterSpacing:".03em", color:"rgba(28,28,30,.5)", lineHeight:1.7, maxWidth:"54ch", marginBottom:"4.5rem" }}>
+            An independent research initiative by <span style={{ color:C.text, fontWeight:500 }}>Pranesh Soma</span> — nearly two decades architecting enterprise commerce systems.
           </div>
           <div style={{ ...a(480), display:"flex", flexWrap:"wrap", justifyContent:"center", gap:"clamp(2rem, 6vw, 5rem)", width:"100%" }}>
             {[["Composite","Context Model"],["Governed","SDLC Loop"],["Human-Gated","Agentic Ops"]].map(([v,d]) => (
@@ -936,6 +939,45 @@ const EngineeringNotes = () => {
   );
 };
 
+/* ── SYSTEM BOUNDARIES ── */
+const Boundaries = () => {
+  const items = [
+    ["Research prototypes, not products","The systems shown here are reference architectures and working prototypes from independent research. None is production-deployed, and no production metrics are claimed for the agentic work — the one hard number, ~3\u00d7 checkout throughput, is from prior enterprise engineering."],
+    ["Established mechanisms, composed deliberately","Context assembly, policy gates, risk-tiered approval, and model routing are known patterns. The contribution is the problem-driven sequence and their composition into one governed-action model — not a claim to have invented RAG, policy engines, or gateways."],
+    ["Humans stay in the loop by design","Higher-risk actions require explicit human approval, and nothing graduates to broader autonomy because earlier runs succeeded. An approved plan is immutable; a changed plan is re-authorized."],
+    ["Worked examples are synthetic","Execution traces such as INC-1002 are illustrative, not records of real incidents, and they describe no employer or client system."],
+    ["The Intelligence Control Plane is a roadmap","Token economics and quality-aware routing are proposed, not built. Success there is defined as proving that optimization preserved required evidence, policy compliance, and outcome quality — not merely reducing spend."],
+    ["The hard problems remain open","Multi-tenant policy conflict, context freshness at scale, measuring missed evidence, and cross-team governance are acknowledged as unsolved rather than hidden."],
+  ];
+  return (
+      <section id="boundaries" style={{ position:"relative", background:C.bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
+        <div style={inner({ padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
+          <Reveal>
+            <Eyebrow center>System Boundaries</Eyebrow>
+            <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.1rem,3.4vw,3.2rem)", fontWeight:800, lineHeight:1.06, letterSpacing:"-.035em", color:C.text, textAlign:"center", maxWidth:"20ch", margin:"0 auto 1.2rem" }}>
+              What this is &mdash; and{" "}
+              <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>what it isn't</em>
+            </h2>
+            <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:"1.08rem", lineHeight:1.75, color:C.muted, textAlign:"center", maxWidth:"60ch", margin:"0 auto 3.5rem" }}>
+              Stating limits is part of the engineering. These are the explicit boundaries of the work on this site &mdash; what it claims, what it does not, and where the problems are still open.
+            </p>
+          </Reveal>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(300px, 1fr))", gap:"1.25rem" }}>
+            {items.map(([t,b],i)=>(
+                <Reveal key={t} delay={(i%3)*80}>
+                  <div style={{ background:C.glass, border:`1px solid ${C.border}`, borderLeft:`2px solid ${C.muted}`, borderRadius:"16px", padding:"2rem", height:"100%" }}>
+                    <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".58rem", letterSpacing:".16em", textTransform:"uppercase", color:C.muted, marginBottom:".9rem" }}>Boundary {String(i+1).padStart(2,"0")}</div>
+                    <h3 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.05rem", fontWeight:700, color:C.text, marginBottom:".7rem", lineHeight:1.25 }}>{t}</h3>
+                    <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".9rem", lineHeight:1.75, color:"rgba(28,28,30,.62)" }}>{b}</p>
+                  </div>
+                </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+  );
+};
+
 /* ── RESEARCH ── */
 const Research = () => {
   const pubs = [
@@ -1131,6 +1173,7 @@ export default function App() {
         <EnterpriseControlPlane/>
         <Roadmap/>
         <EngineeringNotes/>
+        <Boundaries/>
         <Research/>
         <Team/>
         <Footer/>
