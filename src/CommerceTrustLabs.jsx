@@ -629,7 +629,7 @@ const Milestones = () => {
         </div>
           <Reveal delay={150}>
             <div style={{ overflowX:"auto", paddingBottom:".5rem" }}>
-              <svg viewBox="0 96 1200 312" style={{ width:"100%", minWidth:"1000px", height:"auto", display:"block" }}>
+              <svg viewBox="0 68 1200 372" style={{ width:"100%", minWidth:"1000px", height:"auto", display:"block" }}>
                 <defs>
                   <linearGradient id="eg" x1="0" y1="0" x2="1" y2="0">
                     <stop offset="0%" stopColor="#2f6fb0"/><stop offset="55%" stopColor="#4f74c0"/><stop offset="100%" stopColor="#6a54b8"/>
@@ -644,21 +644,21 @@ const Milestones = () => {
                 <path d={aPath} stroke="url(#ag)" strokeWidth="12" fill="none" opacity="0.10" strokeLinecap="round"/>
                 <path d={ePath} stroke="url(#eg)" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
                 <path d={aPath} stroke="url(#ag)" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-                {enterprise.map((m,i)=>{ const [x,y]=bez(eP[0],eP[1],eP[2],m.t); const far=i%2===1; const lb=y-(far?46:14); return (
+                {enterprise.map((m,i)=>{ const [x,y]=bez(eP[0],eP[1],eP[2],m.t); const far=i%2===1; const dY=far?110:162; return (
                     <g key={"e"+i}>
-                      <line x1={x} y1={y-6} x2={x} y2={lb} stroke={C.border} strokeWidth="1"/>
+                      <line x1={x} y1={y-6} x2={x} y2={dY+4} stroke="rgba(28,28,30,0.09)" strokeWidth="1"/>
                       <circle cx={x} cy={y} r="4.5" fill="#fff" stroke={C.blueHi} strokeWidth="2"/>
-                      <text x={x} y={lb-30} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="10.5" letterSpacing="0.5" fill={C.blueHi}>{m.y}</text>
-                      <text x={x} y={lb-14} textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="13.5" fontWeight="700" fill={C.text}>{m.a}</text>
-                      <text x={x} y={lb} textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="10.5" fill={C.muted}>{m.b}</text>
+                      <text x={x} y={dY-30} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="10.5" letterSpacing="0.5" fill={C.blueHi}>{m.y}</text>
+                      <text x={x} y={dY-15} textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="13.5" fontWeight="700" fill={C.text}>{m.a}</text>
+                      <text x={x} y={dY} textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="10.5" fill={C.muted}>{m.b}</text>
                     </g>
                 ); })}
-                {ai.map((m,i)=>{ const [x,y]=bez(aP[0],aP[1],aP[2],m.t); const far=i%2===1; const lt=y+(far?40:15); return (
+                {ai.map((m,i)=>{ const [x,y]=bez(aP[0],aP[1],aP[2],m.t); const far=i%2===1; const yY=far?410:372; return (
                     <g key={"a"+i}>
-                      <line x1={x} y1={y+6} x2={x} y2={lt} stroke={C.border} strokeWidth="1"/>
+                      <line x1={x} y1={y+6} x2={x} y2={yY-11} stroke="rgba(28,28,30,0.09)" strokeWidth="1"/>
                       <circle cx={x} cy={y} r="4.5" fill="#fff" stroke={C.accent} strokeWidth="2"/>
-                      <text x={x} y={lt+11} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="10.5" letterSpacing="0.5" fill={C.accent}>{m.y}</text>
-                      <text x={x} y={lt+26} textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="13.5" fontWeight="700" fill={C.text}>{m.a}</text>
+                      <text x={x} y={yY} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="10.5" letterSpacing="0.5" fill={C.accent}>{m.y}</text>
+                      <text x={x} y={yY+16} textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="13.5" fontWeight="700" fill={C.text}>{m.a}</text>
                     </g>
                 ); })}
               </svg>
