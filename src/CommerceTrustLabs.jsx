@@ -230,7 +230,7 @@ const Nav = () => {
   const [solid, setSolid] = useState(false);
   const [active, setActive] = useState("");
   const [open, setOpen] = useState(false);
-  const links = [["story","Story"],["loop","Loop"],["context","Context"],["operations","Operations"],["ecp","Control Plane"],["journey","Journey"],["research","Research"],["team","Team"]];
+  const links = [["story","Story"],["loop","Loop"],["context","Context"],["operations","Operations"],["ecp","Control Plane"],["research","Research"],["team","Founder"]];
   useEffect(() => {
     const fn = () => setSolid(window.scrollY > 40);
     window.addEventListener("scroll", fn);
@@ -592,49 +592,45 @@ const Research = () => {
 /* ── MILESTONES (double-arc career timeline) ── */
 const Milestones = () => {
   const bez = (P0,P1,P2,t) => { const m=1-t; return [ m*m*P0[0]+2*m*t*P1[0]+t*t*P2[0], m*m*P0[1]+2*m*t*P1[1]+t*t*P2[1] ]; };
-  const eP=[[115,342],[500,18],[885,342]];
-  const aP=[[190,342],[500,122],[810,342]];
+  const eP=[[130,342],[600,14],[1070,342]];
+  const aP=[[178,342],[600,120],[1022,342]];
   const enterprise=[
     {t:0.03,y:"2006",a:"Commerce",b:"foundations"},
-    {t:0.19,y:"2018",a:"Traffic Manager",b:"reverse-proxy control"},
-    {t:0.35,y:"2019",a:"Cart Commons",b:"shared capabilities"},
-    {t:0.50,y:"2021–23",a:"Reactive checkout",b:"~3× throughput"},
-    {t:0.66,y:"2023–24",a:"eProcurement",b:"25+ engineer team"},
-    {t:0.82,y:"2024–25",a:"Custom Product",b:"offering + search"},
+    {t:0.1475,y:"2013–17",a:"Cloud migration",b:"monolith → microservices"},
+    {t:0.265,y:"2018",a:"Traffic Manager",b:"reverse-proxy control"},
+    {t:0.3825,y:"2019",a:"Cart Commons",b:"shared capabilities"},
+    {t:0.50,y:"2019",a:"B2B Commerce",b:"enterprise buyers"},
+    {t:0.6175,y:"2021–23",a:"Reactive checkout",b:"~3× throughput"},
+    {t:0.735,y:"2023–24",a:"eProcurement",b:"25+ engineer team"},
+    {t:0.8525,y:"2024–25",a:"Custom Product",b:"offering + search"},
     {t:0.97,y:"2026",a:"Customer Platform",b:"graph → Cassandra"},
   ];
   const ai=[
-    {t:0.04,y:"Early 2025",a:"Agentic Commerce",b:"planner / worker"},
-    {t:0.28,y:"2025",a:"Loop Engineering",b:"agentic SDLC"},
-    {t:0.50,y:"2025–26",a:"Composite Context",b:"governed evidence"},
-    {t:0.72,y:"2026",a:"Agentic Operations",b:"trigger → verified"},
-    {t:0.96,y:"2026",a:"Context Plane",b:"the control plane"},
+    {t:0.03,y:"Early 2025",a:"Agentic Commerce"},
+    {t:0.1475,y:"2025",a:"Repo Compare"},
+    {t:0.265,y:"2025",a:"Multi-Agent Commerce"},
+    {t:0.3825,y:"2026",a:"Loop Engineering"},
+    {t:0.50,y:"2026",a:"SDLC Loop"},
+    {t:0.6175,y:"2026",a:"Composite Context"},
+    {t:0.735,y:"2026",a:"PDLC"},
+    {t:0.8525,y:"2026",a:"Agentic Ops"},
+    {t:0.97,y:"2026",a:"ECP"},
   ];
   const ePath=`M${eP[0][0]} ${eP[0][1]} Q ${eP[1][0]} ${eP[1][1]} ${eP[2][0]} ${eP[2][1]}`;
   const aPath=`M${aP[0][0]} ${aP[0][1]} Q ${aP[1][0]} ${aP[1][1]} ${aP[2][0]} ${aP[2][1]}`;
   return (
-      <section id="journey" style={{ position:"relative", background:C.bg3, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
-        <div style={inner({ padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
-          <Reveal>
-            <Eyebrow center>The Journey</Eyebrow>
-            <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.1rem,3.4vw,3.2rem)", fontWeight:800, lineHeight:1.06, letterSpacing:"-.035em", color:C.text, textAlign:"center", maxWidth:"20ch", margin:"0 auto 1.2rem" }}>
-              Two arcs, one throughline
-            </h2>
-            <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:"1.08rem", lineHeight:1.75, color:C.muted, textAlign:"center", maxWidth:"58ch", margin:"0 auto 2.2rem" }}>
-              Nearly two decades building enterprise commerce systems — then turning that same instinct for control, evidence, and safe migration toward the governed infrastructure agentic AI needs.
-            </p>
-            <div style={{ display:"flex", justifyContent:"center", flexWrap:"wrap", gap:"1.6rem", marginBottom:"2.5rem" }}>
-              <span style={{ display:"inline-flex", alignItems:"center", gap:".5rem", fontFamily:"'DM Mono',monospace", fontSize:".68rem", letterSpacing:".12em", textTransform:"uppercase", color:C.muted }}>
-                <span style={{ width:".7rem", height:".7rem", borderRadius:"50%", background:C.blueHi }}/> Enterprise commerce
-              </span>
-              <span style={{ display:"inline-flex", alignItems:"center", gap:".5rem", fontFamily:"'DM Mono',monospace", fontSize:".68rem", letterSpacing:".12em", textTransform:"uppercase", color:C.muted }}>
-                <span style={{ width:".7rem", height:".7rem", borderRadius:"50%", background:C.accent }}/> Agentic AI architecture
-              </span>
-            </div>
-          </Reveal>
+      <div style={{ marginTop:"3.5rem" }}>
+        <div style={{ display:"flex", justifyContent:"center", flexWrap:"wrap", gap:"1.6rem", marginBottom:"2.2rem" }}>
+          <span style={{ display:"inline-flex", alignItems:"center", gap:".5rem", fontFamily:"'DM Mono',monospace", fontSize:".68rem", letterSpacing:".12em", textTransform:"uppercase", color:C.muted }}>
+            <span style={{ width:".7rem", height:".7rem", borderRadius:"50%", background:C.blueHi }}/> Enterprise commerce
+          </span>
+          <span style={{ display:"inline-flex", alignItems:"center", gap:".5rem", fontFamily:"'DM Mono',monospace", fontSize:".68rem", letterSpacing:".12em", textTransform:"uppercase", color:C.muted }}>
+            <span style={{ width:".7rem", height:".7rem", borderRadius:"50%", background:C.accent }}/> Agentic AI architecture
+          </span>
+        </div>
           <Reveal delay={150}>
             <div style={{ overflowX:"auto", paddingBottom:".5rem" }}>
-              <svg viewBox="0 118 1000 300" style={{ width:"100%", minWidth:"780px", height:"auto", display:"block" }}>
+              <svg viewBox="0 96 1200 312" style={{ width:"100%", minWidth:"1000px", height:"auto", display:"block" }}>
                 <defs>
                   <linearGradient id="eg" x1="0" y1="0" x2="1" y2="0">
                     <stop offset="0%" stopColor="#2f6fb0"/><stop offset="55%" stopColor="#4f74c0"/><stop offset="100%" stopColor="#6a54b8"/>
@@ -643,44 +639,54 @@ const Milestones = () => {
                     <stop offset="0%" stopColor="#d9631f"/><stop offset="60%" stopColor="#dd7a24"/><stop offset="100%" stopColor="#e0a636"/>
                   </linearGradient>
                 </defs>
-                <line x1="60" y1="342" x2="940" y2="342" stroke={C.border} strokeWidth="1"/>
+                <line x1="70" y1="342" x2="1130" y2="342" stroke={C.border} strokeWidth="1"/>
                 {/* soft rainbow bands */}
                 <path d={ePath} stroke="url(#eg)" strokeWidth="12" fill="none" opacity="0.10" strokeLinecap="round"/>
                 <path d={aPath} stroke="url(#ag)" strokeWidth="12" fill="none" opacity="0.10" strokeLinecap="round"/>
                 <path d={ePath} stroke="url(#eg)" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
                 <path d={aPath} stroke="url(#ag)" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-                {enterprise.map((m,i)=>{ const [x,y]=bez(eP[0],eP[1],eP[2],m.t); return (
+                {enterprise.map((m,i)=>{ const [x,y]=bez(eP[0],eP[1],eP[2],m.t); const far=i%2===1; const lb=y-(far?46:14); return (
                     <g key={"e"+i}>
-                      <circle cx={x} cy={y} r="5" fill="#fff" stroke={C.blueHi} strokeWidth="2"/>
-                      <text x={x} y={y-42} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="12" letterSpacing="0.5" fill={C.blueHi}>{m.y}</text>
-                      <text x={x} y={y-25} textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="14.5" fontWeight="700" fill={C.text}>{m.a}</text>
-                      <text x={x} y={y-10} textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="11" fill={C.muted}>{m.b}</text>
+                      <line x1={x} y1={y-6} x2={x} y2={lb} stroke={C.border} strokeWidth="1"/>
+                      <circle cx={x} cy={y} r="4.5" fill="#fff" stroke={C.blueHi} strokeWidth="2"/>
+                      <text x={x} y={lb-30} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="10.5" letterSpacing="0.5" fill={C.blueHi}>{m.y}</text>
+                      <text x={x} y={lb-14} textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="13.5" fontWeight="700" fill={C.text}>{m.a}</text>
+                      <text x={x} y={lb} textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="10.5" fill={C.muted}>{m.b}</text>
                     </g>
                 ); })}
-                {ai.map((m,i)=>{ const [x,y]=bez(aP[0],aP[1],aP[2],m.t); return (
+                {ai.map((m,i)=>{ const [x,y]=bez(aP[0],aP[1],aP[2],m.t); const far=i%2===1; const lt=y+(far?40:15); return (
                     <g key={"a"+i}>
-                      <circle cx={x} cy={y} r="5" fill="#fff" stroke={C.accent} strokeWidth="2"/>
-                      <text x={x} y={y+24} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="12" letterSpacing="0.5" fill={C.accent}>{m.y}</text>
-                      <text x={x} y={y+41} textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="14.5" fontWeight="700" fill={C.text}>{m.a}</text>
-                      <text x={x} y={y+56} textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="11" fill={C.muted}>{m.b}</text>
+                      <line x1={x} y1={y+6} x2={x} y2={lt} stroke={C.border} strokeWidth="1"/>
+                      <circle cx={x} cy={y} r="4.5" fill="#fff" stroke={C.accent} strokeWidth="2"/>
+                      <text x={x} y={lt+11} textAnchor="middle" fontFamily="'DM Mono',monospace" fontSize="10.5" letterSpacing="0.5" fill={C.accent}>{m.y}</text>
+                      <text x={x} y={lt+26} textAnchor="middle" fontFamily="'Manrope',sans-serif" fontSize="13.5" fontWeight="700" fill={C.text}>{m.a}</text>
                     </g>
                 ); })}
               </svg>
             </div>
             <div className="arc-hint" style={{ textAlign:"center", marginTop:".6rem", fontFamily:"'DM Mono',monospace", fontSize:".6rem", letterSpacing:".18em", textTransform:"uppercase", color:C.muted }}>Scroll the timeline →</div>
           </Reveal>
-        </div>
-      </section>
+      </div>
   );
 };
 
-/* ── TEAM ── */
+/* ── ORIGIN / FOUNDER ── */
 const Team = () => (
     <section id="team" style={{ position:"relative", background:C.bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
       <div style={inner({ position:"relative", zIndex:1, padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
-        <Reveal><Eyebrow center>Founder</Eyebrow></Reveal>
+        <Reveal>
+          <Eyebrow center>Origin</Eyebrow>
+          <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.1rem,3.4vw,3.2rem)", fontWeight:800, lineHeight:1.06, letterSpacing:"-.035em", color:C.text, textAlign:"center", maxWidth:"22ch", margin:"0 auto 1.2rem" }}>
+            From commerce systems to{" "}
+            <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>governed autonomy</em>
+          </h2>
+          <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:"1.08rem", lineHeight:1.75, color:C.muted, textAlign:"center", maxWidth:"62ch", margin:"0 auto" }}>
+            Commerce Trust Labs didn't begin as an AI company. It's the evolution of nearly two decades spent building enterprise commerce systems — the same instincts for control, evidence, and safe migration, transformed into the governed infrastructure that lets AI act on those systems.
+          </p>
+        </Reveal>
+        <Milestones/>
         <Reveal delay={100}>
-          <div style={{ display:"flex", flexWrap:"wrap", gap:"3.5rem", alignItems:"start", border:`1px solid ${C.border}`, borderRadius:"24px", padding:"3rem", background:C.glass, minWidth:0, maxWidth:"960px", margin:"0 auto" }}>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:"3.5rem", alignItems:"start", border:`1px solid ${C.border}`, borderRadius:"24px", padding:"3rem", background:C.glass, minWidth:0, maxWidth:"960px", margin:"5rem auto 0" }}>
             <div style={{ flexShrink:0, minWidth:0, width:"220px", margin:"0 auto" }}>
               <div style={{ width:"100%", aspectRatio:"3/4", background:C.bg2, borderRadius:"16px", border:`1px solid ${C.border}`, marginBottom:"1.2rem", position:"relative", overflow:"hidden" }}>
                 <img src="/Pranesh.PNG" alt="Pranesh Soma" style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center top", display:"block" }}/>
@@ -690,25 +696,16 @@ const Team = () => (
               <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".1em", textTransform:"uppercase", color:C.accent, textAlign:"center" }}>Founder &amp; Chief Architect</div>
             </div>
             <div style={{ minWidth:0, flex:"1 1 320px" }}>
-              <h3 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(1.5rem,2.4vw,2.1rem)", fontWeight:800, lineHeight:1.12, letterSpacing:"-.035em", color:C.text, marginBottom:"1.8rem" }}>
-                Nearly Two Decades Inside{" "}
-                <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>the Commerce Lifecycle</em>
+              <h3 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(1.35rem,2.2vw,1.9rem)", fontWeight:800, lineHeight:1.14, letterSpacing:"-.035em", color:C.text, marginBottom:"1.6rem" }}>
+                The architect behind{" "}
+                <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>the transformation</em>
               </h3>
               {[
-                "Pranesh Soma is a distributed systems architect who has spent close to two decades building the commerce systems that agentic infrastructure now has to plan around — customer identity and organization-hierarchy platforms, cart and checkout orchestration, multi-promotion pricing, eProcurement, store-order creation, custom-product offerings, post-order servicing, and the traffic-management and reverse-proxy layers that keep them standing.",
-                "As an engineering leader at one of the largest retail platforms in the United States, he built infrastructure that held up under large-scale bot attacks, led reactive and GraphQL-based checkout architectures, and ran large graph-to-Cassandra data-parity migrations — running both systems of record in parallel and reconciling them before retiring the old one. That firsthand view of how many independent systems a single commerce transaction actually touches is exactly what agentic infrastructure now has to reason across.",
-                "Commerce Trust Labs is where that experience became architecture. Pranesh designed the planner/worker model behind Agentic Commerce, the eleven-stage agentic SDLC loop with its supervisor and human gates, the composite-context model that assembles governed, evidence-backed context from authoritative sources, and the Agentic Operations runtime that carries a production incident from trigger to verified resolution — all unified under the Enterprise Context Plan, the governed plane between AI reasoning and enterprise action.",
+                "Pranesh Soma is a distributed systems architect who spent close to two decades inside one of the largest retail platforms in the United States — building the cart, checkout, pricing, identity, and traffic-management systems that agentic infrastructure now has to plan around, and leading modernization programs from monolith-to-microservices cloud migrations to large graph-to-Cassandra data-parity transitions.",
+                "Commerce Trust Labs is where that experience became architecture — the planner/worker model behind Agentic Commerce, the agentic SDLC loop, the composite-context model, the Agentic Operations runtime, and the Enterprise Context Plan that unifies them into a governed plane between AI reasoning and enterprise action.",
               ].map((para,i) => (
                   <p key={i} style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".95rem", lineHeight:1.85, color:"rgba(28,28,30,.64)", marginBottom:"1rem" }}>{para}</p>
               ))}
-              <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(110px,1fr))", gap:"1px", background:C.border, border:`1px solid ${C.border}`, borderRadius:"14px", overflow:"hidden", marginTop:"1.8rem" }}>
-                {[["Cart &","Checkout"],["Pricing &","Promotions"],["Identity &","Hierarchy"],["Traffic &","Resilience"]].map(([v,d]) => (
-                    <div key={v+d} style={{ background:C.bg2, padding:"1.1rem", textAlign:"center" }}>
-                      <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".8rem", fontWeight:800, color:C.accent, marginBottom:".3rem" }}>{v}</div>
-                      <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".56rem", letterSpacing:".08em", textTransform:"uppercase", color:C.muted }}>{d}</div>
-                    </div>
-                ))}
-              </div>
             </div>
           </div>
         </Reveal>
@@ -749,7 +746,6 @@ export default function App() {
         <ContextSection/>
         <Operations/>
         <Ecp/>
-        <Milestones/>
         <Research/>
         <Team/>
         <Footer/>
