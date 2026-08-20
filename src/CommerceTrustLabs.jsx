@@ -22,7 +22,7 @@ const GlobalStyle = () => (
     @keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-2%,3%) scale(1.05)}}
     @keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(3%,-2%) scale(1.08)}}
     @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
-    .nl{position:relative;color:rgba(28,28,30,.55);text-decoration:none;font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.08em;transition:color .25s;white-space:nowrap}
+    .nl{position:relative;color:rgba(28,28,30,.62);text-decoration:none;font-family:'DM Mono',monospace;font-size:.76rem;letter-spacing:.075em;transition:color .25s;white-space:nowrap}
     .nl:hover,.nl.on{color:#16161a}
     .nl.on::after{content:'';position:absolute;left:0;right:0;bottom:-.5rem;height:1px;background:#d9631f}
     .card:hover{background:rgba(28,28,30,0.05)!important;border-color:rgba(28,28,30,0.14)!important;transform:translateY(-2px)}
@@ -251,12 +251,12 @@ const Nav = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-      <nav style={{ position:"fixed", top:0, left:0, right:0, zIndex:200, display:"flex", flexWrap:"wrap", justifyContent:"space-between", alignItems:"center", gap:"1rem", padding: solid ? ".9rem clamp(1.25rem, 5vw, 3.5rem)" : "1.5rem clamp(1.25rem, 5vw, 3.5rem)", background: solid||open ? "rgba(255,255,255,.86)" : "transparent", backdropFilter: (solid||open) ? "blur(18px) saturate(140%)" : "none", borderBottom:`1px solid ${(solid||open) ? C.border : "transparent"}`, transition:"all .35s cubic-bezier(.16,1,.3,1)", minWidth:0, maxWidth:"100vw" }}>
-        <a href="#" style={{ display:"flex", alignItems:"center", gap:".6rem", fontFamily:"'Manrope',sans-serif", fontSize:".8rem", fontWeight:700, letterSpacing:"-.01em", color:C.text, textDecoration:"none", flexShrink:0 }}>
-          <span style={{ width:"1.6rem", height:"1.6rem", borderRadius:"6px", background:C.accent, display:"inline-flex", alignItems:"center", justifyContent:"center", fontFamily:"'DM Mono',monospace", fontSize:".62rem", color:"#fff" }}>CT</span>
+      <nav style={{ position:"fixed", top:0, left:0, right:0, zIndex:200, display:"flex", flexWrap:"wrap", justifyContent:"space-between", alignItems:"center", gap:"1.25rem", padding: solid ? "1.1rem clamp(1.5rem, 4vw, 5rem)" : "1.8rem clamp(1.5rem, 4vw, 5rem)", background: solid||open ? "rgba(255,255,255,.9)" : "transparent", backdropFilter: (solid||open) ? "blur(18px) saturate(140%)" : "none", borderBottom:`1px solid ${(solid||open) ? C.border : "transparent"}`, transition:"all .35s cubic-bezier(.16,1,.3,1)", minWidth:0, maxWidth:"100vw" }}>
+        <a href="#" style={{ display:"flex", alignItems:"center", gap:".75rem", fontFamily:"'Manrope',sans-serif", fontSize:".96rem", fontWeight:750, letterSpacing:"-.015em", color:C.text, textDecoration:"none", flexShrink:0 }}>
+          <span style={{ width:"2rem", height:"2rem", borderRadius:"7px", background:C.accent, display:"inline-flex", alignItems:"center", justifyContent:"center", fontFamily:"'DM Mono',monospace", fontSize:".7rem", fontWeight:500, color:"#fff" }}>CT</span>
           Commerce Trust Labs
         </a>
-        <div className="nav-links" style={{ flexWrap:"wrap", gap:"clamp(1rem, 2vw, 1.6rem)", minWidth:0 }}>
+        <div className="nav-links" style={{ flexWrap:"wrap", gap:"clamp(1.25rem, 2vw, 2rem)", minWidth:0 }}>
           {links.map(([id,l]) => (
               <a key={id} href={`#${id}`} className={`nl${active===id?" on":""}`}>{l}</a>
           ))}
