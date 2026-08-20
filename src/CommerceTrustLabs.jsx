@@ -44,6 +44,9 @@ const GlobalStyle = () => (
     .split-visual{order:2;min-width:0;flex:1 1 420px;max-width:580px;margin:0 auto}
     .split-visual.align-content{padding-top:8rem}
     .split-visual svg{filter:contrast(1.15) saturate(1.08)}
+    .research-row{display:grid!important;grid-template-columns:220px minmax(0,1fr) auto;column-gap:1.5rem;row-gap:.7rem}
+    .research-type{align-self:center}
+    .research-action{align-self:center;justify-self:end}
     .split-row.reverse .split-text{order:2}
     .split-row.reverse .split-visual{order:1}
     @media (max-width: 860px){
@@ -54,6 +57,8 @@ const GlobalStyle = () => (
       .split-text,.split-row.reverse .split-text{order:1}
       .split-visual,.split-row.reverse .split-visual{order:2}
       .split-visual.align-content{padding-top:0}
+      .research-row{grid-template-columns:1fr;gap:.65rem}
+      .research-type,.research-action{justify-self:start}
     }
     @media (min-width: 1440px){
       .split-text{flex-basis:520px}
@@ -584,15 +589,15 @@ const Research = () => {
         <div style={{ display:"flex", flexDirection:"column", gap:"1px", background:C.border, border:`1px solid ${C.border}`, borderRadius:"16px", overflow:"hidden" }}>
           {pubs.map((p,i) => (
               <Reveal key={i} delay={180+i*60}>
-                <div className="row" style={{ background:C.bg, padding:"1.6rem 1.8rem", display:"flex", flexWrap:"wrap", gap:"1.2rem", alignItems:"center", minWidth:0, transition:"background .25s" }}>
-                  <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".56rem", letterSpacing:".15em", textTransform:"uppercase", color:C.accent, flexShrink:0 }}>{p.type}</div>
+                <div className="row research-row" style={{ background:C.bg, padding:"1.6rem 1.8rem", alignItems:"center", minWidth:0, transition:"background .25s" }}>
+                  <div className="research-type" style={{ fontFamily:"'DM Mono',monospace", fontSize:".56rem", letterSpacing:".15em", textTransform:"uppercase", color:C.accent }}>{p.type}</div>
                   <div style={{ minWidth:0, flex:"1 1 180px" }}>
                     <div style={{ fontFamily:"'Manrope',sans-serif", fontWeight:700, fontSize:".98rem", color:C.text, marginBottom:".35rem" }}>{p.title}</div>
                     <div style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".86rem", color:"rgba(28,28,30,.6)", lineHeight:1.6 }}>{p.desc}</div>
                   </div>
                   {p.link
-                      ? <a href={p.link} target="_blank" rel="noreferrer" className="lk" style={{ flexShrink:0 }}>{p.linkLabel}</a>
-                      : <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".68rem", color:C.muted, whiteSpace:"nowrap", flexShrink:0 }}>{p.linkLabel}</span>
+                      ? <a href={p.link} target="_blank" rel="noreferrer" className="lk research-action">{p.linkLabel}</a>
+                      : <span className="research-action" style={{ fontFamily:"'DM Mono',monospace", fontSize:".68rem", color:C.muted, whiteSpace:"nowrap" }}>{p.linkLabel}</span>
                   }
                 </div>
               </Reveal>
