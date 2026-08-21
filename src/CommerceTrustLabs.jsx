@@ -130,6 +130,22 @@ const Eyebrow = ({ children, center }) => (
     )
 );
 
+/* ── STATUS BADGE ── */
+const StatusBadge = ({ kind }) => {
+  const map = {
+    prototype:   ["Working Prototype", C.accent,  "rgba(217,99,31,.08)"],
+    spec:        ["Architecture Spec", C.blueHi,  "rgba(47,111,176,.08)"],
+    roadmap:     ["Roadmap",           C.blueHi,  "rgba(47,111,176,.06)"],
+    exploration: ["Exploration",       C.muted,   "rgba(28,28,30,.05)"],
+  };
+  const [label, color, bg] = map[kind] || map.spec;
+  return (
+      <span style={{ display:"inline-flex", alignItems:"center", gap:".45rem", fontFamily:"'DM Mono',monospace", fontSize:".56rem", fontWeight:500, letterSpacing:".16em", textTransform:"uppercase", color, background:bg, border:`1px solid ${color}`, borderRadius:"999px", padding:".34rem .75rem", whiteSpace:"nowrap" }}>
+        <span style={{ width:".4rem", height:".4rem", borderRadius:"50%", background:color }}/>{label}
+      </span>
+  );
+};
+
 /* ── ATMOSPHERE ── */
 const Atmosphere = ({ variant = "hero" }) => {
   const palettes = {
@@ -275,14 +291,20 @@ const FlowGraphic = () => {
 };
 
 const EngineeringArcGraphic = () => {
+  const status = {
+    built:       { label:"Built",             color:C.accent, border:C.accent,  bg:"#fff" },
+    exploration: { label:"Exploration",       color:C.muted,  border:C.muted,   bg:"rgba(28,28,30,.035)" },
+    spec:        { label:"Architecture Spec", color:C.blueHi, border:C.blueHi,  bg:"rgba(47,111,176,.05)" },
+    roadmap:     { label:"Roadmap",           color:C.blueHi, border:C.blueHi,  bg:"rgba(47,111,176,.05)" },
+  };
   const evolution = [
-    ["01","MAR 2025","Content without a complete cart","Agentic Commerce"],
-    ["02","MAY 2026","A valuable loop bound to one assistant","Governed Agentic SDLC"],
-    ["03","2026","Every agent rebuilding the same reality","Composite Context"],
-    ["04","2026","Confidence without inspectable proof","Engineering Confidence Platform"],
-    ["05","AUG 2026","API success mistaken for recovery","Agentic Operations"],
-    ["06","AUG 2026","Trust controls repeated per workflow","Enterprise Control Plane"],
-    ["07","ROADMAP","Token savings without evidence safety","Intelligence Control Plane"],
+    ["01","MAR 2025","Content without a complete cart","Agentic Commerce","built"],
+    ["02","MAY 2026","A valuable loop bound to one assistant","Governed Agentic SDLC","built"],
+    ["03","2026","Every agent rebuilding the same reality","Composite Context","built"],
+    ["04","2026","Confidence without inspectable proof","Engineering Confidence","exploration"],
+    ["05","AUG 2026","API success mistaken for recovery","Agentic Operations","built"],
+    ["06","AUG 2026","Trust controls repeated per workflow","Enterprise Control Plane","spec"],
+    ["07","ROADMAP","Token savings without evidence safety","Intelligence Control Plane","roadmap"],
   ];
   return (
     <div style={{ marginBottom:"4rem" }}>
@@ -295,15 +317,15 @@ const EngineeringArcGraphic = () => {
       </div>
 
       <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(185px, 1fr))", gap:"1.1rem" }}>
-        {evolution.map(([n,date,observed,built],i)=>{ const road=i===6; return (
-          <div key={n} style={{ border:`1px solid ${road?"rgba(47,111,176,.4)":C.border}`, borderTop:`3px solid ${road?C.blueHi:C.accent}`, borderRadius:"16px", background:road?"rgba(47,111,176,.05)":"#fff", padding:"1.6rem 1.4rem", display:"flex", flexDirection:"column" }}>
+        {evolution.map(([n,date,observed,built,st])=>{ const s=status[st]; return (
+          <div key={n} style={{ border:`1px solid ${s.border}33`, borderTop:`3px solid ${s.border}`, borderRadius:"16px", background:s.bg, padding:"1.6rem 1.4rem", display:"flex", flexDirection:"column" }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", gap:".5rem", marginBottom:"1.4rem" }}>
-              <span style={{ fontFamily:"'DM Mono',monospace", fontSize:"1.05rem", fontWeight:500, color:road?C.blueHi:C.accent }}>{n}</span>
+              <span style={{ fontFamily:"'DM Mono',monospace", fontSize:"1.05rem", fontWeight:500, color:s.color }}>{n}</span>
               <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".58rem", letterSpacing:".1em", color:"rgba(28,28,30,.42)" }}>{date}</span>
             </div>
             <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".56rem", letterSpacing:".16em", textTransform:"uppercase", color:"rgba(28,28,30,.42)", marginBottom:".45rem" }}>Observed</div>
             <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".95rem", lineHeight:1.45, color:C.muted, flex:1, marginBottom:"1.3rem" }}>{observed}</div>
-            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".56rem", letterSpacing:".16em", textTransform:"uppercase", color:road?C.blueHi:C.accent, marginBottom:".4rem" }}>{road?"Roadmap":"Built"}</div>
+            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".56rem", letterSpacing:".16em", textTransform:"uppercase", color:s.color, marginBottom:".4rem" }}>{s.label}</div>
             <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.08rem", fontWeight:750, lineHeight:1.25, color:C.text }}>{built}</div>
           </div>
         ); })}
@@ -327,9 +349,9 @@ const EngineeringArcGraphic = () => {
           </div>
           <div style={{ textAlign:"center", color:"rgba(28,28,30,.32)", fontSize:"1.1rem" }}>&#8597;</div>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))", gap:".9rem" }}>
-            <div style={{ border:`1px solid ${C.border}`, borderRadius:"14px", background:"#fff", padding:"1.5rem", textAlign:"center" }}>
-              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".1em", textTransform:"uppercase", color:C.text, marginBottom:".5rem" }}>Engineering Confidence Platform</div>
-              <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".92rem", color:C.muted }}>Requirements &middot; gates &middot; confidence &middot; release evidence</div>
+            <div style={{ border:`1px dashed ${C.muted}80`, borderRadius:"14px", background:"rgba(28,28,30,.035)", padding:"1.5rem", textAlign:"center" }}>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".1em", textTransform:"uppercase", color:C.muted, marginBottom:".5rem" }}>Engineering Confidence · Exploration</div>
+              <div style={{ fontFamily:"'Manrope',sans-serif", fontSize:".92rem", color:C.muted }}>Requirements &middot; gates &middot; confidence &middot; release evidence &mdash; a structural-confidence idea, not yet built</div>
             </div>
             <div style={{ border:`1px solid ${C.text}`, borderRadius:"14px", background:C.text, padding:"1.5rem", textAlign:"center" }}>
               <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".1em", textTransform:"uppercase", color:"#ed8a4d", marginBottom:".5rem" }}>Enterprise Control Plane</div>
@@ -365,7 +387,7 @@ const Nav = () => {
   const [solid, setSolid] = useState(false);
   const [active, setActive] = useState("");
   const [open, setOpen] = useState(false);
-  const links = [["story","Story"],["loop","Delivery Loop"],["context","Context"],["operations","Operations"],["enterprise-control-plane","Control Plane"],["roadmap","Roadmap"],["engineering-notes","Engineering Notes"],["research","Research"],["team","Creator"]];
+  const links = [["team","Career Arc"],["loop","Delivery Loop"],["operations","Operations"],["enterprise-control-plane","Control Plane"],["roadmap","Roadmap"],["engineering-notes","Engineering Notes"],["research","Research"]];
   useEffect(() => {
     const fn = () => setSolid(window.scrollY > 40);
     window.addEventListener("scroll", fn);
@@ -421,7 +443,7 @@ const Hero = () => {
         <Atmosphere variant="hero"/>
         <div style={inner({ position:"relative", zIndex:1, padding:"10rem clamp(1.25rem, 5vw, 3.5rem) 7rem", textAlign:"center", display:"flex", flexDirection:"column", alignItems:"center" })}>
           <div style={{ ...a(60) }}>
-            <Eyebrow center>Agentic Infrastructure for Enterprise Commerce</Eyebrow>
+            <Eyebrow center>Personal Research &amp; Engineering Portfolio</Eyebrow>
           </div>
           <h1 style={{ ...a(150), fontFamily:"'Manrope',sans-serif", fontSize:"clamp(3rem,7vw,6.5rem)", fontWeight:800, lineHeight:1.0, letterSpacing:"-.04em", color:C.text, maxWidth:"16ch", marginBottom:"2.2rem" }}>
             Where Tokens Become{" "}
@@ -430,12 +452,12 @@ const Hero = () => {
           <p style={{ ...a(260), fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:"clamp(1.15rem,1.8vw,1.5rem)", lineHeight:1.65, color:"rgba(28,28,30,.72)", maxWidth:"42ch", marginBottom:"3.2rem" }}>
             Tokens carry model output. Trusted action emerges only when that output is grounded in authoritative context, evaluated by policy, authorized at the right risk level, executed through registered procedures, and verified with evidence. Commerce Trust Labs explores the control plane in between.
           </p>
-          <div style={{ ...a(360), display:"flex", gap:"1.1rem", flexWrap:"wrap", justifyContent:"center", marginBottom:"2.2rem" }}>
-            <a href="#story" className="pill">Read the Story →</a>
-            <a href="https://github.com/PraneshSoma/agentic-sdlc-loop" target="_blank" rel="noreferrer" className="pill2">View on GitHub</a>
+          <div style={{ ...a(330), fontFamily:"'DM Mono',monospace", fontSize:".76rem", letterSpacing:".03em", color:"rgba(28,28,30,.55)", lineHeight:1.7, maxWidth:"56ch", marginBottom:"2.6rem" }}>
+            A personal research &amp; engineering portfolio by <span style={{ color:C.text, fontWeight:600 }}>Pranesh Soma</span> — ~19 years architecting large-scale enterprise commerce systems.
           </div>
-          <div style={{ ...a(420), fontFamily:"'DM Mono',monospace", fontSize:".74rem", letterSpacing:".03em", color:"rgba(28,28,30,.5)", lineHeight:1.7, maxWidth:"54ch", marginBottom:"4.5rem" }}>
-            An independent research initiative by <span style={{ color:C.text, fontWeight:500 }}>Pranesh Soma</span> — nearly two decades architecting enterprise commerce systems.
+          <div style={{ ...a(400), display:"flex", gap:"1.1rem", flexWrap:"wrap", justifyContent:"center", marginBottom:"4.5rem" }}>
+            <a href="#team" className="pill">See the Career Arc →</a>
+            <a href="https://github.com/PraneshSoma/agentic-sdlc-loop" target="_blank" rel="noreferrer" className="pill2">View on GitHub</a>
           </div>
           <div style={{ ...a(480), display:"flex", flexWrap:"wrap", justifyContent:"center", gap:"clamp(2rem, 6vw, 5rem)", width:"100%" }}>
             {[["Composite","Context Model"],["Governed","SDLC Loop"],["Human-Gated","Agentic Ops"]].map(([v,d]) => (
@@ -452,7 +474,7 @@ const Hero = () => {
 };
 
 /* ── generic full-bleed split section ── */
-const SplitSection = ({ id, bg, eyebrow, heading, headingEm, body, visual, atmosphere, reverse, alignVisualToContent, children }) => (
+const SplitSection = ({ id, bg, eyebrow, badge, heading, headingEm, body, visual, atmosphere, reverse, alignVisualToContent, children }) => (
     <section id={id} style={{ position:"relative", background:bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
       {atmosphere && <Atmosphere variant={atmosphere}/>}
       <div style={inner({ position:"relative", zIndex:1, padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
@@ -460,6 +482,7 @@ const SplitSection = ({ id, bg, eyebrow, heading, headingEm, body, visual, atmos
           <div className="split-text">
             <Reveal>
               <Eyebrow>{eyebrow}</Eyebrow>
+              {badge && <div style={{ marginTop:"-.8rem", marginBottom:"1.5rem" }}>{badge}</div>}
               <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.1rem,3.4vw,3.2rem)", fontWeight:800, lineHeight:1.06, letterSpacing:"-.035em", color:C.text, marginBottom:"1.8rem" }}>
                 {heading}{" "}
                 {headingEm && <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>{headingEm}</em>}
@@ -488,7 +511,7 @@ const Story = () => {
     { title:"Turn Missing Products Into Merchandising Intelligence", body:"When an item is unavailable, the experience can offer an external marketplace option. That unmet purchase intent becomes a structured catalog-gap signal that helps merchandising teams prioritize assortment expansion." },
   ];
   return (
-      <SplitSection id="story" bg={C.bg2} eyebrow="Origin"
+      <SplitSection id="story" bg={C.bg2} eyebrow="Origin" badge={<StatusBadge kind="prototype"/>}
         heading="Agentic Commerce Started With" headingEm="the Project-to-Cart Gap"
         body="In March 2025, the gap I encountered in project-based shopping was not a shortage of do-it-yourself content. Customers could find videos, articles, and inspiration, but there was no unified journey that understood a project, identified the complete bill of materials, matched every item to a retailer's catalog, and created a ready-to-buy cart. Agentic Commerce began as a multi-agent orchestrator designed to close that gap."
         visual={<OrchestratorGraphic/>}>
@@ -522,6 +545,11 @@ const Loop = () => {
         <div style={inner({ padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
           <Reveal>
             <Eyebrow>Governed Agentic Software Delivery</Eyebrow>
+            <div style={{ display:"flex", flexWrap:"wrap", gap:".8rem", alignItems:"center", marginTop:"-.8rem", marginBottom:"1.5rem" }}>
+              <StatusBadge kind="prototype"/>
+              <a href="https://github.com/PraneshSoma/agentic-sdlc-loop" target="_blank" rel="noreferrer" className="lk">agentic-sdlc-loop ↗</a>
+              <a href="https://github.com/PraneshSoma/loop-engineering" target="_blank" rel="noreferrer" className="lk">loop-engineering ↗</a>
+            </div>
             <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.1rem,3.4vw,3.2rem)", fontWeight:800, lineHeight:1.06, letterSpacing:"-.035em", color:C.text, marginBottom:"1.8rem", maxWidth:"22ch" }}>
               An 11-stage delivery loop with evidence and human gates
             </h2>
@@ -575,7 +603,7 @@ const ContextSection = () => {
     { n:"Business Context — Phase 3", body:"Weighs criticality, customer impact, and business ownership into the policy decision." },
   ];
   return (
-      <SplitSection id="context" bg={C.bg} eyebrow="Composite Context"
+      <SplitSection id="context" bg={C.bg} eyebrow="Composite Context" badge={<StatusBadge kind="prototype"/>}
         heading="Context Assembled From Multiple Authoritative Sources"
         body="An enterprise decision rarely depends on one prompt or one database. Composite context is built on demand by connectors, each pulling a bounded piece of information from its authoritative source, then normalized into a single package — with source, freshness, and confidence tracked for every element it contains.">
         <div style={{ display:"flex", flexDirection:"column", gap:"1.1rem", marginBottom:"2rem" }}>
@@ -614,7 +642,7 @@ const Operations = () => {
     ["10:49:41","RESOLVED","control-tower","incident closed — outcome verified, evidence ledger updated"],
   ];
   return (
-      <SplitSection id="operations" bg={C.bg2} reverse eyebrow="Agentic Operations"
+      <SplitSection id="operations" bg={C.bg2} reverse eyebrow="Agentic Operations" badge={<StatusBadge kind="prototype"/>}
         heading="From Trigger to Verified Resolution"
         body="The Agentic Operations Platform applies these principles to operational work — incidents, production tickets, data reconciliation, entitlement issues. Agents never hold production write credentials directly: they propose a plan built from a registered action, and a separately governed execution layer performs it only after policy and approval clear."
         visual={<FlowGraphic/>}>
@@ -664,6 +692,7 @@ const EnterpriseControlPlane = () => {
             <div className="split-text">
               <Reveal>
                 <Eyebrow>Enterprise Control Plane</Eyebrow>
+                <div style={{ marginTop:"-.8rem", marginBottom:"1.5rem" }}><StatusBadge kind="spec"/></div>
                 <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.1rem,3.4vw,3.2rem)", fontWeight:800, lineHeight:1.06, letterSpacing:"-.035em", color:C.text, marginBottom:"1.8rem" }}>
                   The Governed Plane Between{" "}
                   <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>Reasoning and Action</em>
@@ -729,7 +758,12 @@ const Roadmap = () => {
       <div style={{ position:"absolute", inset:0, background:"radial-gradient(circle at 78% 22%, rgba(47,111,176,.28), transparent 34%), radial-gradient(circle at 18% 76%, rgba(217,99,31,.2), transparent 32%)" }}/>
       <div style={inner({ position:"relative", zIndex:1, padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
         <Reveal>
-          <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".65rem", letterSpacing:".2em", textTransform:"uppercase", color:"#ed8a4d", marginBottom:"1.6rem" }}>Roadmap · The Next Control Plane</div>
+          <div style={{ display:"flex", flexWrap:"wrap", alignItems:"center", gap:"1rem", marginBottom:"1.6rem" }}>
+            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".65rem", letterSpacing:".2em", textTransform:"uppercase", color:"#ed8a4d" }}>Roadmap · The Next Control Plane</div>
+            <span style={{ display:"inline-flex", alignItems:"center", gap:".45rem", fontFamily:"'DM Mono',monospace", fontSize:".56rem", fontWeight:500, letterSpacing:".16em", textTransform:"uppercase", color:"#ed8a4d", background:"rgba(237,138,77,.1)", border:"1px solid #ed8a4d", borderRadius:"999px", padding:".34rem .75rem" }}>
+              <span style={{ width:".4rem", height:".4rem", borderRadius:"50%", background:"#ed8a4d" }}/>Roadmap · Not Built
+            </span>
+          </div>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))", gap:"clamp(2.5rem,6vw,7rem)", alignItems:"end", marginBottom:"4.5rem" }}>
             <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.5rem,5vw,5rem)", fontWeight:800, lineHeight:1, letterSpacing:"-.05em", color:"#fff", maxWidth:"13ch" }}>
               From traffic control to{" "}<em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:"#ed8a4d" }}>intelligence control</em>
@@ -805,7 +839,7 @@ const Roadmap = () => {
 const EngineeringNotes = () => {
   const notes = [
     {
-      number:"01", era:"Early 2025 · Agentic Commerce",
+      number:"01", status:"prototype", era:"Early 2025 · Agentic Commerce",
       title:"Content inspired the project, but it could not complete the purchase",
       lead:"By March 2025, customers had abundant do-it-yourself videos, articles, and project inspiration. The missing experience was a unified path from that content—or from a customer's own idea—to every compatible item required for the project and a complete, purchasable cart.",
       problem:"Search and recommendations worked one product at a time. The customer still had to interpret the project, derive a bill of materials, determine quantities and compatibility, find each item, recognize catalog gaps, and coordinate the final cart. A chatbot that only answered questions did not remove that work.",
@@ -815,7 +849,7 @@ const EngineeringNotes = () => {
       next:"That constraint produced the governed software-delivery loop."
     },
     {
-      number:"02", era:"May 2026 · Governed Agentic SDLC",
+      number:"02", status:"prototype", era:"May 2026 · Governed Agentic SDLC",
       title:"Was the value in Claude—or in the engineering loop around it?",
       lead:"Loop Engineering was already producing value in Claude by keeping research, architecture decisions, implementation intent, and validation connected across a long-running engineering problem. In May 2026, I used GitHub Copilot to simulate that workflow and test whether the operating model could survive outside the assistant where it originated.",
       problem:"AI coding assistants typically started each task cold. Architectural decisions, constraints, prior research, and accepted trade-offs had to be rediscovered or manually restated. Even when one long-running Claude workflow accumulated that knowledge successfully, the value was difficult to reproduce, govern, or transfer across tools and engineers.",
@@ -825,7 +859,7 @@ const EngineeringNotes = () => {
       next:"That constraint produced Composite Context."
     },
     {
-      number:"03", era:"2026 · Composite Context",
+      number:"03", status:"prototype", era:"2026 · Composite Context",
       title:"The expensive part was repeatedly rebuilding reality",
       lead:"An agent rarely fails because the enterprise has no information. It fails because the relevant facts live in different systems, arrive with different freshness, and lose their provenance when compressed into a prompt.",
       problem:"Repository structure, architecture decisions, business rules, runtime telemetry, ownership, policy, and prior outcomes were retrieved independently by each workflow. This increased response latency, duplicated interpretation, and allowed two agents to act from different versions of reality.",
@@ -835,9 +869,9 @@ const EngineeringNotes = () => {
       next:"That constraint produced the Engineering Confidence Platform."
     },
     {
-      number:"04", era:"2026 · Engineering Confidence Platform",
+      number:"04", status:"exploration", era:"Exploration · Engineering Confidence",
       title:"Confidence could not be another model-generated number",
-      lead:"Once AI participated in architecture and software delivery, the important question changed from “Is the answer convincing?” to “What evidence makes this change acceptable at this risk level?”",
+      lead:"This chapter is an open exploration, not a built platform. Once AI participated in architecture and software delivery, the important question changed from “Is the answer convincing?” to “What evidence makes this change acceptable at this risk level?” The idea below frames how that could work — it has not been implemented as a standalone system.",
       problem:"A single confidence score hides why a decision is safe. High model certainty cannot compensate for stale context, an unapproved architecture change, missing tests, an unauthorized actor, or an action outside the registered release procedure.",
       decision:"Define confidence structurally. A change earns progression through traceable requirements, accepted decisions, evidence completeness, policy evaluation, risk-tiered human gates, immutable execution intent, and outcome verification. The platform applies those controls at application and repository scope while the delivery loop performs the work.",
       trace:["Evidence establishes what is known","Policy evaluates the proposed action","Risk determines the required authorization","The accepted plan becomes immutable intent","Verification proves the resulting system state"],
@@ -845,7 +879,7 @@ const EngineeringNotes = () => {
       next:"That constraint produced Agentic Operations."
     },
     {
-      number:"05", era:"2026 · Agentic Operations",
+      number:"05", status:"prototype", era:"2026 · Agentic Operations",
       title:"A successful API call is not a resolved incident",
       lead:"Operational tickets appeared ideal for automation: detect a known symptom, run a standard procedure, and close the incident. The dangerous gap was everything between diagnosis and verified recovery.",
       problem:"An agent could select the wrong procedure, diagnose from incomplete telemetry, mutate a plan after approval, execute with broad credentials, or report success because an API returned 200—even while the customer-facing condition remained broken.",
@@ -855,7 +889,7 @@ const EngineeringNotes = () => {
       next:"That constraint produced the Enterprise Control Plane."
     },
     {
-      number:"06", era:"2026 · Enterprise Control Plane",
+      number:"06", status:"spec", era:"2026 · Enterprise Control Plane",
       title:"The architecture converged on one governed-action model",
       lead:"Agentic Commerce, software delivery, and production operations began as separate problems. Their implementations converged because every enterprise action must answer the same questions before it is trusted.",
       problem:"Who is acting? What authoritative facts support the decision? Is the proposed action registered? Which policy applies at this scope? Who must authorize it? What exactly was approved? Did execution produce the intended outcome?",
@@ -865,7 +899,7 @@ const EngineeringNotes = () => {
       next:"That constraint produced the Enterprise Intelligence Control Plane roadmap."
     },
     {
-      number:"07", era:"Roadmap · Enterprise Intelligence Control Plane",
+      number:"07", status:"roadmap", era:"Roadmap · Enterprise Intelligence Control Plane",
       title:"The next scarce resource is trustworthy intelligence per token",
       lead:"Once context, policy, approval, execution, and verification were connected, the next question became economic: how can an enterprise provide every agent with sufficient evidence while avoiding repeated, indiscriminate use of the most expensive model and context window?",
       problem:"Existing gateways can route providers, count tokens, cache prompts, and enforce budgets. They do not by themselves determine which evidence deserves tokens, whether excluded context contained a critical constraint, when a lower-cost model is sufficient, or whether optimization reduced the quality of the engineering outcome.",
@@ -898,7 +932,10 @@ const EngineeringNotes = () => {
                 <summary style={{ cursor:"pointer", padding:"2rem", display:"flex", gap:"1.4rem", alignItems:"flex-start" }}>
                   <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".72rem", color:C.accent, letterSpacing:".12em", paddingTop:".25rem" }}>{n.number}</span>
                   <span style={{ flex:1, minWidth:0 }}>
-                    <span style={{ display:"block", fontFamily:"'DM Mono',monospace", fontSize:".58rem", letterSpacing:".13em", textTransform:"uppercase", color:C.blueHi, marginBottom:".7rem" }}>{n.era}</span>
+                    <span style={{ display:"flex", flexWrap:"wrap", alignItems:"center", gap:".7rem", marginBottom:".7rem" }}>
+                      <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".58rem", letterSpacing:".13em", textTransform:"uppercase", color:C.blueHi }}>{n.era}</span>
+                      {n.status && <StatusBadge kind={n.status}/>}
+                    </span>
                     <span style={{ display:"block", fontFamily:"'Manrope',sans-serif", fontSize:"clamp(1.15rem,1.8vw,1.5rem)", fontWeight:800, letterSpacing:"-.025em", lineHeight:1.2, color:C.text }}>{n.title}</span>
                     <span style={{ display:"block", fontFamily:"'Manrope',sans-serif", fontSize:".9rem", lineHeight:1.7, color:"rgba(28,28,30,.6)", marginTop:".8rem" }}>{n.lead}</span>
                   </span>
@@ -1098,7 +1135,7 @@ const Team = () => (
     <section id="team" style={{ position:"relative", background:C.bg, width:"100%", maxWidth:"100vw", overflow:"hidden" }}>
       <div style={inner({ position:"relative", zIndex:1, padding:"8.5rem clamp(1.25rem, 5vw, 3.5rem)" })}>
         <Reveal>
-          <Eyebrow center>Creator</Eyebrow>
+          <Eyebrow center>Career Arc · Creator</Eyebrow>
           <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.1rem,3.4vw,3.2rem)", fontWeight:800, lineHeight:1.06, letterSpacing:"-.035em", color:C.text, textAlign:"center", maxWidth:"22ch", margin:"0 auto 1.2rem" }}>
             From commerce systems to{" "}
             <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>governed autonomy</em>
@@ -1125,7 +1162,7 @@ const Team = () => (
               </h3>
               {[
                 "Pranesh Soma is a distributed systems architect with close to two decades of experience designing large-scale enterprise commerce systems across cart, checkout, pricing, identity, platform traffic, modernization, and complex data migrations.",
-                "Commerce Trust Labs turns that experience into a connected body of independent research: the planner-and-worker model behind Agentic Commerce, the governed software-delivery loop within the Engineering Confidence Platform, the composite-context model, and the Agentic Operations runtime. The Enterprise Control Plane unifies them through shared context, policy, authorization, and evidence between AI reasoning and enterprise action.",
+                "Commerce Trust Labs turns that experience into a connected body of independent research: the planner-and-worker model behind Agentic Commerce, the governed software-delivery loop, the composite-context model, and the Agentic Operations runtime. The Enterprise Control Plane is the architecture that unifies them through shared context, policy, authorization, and evidence between AI reasoning and enterprise action.",
               ].map((para,i) => (
                   <p key={i} style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:".95rem", lineHeight:1.85, color:"rgba(28,28,30,.64)", marginBottom:"1rem" }}>{para}</p>
               ))}
@@ -1166,6 +1203,7 @@ export default function App() {
         <GlobalStyle/>
         <Nav/>
         <Hero/>
+        <Team/>
         <Story/>
         <Loop/>
         <ContextSection/>
@@ -1175,7 +1213,6 @@ export default function App() {
         <EngineeringNotes/>
         <Boundaries/>
         <Research/>
-        <Team/>
         <Footer/>
       </>
   );
