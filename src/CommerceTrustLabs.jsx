@@ -53,6 +53,8 @@ const GlobalStyle = () => (
     .note-card summary::-webkit-details-marker{display:none}
     .note-card summary:focus-visible{outline:2px solid #d9631f;outline-offset:5px;border-radius:12px}
     .note-card[open] .note-plus{transform:rotate(45deg);background:#d9631f;color:#fff;border-color:#d9631f}
+    .career-details summary::-webkit-details-marker{display:none}
+    .career-details[open] .career-plus{transform:rotate(45deg)}
     .note-story{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(2rem,5vw,5rem)}
     .split-row.reverse .split-text{order:2}
     .split-row.reverse .split-visual{order:1}
@@ -96,7 +98,7 @@ const useInView = () => {
   useEffect(() => {
     const o = new IntersectionObserver(([e]) => {
       if (e.isIntersecting) { setV(true); o.disconnect(); }
-    }, { threshold: 0.08 });
+    }, { threshold: 0.01, rootMargin: "0px 0px -8% 0px" });
     if (ref.current) o.observe(ref.current);
     return () => o.disconnect();
   }, []);
@@ -105,11 +107,12 @@ const useInView = () => {
 
 const Reveal = ({ children, delay = 0 }) => {
   const [ref, v] = useInView();
+  const d = Math.min(delay, 120);
   return (
       <div ref={ref} style={{
         opacity: v ? 1 : 0,
-        transform: v ? "none" : "translateY(24px)",
-        transition: `opacity .8s cubic-bezier(.16,1,.3,1) ${delay}ms, transform .8s cubic-bezier(.16,1,.3,1) ${delay}ms`
+        transform: v ? "none" : "translateY(14px)",
+        transition: `opacity .42s cubic-bezier(.16,1,.3,1) ${d}ms, transform .42s cubic-bezier(.16,1,.3,1) ${d}ms`
       }}>
         {children}
       </div>
@@ -133,10 +136,10 @@ const Eyebrow = ({ children, center }) => (
 /* ── STATUS BADGE ── */
 const StatusBadge = ({ kind }) => {
   const map = {
-    prototype:   ["Working Prototype", C.accent,  "rgba(217,99,31,.08)"],
-    spec:        ["Architecture Spec", C.blueHi,  "rgba(47,111,176,.08)"],
-    roadmap:     ["Roadmap",           C.blueHi,  "rgba(47,111,176,.06)"],
-    exploration: ["Exploration",       C.muted,   "rgba(28,28,30,.05)"],
+    prototype:   ["Working Prototype",      C.accent,  "rgba(217,99,31,.08)"],
+    spec:        ["Reference Architecture", C.blueHi,  "rgba(47,111,176,.08)"],
+    roadmap:     ["Roadmap",                C.blueHi,  "rgba(47,111,176,.06)"],
+    exploration: ["Exploration",            C.muted,   "rgba(28,28,30,.05)"],
   };
   const [label, color, bg] = map[kind] || map.spec;
   return (
@@ -375,7 +378,7 @@ const SplitSection = ({ id, bg, eyebrow, badge, heading, headingEm, body, visual
 const EngineeringNotes = () => {
   const notes = [
     {
-      number:"01", status:"prototype", era:"Early 2025 · Agentic Commerce",
+      number:"01", status:"spec", era:"Early 2025 · Agentic Commerce",
       title:"Content inspired the project, but it could not complete the purchase",
       lead:"By March 2025, customers had abundant do-it-yourself videos, articles, and project inspiration. The missing experience was a unified path from that content—or from a customer's own idea—to every compatible item required for the project and a complete, purchasable cart.",
       problem:"Search and recommendations worked one product at a time. The customer still had to interpret the project, derive a bill of materials, determine quantities and compatibility, find each item, recognize catalog gaps, and coordinate the final cart. A chatbot that only answered questions did not remove that work.",
@@ -402,7 +405,16 @@ const EngineeringNotes = () => {
       decision:"Treat context as a governed evidence product. Composite Context assembles claims from authoritative sources, preserves source and freshness metadata, resolves them at organization, domain, application, repository, and workflow scope, and exposes only the minimum evidence required by the current decision.",
       trace:["Resolve the acting identity and scope","Collect claims from authoritative connectors","Mark missing, stale, and conflicting evidence","Assemble a decision-specific context package","Persist accepted decisions and verified outcomes back into context"],
       learned:"Shared context improved consistency, but evidence alone could not decide whether an agent was permitted to act. The architecture still needed a reusable model for confidence, policy, approval, and release readiness.",
-      next:"That constraint produced the Engineering Confidence Platform."
+      next:"That constraint produced the Engineering Confidence Platform.",
+      artifact:{ label:"Context manifest (synthetic example)", lines:[
+        "context_id: ctx_9f21  scope: app=checkout-service env=prod",
+        "claims:",
+        "  - source: service-catalog     freshness: 4m   confidence: high",
+        "  - source: runtime-metrics     freshness: 20s  confidence: high",
+        "  - source: deploy-history      freshness: 1m   confidence: high",
+        "  - source: incident-history    freshness: 2h   confidence: med",
+        "excluded: [marketing-copy, unrelated-tenants]   missing: 0  stale: 0",
+      ]},
     },
     {
       number:"04", status:"exploration", era:"Exploration · Engineering Confidence",
@@ -432,7 +444,15 @@ const EngineeringNotes = () => {
       decision:"Place a reusable Enterprise Control Plane between probabilistic reasoning and deterministic enterprise systems. Composite Context supplies governed evidence. Identity, policy, and authorization determine whether an action may proceed. Registered procedures constrain execution. Verification feeds the observed outcome back into the context shared by commerce, engineering, and operations.",
       trace:["Models propose","Composite Context grounds","Policy and people authorize","Registered capabilities execute","Evidence verifies","Outcomes strengthen the next decision"],
       learned:"The result is not a claim that every enterprise workflow is solved. It is a working architectural thesis: intelligence can vary by model and use case, while the infrastructure that converts reasoning into accountable action remains consistent. But operating the loop exposed a new economic constraint: frontier models were repeatedly consuming large volumes of overlapping context even when only part of that evidence required expensive reasoning.",
-      next:"That constraint produced the Enterprise Intelligence Control Plane roadmap."
+      next:"That constraint produced the Enterprise Intelligence Control Plane roadmap.",
+      artifact:{ label:"Policy decision + registered action (synthetic example)", lines:[
+        "decision: REQUIRE_APPROVAL   risk_tier: R2   scope: app=checkout env=prod",
+        "actor: agent:ops-investigator   identity: verified   evidence: ctx_9f21",
+        "registered_action:",
+        "  name: restart_service   params: { version: \"1.3.0\" }  (frozen)",
+        "  credential: scoped, single-use   mutation_after_approval: denied",
+        "verify: health + error_rate + traffic within recovery window → close",
+      ]},
     },
     {
       number:"07", status:"roadmap", era:"Roadmap · Enterprise Intelligence Control Plane",
@@ -470,7 +490,7 @@ const EngineeringNotes = () => {
                       {n.status && <StatusBadge kind={n.status}/>}
                     </span>
                     <span style={{ display:"block", fontFamily:"'Manrope',sans-serif", fontSize:"clamp(1.15rem,1.8vw,1.5rem)", fontWeight:800, letterSpacing:"-.025em", lineHeight:1.2, color:C.text }}>{n.title}</span>
-                    <span style={{ display:"block", fontFamily:"'Manrope',sans-serif", fontSize:"1rem", lineHeight:1.7, color:"rgba(28,28,30,.6)", marginTop:".8rem" }}>{n.lead}</span>
+                    <span style={{ display:"block", fontFamily:"'DM Mono',monospace", fontSize:".72rem", letterSpacing:".04em", color:C.accent, marginTop:".9rem" }}>Open to read the constraint, decision &amp; evidence →</span>
                   </span>
                   <span className="note-plus" aria-hidden="true" style={{ width:"2rem", height:"2rem", borderRadius:"50%", border:`1px solid ${C.border}`, display:"inline-flex", alignItems:"center", justifyContent:"center", flexShrink:0, transition:"all .25s", fontSize:"1.2rem" }}>+</span>
                 </summary>
@@ -492,7 +512,17 @@ const EngineeringNotes = () => {
                     </div>
                     <h4 style={{ fontFamily:"'DM Mono',monospace", fontSize:".72rem", letterSpacing:".15em", textTransform:"uppercase", color:C.blueHi, marginBottom:".8rem" }}>What it revealed</h4>
                     <p style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.04rem", lineHeight:1.8, color:"rgba(28,28,30,.66)", marginBottom:"1.4rem" }}>{n.learned}</p>
-                    <p style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontSize:"1.2rem", lineHeight:1.5, color:C.accent, borderLeft:`2px solid ${C.accent}`, paddingLeft:"1rem" }}>{n.next}</p>
+                    <p style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontSize:"1.2rem", lineHeight:1.5, color:C.accent, borderLeft:`2px solid ${C.accent}`, paddingLeft:"1rem", marginBottom:n.artifact?"1.6rem":0 }}>{n.next}</p>
+                    {n.artifact && (
+                        <div style={{ background:C.text, borderRadius:"14px", padding:"1.4rem 1.5rem", overflowX:"auto" }}>
+                          <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".62rem", letterSpacing:".14em", textTransform:"uppercase", color:"rgba(255,255,255,.46)", marginBottom:".9rem" }}>{n.artifact.label}</div>
+                          <div style={{ minWidth:"max-content" }}>
+                            {n.artifact.lines.map((ln,k)=>(
+                                <div key={k} style={{ fontFamily:"'DM Mono',monospace", fontSize:".74rem", lineHeight:1.75, color: k===0?"#7bafe0":"rgba(255,255,255,.8)", whiteSpace:"pre" }}>{ln}</div>
+                            ))}
+                          </div>
+                        </div>
+                    )}
                   </div>
                 </div>
               </details>
@@ -593,12 +623,11 @@ const Milestones = () => {
   ];
   const ai=[
     {t:0.03,y:"Early 2025",a:"Agentic Commerce"},
-    {t:0.164,y:"2025",a:"Repo Compare"},
-    {t:0.298,y:"2025",a:"Multi-Agent Commerce"},
-    {t:0.432,y:"2026",a:"Governed SDLC Loop"},
-    {t:0.566,y:"2026",a:"Composite Context"},
-    {t:0.70,y:"2026",a:"PDLC"},
-    {t:0.834,y:"2026",a:"Agentic Ops"},
+    {t:0.187,y:"2025",a:"Repo Compare"},
+    {t:0.343,y:"2025",a:"Multi-Agent Commerce"},
+    {t:0.50,y:"2026",a:"Governed SDLC Loop"},
+    {t:0.657,y:"2026",a:"Composite Context"},
+    {t:0.813,y:"2026",a:"Agentic Ops"},
     {t:0.97,y:"2026",a:"Enterprise Control Plane"},
   ];
   const ePath=`M${eP[0][0]} ${eP[0][1]} Q ${eP[1][0]} ${eP[1][1]} ${eP[2][0]} ${eP[2][1]}`;
@@ -685,12 +714,17 @@ const Team = () => (
                 Experience transformed into{" "}
                 <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>reference architecture</em>
               </h3>
-              {[
-                "Pranesh Soma is a distributed systems architect with close to two decades of experience designing large-scale enterprise commerce systems across cart, checkout, pricing, identity, platform traffic, modernization, and complex data migrations.",
-                "Commerce Trust Labs turns that experience into a connected body of independent research: the planner-and-worker model behind Agentic Commerce, the governed software-delivery loop, the composite-context model, and the Agentic Operations runtime. The Enterprise Control Plane is the architecture that unifies them through shared context, policy, authorization, and evidence between AI reasoning and enterprise action.",
-              ].map((para,i) => (
-                  <p key={i} style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:"1.05rem", lineHeight:1.85, color:"rgba(28,28,30,.64)", marginBottom:"1rem" }}>{para}</p>
-              ))}
+              <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:"1.05rem", lineHeight:1.85, color:"rgba(28,28,30,.64)", marginBottom:"1.4rem" }}>
+                A distributed-systems architect with close to two decades designing large-scale enterprise commerce systems — cart, checkout, pricing, identity, platform traffic, modernization, and complex data migrations. Commerce Trust Labs turns that experience into independent research on governed AI action.
+              </p>
+              <details className="career-details">
+                <summary style={{ cursor:"pointer", listStyle:"none", display:"inline-flex", alignItems:"center", gap:".5rem", fontFamily:"'DM Mono',monospace", fontSize:".74rem", letterSpacing:".05em", color:C.accent }}>
+                  <span className="career-plus" style={{ display:"inline-block", transition:"transform .2s" }}>+</span> View career story
+                </summary>
+                <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:"1.02rem", lineHeight:1.85, color:"rgba(28,28,30,.6)", marginTop:"1rem" }}>
+                  The through-line runs from core commerce systems, through cloud and microservices, traffic and release infrastructure, and reactive and B2B platforms, into governed agentic systems: the planner-and-worker model behind Agentic Commerce, the governed software-delivery loop, the composite-context model, and the Agentic Operations runtime — unified by the Enterprise Control Plane through shared context, policy, authorization, and evidence between AI reasoning and enterprise action.
+                </p>
+              </details>
             </div>
           </div>
         </Reveal>
@@ -766,8 +800,8 @@ const Architecture = () => {
           <Reveal>
             <Eyebrow center>One Accumulated Architecture</Eyebrow>
             <h2 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"clamp(2.1rem,3.4vw,3.2rem)", fontWeight:800, lineHeight:1.06, letterSpacing:"-.035em", color:C.text, textAlign:"center", maxWidth:"22ch", margin:"0 auto 1.4rem" }}>
-              Five systems reduce to{" "}
-              <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>one governed-action model</em>
+              One governed-action{" "}
+              <em style={{ fontFamily:"'Instrument Serif',serif", fontStyle:"italic", fontWeight:400, color:C.accent }}>architecture</em>
             </h2>
             <p style={{ fontFamily:"'Manrope',sans-serif", fontWeight:400, fontSize:"1.08rem", lineHeight:1.8, color:C.muted, textAlign:"center", maxWidth:"64ch", margin:"0 auto 3.5rem" }}>
               Each experiment exposed a constraint the last one could not solve. The result is not six products — it is one model: an action is trusted only when it is grounded in authoritative context, authorized by policy and a human at the right risk, executed through a registered procedure, and verified by evidence. Composite Context feeds that model; the Enterprise Control Plane governs it.
@@ -796,40 +830,50 @@ const Architecture = () => {
 
 /* ── THREE PROOF-BACKED CASE STUDIES ── */
 const CaseStudies = () => {
-  const trace = [
-    ["10:42","TRIGGER","error spike reported on checkout-service"],
-    ["10:42","CONTEXT","assembled (missing: 0, stale: 0)"],
-    ["10:42","DIAGNOSED","deploy-induced spike — evidence-grounded"],
-    ["10:42","POLICY","R2 action in production → REQUIRE_APPROVAL"],
-    ["10:47","APPROVED","senior_oncall — registered R2 remediation"],
-    ["10:47","EXECUTING","restart_service under scoped credential"],
-    ["10:49","RESOLVED","outcome verified — evidence ledger updated"],
-  ];
   const cases = [
     {
-      k:"01", title:"Project to cart", kind:"spec", evidence:"Architecture + orchestration trace",
+      k:"01", title:"Project to cart", kind:"spec", evidence:"Orchestration diagram + synthetic trace",
       problem:"Project content could inspire a purchase but never assemble a complete, purchasable project.",
-      designed:"A supervisor-and-worker orchestrator over content, project-planning, catalog, availability, marketplace, and cart.",
-      built:"A working multi-agent reference that turns a project request into a complete cart and routes unmet items to marketplace options.",
+      designed:"A supervisor-and-worker orchestration over content, project-planning, catalog, availability, marketplace, and cart.",
+      result:"Takes a project request to a complete cart, and converts unmet demand into structured merchandising signal.",
+      built:"A multi-agent reference architecture — design and orchestration, not a shipped runtime — covering the full project-to-cart path with marketplace fallback.",
       proved:"Missing-product intent can be captured as structured merchandising signal — the outcome, not just the answer, is the product.",
       open:"Catalog-scale grounding and substitution quality across a real assortment remain to be validated.",
+      trace:[
+        ["t0","REQUEST","project brief received — video, article, or prompt"],
+        ["t1","PLAN","content + project agents derive steps, materials, quantities"],
+        ["t2","RESOLVE","catalog agents match SKUs, price, availability"],
+        ["t3","GAP","unmet item → marketplace option; logged as catalog-gap signal"],
+        ["t4","CART","supervisor assembles complete, purchasable project cart"],
+      ],
     },
     {
-      k:"02", title:"Governed delivery loop", kind:"prototype", evidence:null,
+      k:"02", title:"Governed delivery loop", kind:"prototype",
       problem:"AI coding assistants start each task cold; architecture, constraints, and prior decisions get rediscovered every time.",
       designed:"An 11-stage delivery loop where the loop — not the assistant — is the system: discovery, ADR, LLD, code/test gen, review, shadow, release, behind human gates.",
+      result:"A portable, evidence-gated delivery loop — proven by rebuilding it on a different assistant.",
       built:"A supervisor-led state machine with persisted state, retries, evidence, and human gates; proven portable by rebuilding it as a Copilot simulation.",
       proved:"The durable value was the structure and accumulated engineering memory, not any single assistant.",
       open:"Tiered adoption and audit at multi-team scale is designed but not operated in production.",
       repos:[["agentic-sdlc-loop","https://github.com/PraneshSoma/agentic-sdlc-loop"],["loop-engineering","https://github.com/PraneshSoma/loop-engineering"]],
     },
     {
-      k:"03", title:"Governed incident remediation", kind:"prototype", evidence:"Synthetic demo + immutable event trace", showTrace:true,
+      k:"03", title:"Governed incident remediation", kind:"prototype", evidence:"Synthetic demo + immutable event trace",
       problem:"A successful API call is not a resolved incident; agents can diagnose from partial telemetry or report false recovery.",
       designed:"An evidence-grounded incident state machine: trigger, context, diagnosis, frozen plan, policy, human gate, scoped execution, verification.",
+      result:"Incidents close only on verified recovery, executed on scoped credentials after a human gate.",
       built:"A synthetic incident that runs end-to-end — agents never hold production credentials; a separate layer executes a registered action only after approval.",
       proved:"An incident closes only on verified recovery; an approved plan is immutable and runs on scoped credentials.",
       open:"Real-world telemetry noise, multi-service blast radius, and rollback under partial failure are not yet exercised.",
+      trace:[
+        ["10:42","TRIGGER","error spike reported on checkout-service"],
+        ["10:42","CONTEXT","assembled (missing: 0, stale: 0)"],
+        ["10:42","DIAGNOSED","deploy-induced spike — evidence-grounded"],
+        ["10:42","POLICY","R2 action in production → REQUIRE_APPROVAL"],
+        ["10:47","APPROVED","senior_oncall — registered R2 remediation"],
+        ["10:47","EXECUTING","restart_service under scoped credential"],
+        ["10:49","RESOLVED","outcome verified — evidence ledger updated"],
+      ],
     },
   ];
   const Field = ({ label, children, color }) => (
@@ -861,28 +905,38 @@ const CaseStudies = () => {
                     </div>
                     <h3 style={{ fontFamily:"'Manrope',sans-serif", fontSize:"1.4rem", fontWeight:800, letterSpacing:"-.02em", color:C.text, marginBottom:"1.5rem" }}>{c.title}</h3>
                     <Field label="Problem">{c.problem}</Field>
-                    <Field label="Designed" color={C.accent}>{c.designed}</Field>
-                    <Field label="Built" color={C.accent}>{c.built}</Field>
-                    {c.showTrace && (
-                        <div style={{ background:C.text, borderRadius:"12px", padding:"1rem 1.1rem", margin:".4rem 0 1rem", overflowX:"auto" }}>
-                          <div style={{ minWidth:"max-content" }}>
-                            {trace.map(([t,st,msg],j)=>(
-                                <div key={j} style={{ display:"flex", gap:".7rem", fontFamily:"'DM Mono',monospace", fontSize:".66rem", lineHeight:1.9, whiteSpace:"nowrap" }}>
-                                  <span style={{ color:"rgba(255,255,255,.35)" }}>{t}</span>
-                                  <span style={{ color: st==="APPROVED"||st==="RESOLVED"?C.accent:"#7bafe0", width:"5.6rem", flexShrink:0 }}>{st}</span>
-                                  <span style={{ color:"rgba(255,255,255,.8)" }}>{msg}</span>
-                                </div>
-                            ))}
-                          </div>
-                        </div>
-                    )}
-                    <Field label="Proved" color={C.blueHi}>{c.proved}</Field>
-                    <Field label="Unresolved">{c.open}</Field>
+                    <Field label="Architectural decision" color={C.accent}>{c.designed}</Field>
+                    <Field label="Demonstrated result" color={C.blueHi}>{c.result}</Field>
                     <div style={{ marginTop:"1.2rem", paddingTop:"1.2rem", borderTop:`1px solid ${C.border}`, display:"flex", flexWrap:"wrap", gap:"1rem", alignItems:"center" }}>
+                      <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".58rem", letterSpacing:".16em", textTransform:"uppercase", color:C.muted }}>Evidence</span>
                       {c.repos
                           ? c.repos.map(([l,h])=>(<a key={l} href={h} target="_blank" rel="noreferrer" className="lk">{l} ↗</a>))
-                          : <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".7rem", color:C.muted }}>{c.evidence}</span>}
+                          : <span style={{ fontFamily:"'DM Mono',monospace", fontSize:".72rem", color:C.text, opacity:.75 }}>{c.evidence}</span>}
                     </div>
+                    <details className="career-details" style={{ marginTop:"1.2rem" }}>
+                      <summary style={{ cursor:"pointer", listStyle:"none", display:"inline-flex", alignItems:"center", gap:".5rem", fontFamily:"'DM Mono',monospace", fontSize:".7rem", letterSpacing:".05em", color:C.accent }}>
+                        <span className="career-plus" style={{ display:"inline-block", transition:"transform .2s" }}>+</span> Built · proved · unresolved
+                      </summary>
+                      <div style={{ marginTop:"1.2rem" }}>
+                        <Field label="Built" color={C.accent}>{c.built}</Field>
+                        {c.trace && (
+                            <div style={{ background:C.text, borderRadius:"12px", padding:"1rem 1.1rem", margin:".4rem 0 1rem", overflowX:"auto" }}>
+                              <div style={{ minWidth:"max-content" }}>
+                                {c.trace.map(([t,st,msg],j)=>(
+                                    <div key={j} style={{ display:"flex", gap:".7rem", fontFamily:"'DM Mono',monospace", fontSize:".66rem", lineHeight:1.9, whiteSpace:"nowrap" }}>
+                                      <span style={{ color:"rgba(255,255,255,.35)" }}>{t}</span>
+                                      <span style={{ color: st==="APPROVED"||st==="RESOLVED"||st==="CART"?C.accent:"#7bafe0", width:"5.6rem", flexShrink:0 }}>{st}</span>
+                                      <span style={{ color:"rgba(255,255,255,.8)" }}>{msg}</span>
+                                    </div>
+                                ))}
+                              </div>
+                            </div>
+                        )}
+                        <div style={{ fontFamily:"'DM Mono',monospace", fontSize:".58rem", letterSpacing:".14em", textTransform:"uppercase", color:"rgba(28,28,30,.4)", marginTop:"-.4rem", marginBottom:"1rem" }}>{c.trace ? "Illustrative synthetic trace — not a real system record" : ""}</div>
+                        <Field label="Proved" color={C.blueHi}>{c.proved}</Field>
+                        <Field label="Unresolved">{c.open}</Field>
+                      </div>
+                    </details>
                   </div>
                 </Reveal>
             ))}
